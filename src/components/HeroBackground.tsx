@@ -121,7 +121,7 @@ interface NodeProps {
 function Node({ node, glowTexture }: NodeProps) {
   const groupRef = useRef<THREE.Group>(null);
   const dotRef = useRef<THREE.Sprite>(null);
-  const lineRef = useRef<THREE.Line>(null);
+  const lineRef = useRef<any>(null);
   const lineMatRef = useRef<THREE.LineBasicMaterial>(null);
   const linePositions = useMemo(() => new Float32Array([0, 0, 0, 0, 0, 0]), []);
 
@@ -152,7 +152,7 @@ function Node({ node, glowTexture }: NodeProps) {
 
   return (
     <>
-      <line ref={lineRef}>
+      <line ref={lineRef as any}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" count={2} array={linePositions} itemSize={3} />
         </bufferGeometry>
