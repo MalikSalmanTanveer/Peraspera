@@ -1,0 +1,223 @@
+/* globals.css - Premium Vanilla CSS with Custom Fonts & Cursor */
+
+:root {
+  /* Brand Theme Colors */
+  --primary: #FF6B35;
+  --secondary: #4A4E69;
+  
+  --background-light: #F8F9FA;
+  --background-dark: #0A0A0A;
+  
+  --surface-light: #FFFFFF;
+  --surface-dark: #1A1A1A;
+  
+  /* Active Theme Colors (Defaults to Dark Theme for premium feel) */
+  --background: var(--background-dark);
+  --foreground: #ededed;
+  --card: var(--surface-dark);
+  --border: rgba(255, 255, 255, 0.1);
+  --muted-text: #94a3b8;
+  
+  /* Fonts */
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-mono: var(--font-space-mono), monospace;
+
+  /* Radius & Transitions */
+  --radius-sm: 0.5rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+  
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Light theme overrides (can be toggled if needed, defaults to dark as in screenshot) */
+html.light {
+  --background: var(--background-light);
+  --foreground: #0f172a;
+  --card: var(--surface-light);
+  --border: rgba(0, 0, 0, 0.1);
+  --muted-text: #475569;
+}
+
+/* Reset and Global Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+}
+
+body {
+  font-family: var(--font-display);
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Hide scrollbar during preloading */
+body.loading {
+  overflow: hidden;
+}
+
+/* Hide cursor on desktop where custom cursor is active */
+@media (min-width: 768px) {
+  body.custom-cursor-active {
+    cursor: none;
+  }
+  body.custom-cursor-active a, 
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"] {
+    cursor: none;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Custom Cursor */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary);
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 9999;
+  pointer-events: none;
+  display: none;
+}
+
+.cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 107, 53, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 9998;
+  pointer-events: none;
+  display: none;
+  transition: width 0.3s ease-out, height 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
+}
+
+@media (min-width: 768px) {
+  .cursor-dot, .cursor-outline {
+    display: block;
+  }
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(26, 26, 26, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Blobs */
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  filter: blur(60px);
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Spin Slow */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Selection Highlight */
+::selection {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+/* Preloader Exit wiped transition styles */
+#preloader {
+  transition: transform var(--transition-slow);
+}
+
+.preloader-hidden {
+  transform: translateY(-100%);
+}
+
+/* Typewriter Blinking Cursor */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 4px;
+  height: 0.9em;
+  background-color: var(--primary);
+  margin-left: 6px;
+  vertical-align: middle;
+  animation: blink 0.8s step-end infinite;
+}
+
+/* Hide scrollbars for WebKit browsers */
+div::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes bounceVertical {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* Infinite Horizontal Marquee Animations */
+@keyframes marqueeLeft {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
