@@ -20,6 +20,7 @@
     "three": "^0.185.1"
   },
   "devDependencies": {
+    "@types/matter-js": "^0.20.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
