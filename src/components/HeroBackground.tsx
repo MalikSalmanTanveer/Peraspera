@@ -154,7 +154,7 @@ function Node({ node, glowTexture }: NodeProps) {
     <>
       <line ref={lineRef as any}>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" count={2} array={linePositions} itemSize={3} />
+          <bufferAttribute attach="attributes-position" args={[linePositions, 3]} />
         </bufferGeometry>
         <lineBasicMaterial ref={lineMatRef} color={COLORS.accent} transparent opacity={0.08} />
       </line>
