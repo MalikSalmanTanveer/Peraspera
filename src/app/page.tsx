@@ -5,6 +5,7 @@ import HeroBackground from "@/components/HeroBackground";
 import TypewriterHeading from "@/components/TypewriterHeading";
 import WordMarquee from "@/components/WordMarquee";
 import EcosystemIndex from "@/components/EcosystemIndex";
+import PerAsperaCore from "@/components/PerAsperaCore";
 import ServicesSection from "@/components/ServicesSection";
 import FeaturedWorks from "@/components/FeaturedWorks";
 import TrustedPartners from "@/components/TrustedPartners";
@@ -90,6 +91,9 @@ export default function Home() {
 
       {/* 4.8 Ecosystem — Editorial index of nine disciplines */}
       <EcosystemIndex />
+
+      {/* 4.9 Per Aspera Core — One core, six connected services */}
+      <PerAsperaCore />
 
       {/* 5. Services — Scroll-driven stages with physics bubbles */}
       <ServicesSection />
