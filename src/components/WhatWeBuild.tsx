@@ -4,6 +4,14 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import styles from "./WhatWeBuild.module.css";
 
+const PARTICLES = Array.from({ length: 14 }, (_, i) => ({
+  id: i,
+  left: `${6 + (i * 6.5) % 88}%`,
+  top: `${(i * 8.1) % 85}%`,
+  delay: `${(i * 0.9) % 5}s`,
+  duration: `${4 + (i % 3)}s`,
+}));
+
 interface EcosystemNode {
   id: number;
   title: string;
@@ -104,6 +112,16 @@ export default function WhatWeBuild() {
       <div className={styles.gridBg} />
       <div className={styles.radialGlow} />
 
+      <div className={styles.particles}>
+        {PARTICLES.map((p) => (
+          <span
+            key={p.id}
+            className={styles.particle}
+            style={{ left: p.left, top: p.top, animationDelay: p.delay, animationDuration: p.duration }}
+          />
+        ))}
+      </div>
+
       <div className={styles.container}>
         <motion.div
           className={styles.headerGrid}
@@ -160,7 +178,7 @@ export default function WhatWeBuild() {
                 </radialGradient>
               </defs>
 
-              <circle
+              <motion.circle
                 cx="50"
                 cy="50"
                 r={CARD_RADIUS}
@@ -168,17 +186,29 @@ export default function WhatWeBuild() {
                 stroke="rgba(255,204,0,0.07)"
                 strokeWidth="0.18"
                 strokeDasharray="1.2 2.2"
+                className={styles.orbitRing}
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.3, duration: 0.6 }}
               />
 
-              <circle cx="50" cy="50" r="14" fill="url(#hubGrad)" />
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="14"
+                fill="url(#hubGrad)"
+                initial={{ scale: 0 }}
+                animate={isInView ? { scale: 1 } : {}}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              />
 
-              {NODES.map((node) => {
+              {NODES.map((node, i) => {
                 const lineEnd = polar(node.angle, LINE_END_RADIUS);
                 const isHighlighted = highlightedId === node.id;
 
                 return (
                   <g key={node.id}>
-                    <line
+                    <motion.line
                       x1={CENTER.x}
                       y1={CENTER.y}
                       x2={lineEnd.x}
@@ -187,6 +217,9 @@ export default function WhatWeBuild() {
                       strokeWidth={isHighlighted ? "0.34" : "0.24"}
                       strokeLinecap="round"
                       filter={isHighlighted ? "url(#circuitGlow)" : undefined}
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
+                      transition={{ delay: 0.25 + i * 0.07, duration: 0.8, ease: "easeOut" }}
                       style={{ transition: "stroke 0.35s ease, stroke-width 0.35s ease" }}
                     />
 
@@ -210,14 +243,34 @@ export default function WhatWeBuild() {
                             path={`M ${CENTER.x} ${CENTER.y} L ${lineEnd.x} ${lineEnd.y}`}
                           />
                         </circle>
+                        <circle r="0.35" fill="#FFCC00" opacity="0.7">
+                          <animateMotion
+                            dur="2.4s"
+                            repeatCount="indefinite"
+                            path={`M ${CENTER.x} ${CENTER.y} L ${lineEnd.x} ${lineEnd.y}`}
+                          />
+                        </circle>
                       </>
                     )}
 
-                    <circle
+                    {!isHighlighted && isInView && (
+                      <circle r="0.3" fill="rgba(255,204,0,0.5)" opacity="0.6">
+                        <animateMotion
+                          dur={`${2.5 + i * 0.3}s`}
+                          repeatCount="indefinite"
+                          path={`M ${CENTER.x} ${CENTER.y} L ${lineEnd.x} ${lineEnd.y}`}
+                        />
+                      </circle>
+                    )}
+
+                    <motion.circle
                       cx={lineEnd.x}
                       cy={lineEnd.y}
                       r="0.6"
                       fill={isHighlighted ? "#FFCC00" : "rgba(255,204,0,0.4)"}
+                      initial={{ scale: 0 }}
+                      animate={isInView ? { scale: 1 } : {}}
+                      transition={{ delay: 0.5 + i * 0.06, type: "spring", stiffness: 280 }}
                       style={{ transition: "fill 0.35s ease" }}
                     />
                   </g>
@@ -247,22 +300,25 @@ export default function WhatWeBuild() {
             {NODES.map((node, i) => {
               const pos = polar(node.angle, CARD_RADIUS);
               return (
-                <motion.div
+                <div
                   key={node.id}
                   className={styles.nodeAnchor}
                   style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ delay: 0.2 + i * 0.05, duration: 0.4 }}
                 >
-                  <NodeCard
-                    node={node}
-                    isActive={highlightedId === node.id}
-                    onEnter={() => setHoveredId(node.id)}
-                    onLeave={() => setHoveredId(null)}
-                    onClick={() => setActiveId(node.id)}
-                  />
-                </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ delay: 0.35 + i * 0.07, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  >
+                    <NodeCard
+                      node={node}
+                      isActive={highlightedId === node.id}
+                      onEnter={() => setHoveredId(node.id)}
+                      onLeave={() => setHoveredId(null)}
+                      onClick={() => setActiveId(node.id)}
+                    />
+                  </motion.div>
+                </div>
               );
             })}
           </div>
