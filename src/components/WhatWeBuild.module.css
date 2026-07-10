@@ -17,7 +17,7 @@
     linear-gradient(90deg, rgba(255, 204, 0, 0.025) 1px, transparent 1px);
   background-size: 56px 56px;
   pointer-events: none;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 48%, black 15%, transparent 80%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 15%, transparent 80%);
 }
 
 .radialGlow {
@@ -25,8 +25,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(720px, 88vw);
-  height: min(720px, 88vw);
+  width: min(820px, 90vw);
+  height: min(820px, 90vw);
   background: radial-gradient(circle, rgba(255, 204, 0, 0.07) 0%, transparent 68%);
   pointer-events: none;
 }
@@ -135,7 +135,7 @@
   transform: translateY(-2px);
 }
 
-/* ── Diagram stage ── */
+/* ── Diagram ── */
 .diagramStage {
   display: flex;
   justify-content: center;
@@ -145,10 +145,10 @@
 
 .diagramWrap {
   position: relative;
-  width: min(760px, 92vw);
-  height: min(760px, 92vw);
-  max-width: 760px;
-  max-height: 760px;
+  width: min(880px, 94vw);
+  height: min(880px, 94vw);
+  max-width: 880px;
+  max-height: 880px;
   margin: 0 auto;
   overflow: visible;
 }
@@ -162,22 +162,26 @@
   pointer-events: none;
 }
 
-/* ── Central hub ── */
-.hub {
+/* ── Hub — anchor holds center, inner animates without shifting origin ── */
+.hubAnchor {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
+  pointer-events: none;
+}
+
+.hub {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .pedestal {
   position: relative;
-  width: clamp(160px, 34%, 220px);
-  height: clamp(160px, 34%, 220px);
+  width: 200px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,23 +189,29 @@
 
 .pedestalRing {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 50%;
   border: 1px solid rgba(255, 204, 0, 0.14);
 }
 
 .pedestalRing1 {
-  inset: 0;
+  width: 100%;
+  height: 100%;
   animation: ringPulse 4s ease-in-out infinite;
 }
 
 .pedestalRing2 {
-  inset: 14%;
+  width: 72%;
+  height: 72%;
   border-color: rgba(255, 204, 0, 0.2);
   animation: ringSpin 24s linear infinite;
 }
 
 .pedestalRing3 {
-  inset: 28%;
+  width: 48%;
+  height: 48%;
   border-style: dashed;
   border-color: rgba(255, 204, 0, 0.1);
   animation: ringSpin 32s linear infinite reverse;
@@ -209,7 +219,11 @@
 
 .pedestalGrid {
   position: absolute;
-  inset: 6%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 88%;
+  height: 88%;
   border-radius: 50%;
   background:
     repeating-conic-gradient(
@@ -222,65 +236,24 @@
 
 .pedestalGlow {
   position: absolute;
-  inset: 22%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56%;
+  height: 56%;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 204, 0, 0.16) 0%, transparent 68%);
   animation: coreBreath 3.5s ease-in-out infinite;
 }
 
-.cubeWrap {
+.hubLogo {
   position: relative;
-  z-index: 2;
-  width: clamp(64px, 8vw, 84px);
-  height: clamp(64px, 8vw, 84px);
-  transform-style: preserve-3d;
-  animation: cubeFloat 5s ease-in-out infinite;
-}
-
-.cube {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transform: rotateX(-20deg) rotateY(38deg);
-}
-
-.cubeFace {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
-  border: 1px solid rgba(255, 204, 0, 0.32);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backface-visibility: hidden;
-}
-
-.cubeTop {
-  transform: rotateX(90deg) translateZ(34px);
-  background: linear-gradient(145deg, #222 0%, #111 100%);
-  box-shadow: inset 0 0 18px rgba(255, 204, 0, 0.12);
-}
-
-.cubeFront {
-  transform: translateZ(34px);
-}
-
-.cubeRight {
-  transform: rotateY(90deg) translateZ(34px);
-  background: linear-gradient(145deg, #141414 0%, #080808 100%);
-}
-
-.cubeLogo {
-  width: 52%;
-  height: 52%;
+  z-index: 3;
+  width: 72px;
+  height: 72px;
   object-fit: contain;
-  filter: brightness(1.3) drop-shadow(0 0 8px rgba(255, 204, 0, 0.45));
-}
-
-.hubBrand {
-  display: none;
+  filter: brightness(1.3) drop-shadow(0 0 12px rgba(255, 204, 0, 0.45));
+  animation: logoFloat 5s ease-in-out infinite;
 }
 
 /* ── Node anchors ── */
@@ -290,34 +263,34 @@
   transform: translate(-50%, -50%);
 }
 
-/* ── Service node cards ── */
+/* ── Service cards — no scale on hover so lines stay connected ── */
 .node {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 11px 13px;
-  width: 168px;
-  background: rgba(8, 8, 8, 0.9);
-  border: 1px solid rgba(255, 204, 0, 0.16);
+  gap: 9px;
+  padding: 10px 12px;
+  width: 158px;
+  background: rgba(8, 8, 8, 0.92);
+  border: 1px solid rgba(255, 204, 0, 0.18);
   border-radius: 10px;
   backdrop-filter: blur(10px);
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .node:hover,
 .nodeActive {
-  border-color: rgba(255, 204, 0, 0.5);
+  border-color: rgba(255, 204, 0, 0.55);
   box-shadow:
-    0 0 0 1px rgba(255, 204, 0, 0.1),
-    0 0 28px rgba(255, 204, 0, 0.12);
+    0 0 0 1px rgba(255, 204, 0, 0.12),
+    0 0 32px rgba(255, 204, 0, 0.14);
 }
 
 .nodeIcon {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -325,7 +298,7 @@
   background: rgba(255, 204, 0, 0.07);
   border: 1px solid rgba(255, 204, 0, 0.18);
   color: var(--primary);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .nodeContent {
@@ -335,7 +308,7 @@
 
 .nodeTitle {
   font-family: var(--font-mono);
-  font-size: 0.56rem;
+  font-size: 0.54rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -351,8 +324,8 @@
 
 .nodeDesc {
   font-family: var(--font-display);
-  font-size: 0.65rem;
-  line-height: 1.4;
+  font-size: 0.63rem;
+  line-height: 1.38;
   color: rgba(255, 255, 255, 0.38);
 }
 
@@ -362,7 +335,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-top: 56px;
-  max-width: 760px;
+  max-width: 880px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -413,7 +386,6 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
-/* Mobile fallback */
 .mobileGrid {
   display: none;
 }
@@ -425,18 +397,18 @@
 }
 
 @keyframes ringSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes coreBreath {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.06); }
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
 }
 
-@keyframes cubeFloat {
+@keyframes logoFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  50% { transform: translateY(-4px); }
 }
 
 /* Responsive */

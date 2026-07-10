@@ -13,8 +13,9 @@ interface EcosystemNode {
 }
 
 const CENTER = { x: 50, y: 50 };
-const CARD_RADIUS = 38;
-const LINE_RADIUS = 24;
+const CARD_RADIUS = 43;
+const CARD_HALF_PCT = 9;
+const LINE_END_RADIUS = CARD_RADIUS - CARD_HALF_PCT;
 
 const NODES: EcosystemNode[] = [
   { id: 1, title: "Automation", description: "Streamline workflows and eliminate manual tasks.", icon: "settings", angle: -90 },
@@ -42,20 +43,6 @@ function polar(angleDeg: number, radius: number) {
   };
 }
 
-function circuitPath(angleDeg: number) {
-  const end = polar(angleDeg, LINE_RADIUS);
-  const rad = (angleDeg * Math.PI) / 180;
-  const elbow = {
-    x: CENTER.x + LINE_RADIUS * 0.55 * Math.cos(rad),
-    y: CENTER.y + LINE_RADIUS * 0.55 * Math.sin(rad),
-  };
-
-  if (Math.abs(Math.cos(rad)) > Math.abs(Math.sin(rad))) {
-    return `M ${CENTER.x} ${CENTER.y} L ${elbow.x} ${CENTER.y} L ${elbow.x} ${elbow.y} L ${end.x} ${end.y}`;
-  }
-  return `M ${CENTER.x} ${CENTER.y} L ${CENTER.x} ${elbow.y} L ${elbow.x} ${elbow.y} L ${end.x} ${end.y}`;
-}
-
 function NodeCard({
   node,
   isActive,
@@ -70,14 +57,11 @@ function NodeCard({
   onClick: () => void;
 }) {
   return (
-    <motion.button
+    <button
       className={`${styles.node} ${isActive ? styles.nodeActive : ""}`}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       onClick={onClick}
-      animate={{ scale: isActive ? 1.04 : 1 }}
-      transition={{ type: "spring", stiffness: 300, damping: 24 }}
-      whileTap={{ scale: 0.98 }}
     >
       <div className={styles.nodeIcon}>
         <span className="material-icons">{node.icon}</span>
@@ -86,7 +70,7 @@ function NodeCard({
         <div className={styles.nodeTitle}>{node.title}</div>
         <div className={styles.nodeDesc}>{node.description}</div>
       </div>
-    </motion.button>
+    </button>
   );
 }
 
@@ -164,14 +148,14 @@ export default function WhatWeBuild() {
             >
               <defs>
                 <filter id="circuitGlow">
-                  <feGaussianBlur stdDeviation="0.5" result="blur" />
+                  <feGaussianBlur stdDeviation="0.45" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
                 <radialGradient id="hubGrad" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="rgba(255,204,0,0.14)" />
+                  <stop offset="0%" stopColor="rgba(255,204,0,0.16)" />
                   <stop offset="100%" stopColor="rgba(255,204,0,0)" />
                 </radialGradient>
               </defs>
@@ -181,94 +165,84 @@ export default function WhatWeBuild() {
                 cy="50"
                 r={CARD_RADIUS}
                 fill="none"
-                stroke="rgba(255,204,0,0.08)"
-                strokeWidth="0.2"
-                strokeDasharray="1.5 2.5"
+                stroke="rgba(255,204,0,0.07)"
+                strokeWidth="0.18"
+                strokeDasharray="1.2 2.2"
               />
 
-              <circle cx="50" cy="50" r="16" fill="url(#hubGrad)" />
+              <circle cx="50" cy="50" r="14" fill="url(#hubGrad)" />
 
               {NODES.map((node) => {
-                const path = circuitPath(node.angle);
-                const junction = polar(node.angle, LINE_RADIUS);
-                const cardPos = polar(node.angle, CARD_RADIUS);
+                const lineEnd = polar(node.angle, LINE_END_RADIUS);
                 const isHighlighted = highlightedId === node.id;
 
                 return (
                   <g key={node.id}>
-                    <path
-                      d={path}
-                      fill="none"
-                      stroke={isHighlighted ? "rgba(255,204,0,0.65)" : "rgba(255,204,0,0.22)"}
-                      strokeWidth={isHighlighted ? "0.32" : "0.22"}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      filter={isHighlighted ? "url(#circuitGlow)" : undefined}
-                      style={{ transition: "stroke 0.4s ease" }}
-                    />
-
                     <line
-                      x1={junction.x}
-                      y1={junction.y}
-                      x2={cardPos.x}
-                      y2={cardPos.y}
-                      stroke={isHighlighted ? "rgba(255,204,0,0.55)" : "rgba(255,204,0,0.18)"}
-                      strokeWidth={isHighlighted ? "0.28" : "0.18"}
+                      x1={CENTER.x}
+                      y1={CENTER.y}
+                      x2={lineEnd.x}
+                      y2={lineEnd.y}
+                      stroke={isHighlighted ? "rgba(255,204,0,0.75)" : "rgba(255,204,0,0.28)"}
+                      strokeWidth={isHighlighted ? "0.34" : "0.24"}
                       strokeLinecap="round"
-                      style={{ transition: "stroke 0.4s ease" }}
+                      filter={isHighlighted ? "url(#circuitGlow)" : undefined}
+                      style={{ transition: "stroke 0.35s ease, stroke-width 0.35s ease" }}
                     />
 
                     {isHighlighted && (
                       <>
-                        <path
-                          d={path}
-                          fill="none"
-                          stroke="rgba(255,204,0,0.7)"
-                          strokeWidth="0.38"
-                          strokeDasharray="1.5 3"
-                          style={{ animation: "circuitFlow 1.4s linear infinite" }}
+                        <line
+                          x1={CENTER.x}
+                          y1={CENTER.y}
+                          x2={lineEnd.x}
+                          y2={lineEnd.y}
+                          stroke="rgba(255,204,0,0.8)"
+                          strokeWidth="0.42"
+                          strokeDasharray="1.2 2.5"
+                          strokeLinecap="round"
+                          style={{ animation: "circuitFlow 1.2s linear infinite" }}
                         />
-                        <circle r="0.45" fill="#FFCC00">
-                          <animateMotion dur="2s" repeatCount="indefinite" path={path} />
+                        <circle r="0.5" fill="#FFCC00">
+                          <animateMotion
+                            dur="1.6s"
+                            repeatCount="indefinite"
+                            path={`M ${CENTER.x} ${CENTER.y} L ${lineEnd.x} ${lineEnd.y}`}
+                          />
                         </circle>
                       </>
                     )}
 
                     <circle
-                      cx={junction.x}
-                      cy={junction.y}
-                      r="0.55"
-                      fill={isHighlighted ? "#FFCC00" : "rgba(255,204,0,0.35)"}
+                      cx={lineEnd.x}
+                      cy={lineEnd.y}
+                      r="0.6"
+                      fill={isHighlighted ? "#FFCC00" : "rgba(255,204,0,0.4)"}
+                      style={{ transition: "fill 0.35s ease" }}
                     />
                   </g>
                 );
               })}
             </svg>
 
-            <motion.div
-              className={styles.hub}
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <div className={styles.pedestal}>
-                <div className={`${styles.pedestalRing} ${styles.pedestalRing1}`} />
-                <div className={`${styles.pedestalRing} ${styles.pedestalRing2}`} />
-                <div className={`${styles.pedestalRing} ${styles.pedestalRing3}`} />
-                <div className={styles.pedestalGrid} />
-                <div className={styles.pedestalGlow} />
-
-                <div className={styles.cubeWrap}>
-                  <div className={styles.cube}>
-                    <div className={`${styles.cubeFace} ${styles.cubeTop}`}>
-                      <img src="/logo2.png" alt="Per Aspera" className={styles.cubeLogo} />
-                    </div>
-                    <div className={`${styles.cubeFace} ${styles.cubeFront}`} />
-                    <div className={`${styles.cubeFace} ${styles.cubeRight}`} />
-                  </div>
+            {/* Hub — outer anchor keeps true center, inner handles animation */}
+            <div className={styles.hubAnchor}>
+              <motion.div
+                className={styles.hub}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <div className={styles.pedestal}>
+                  <div className={`${styles.pedestalRing} ${styles.pedestalRing1}`} />
+                  <div className={`${styles.pedestalRing} ${styles.pedestalRing2}`} />
+                  <div className={`${styles.pedestalRing} ${styles.pedestalRing3}`} />
+                  <div className={styles.pedestalGrid} />
+                  <div className={styles.pedestalGlow} />
+                  <img src="/logo2.png" alt="Per Aspera" className={styles.hubLogo} />
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
 
             {NODES.map((node, i) => {
               const pos = polar(node.angle, CARD_RADIUS);
@@ -277,9 +251,9 @@ export default function WhatWeBuild() {
                   key={node.id}
                   className={styles.nodeAnchor}
                   style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.25 + i * 0.06, duration: 0.45 }}
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : {}}
+                  transition={{ delay: 0.2 + i * 0.05, duration: 0.4 }}
                 >
                   <NodeCard
                     node={node}
