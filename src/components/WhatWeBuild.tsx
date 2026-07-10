@@ -4,152 +4,56 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import styles from "./WhatWeBuild.module.css";
 
-type NodeAlign =
-  | "top"
-  | "bottom"
-  | "left"
-  | "right"
-  | "top-left"
-  | "top-right"
-  | "bottom-left"
-  | "bottom-right";
-
 interface EcosystemNode {
   id: number;
   title: string;
   description: string;
   icon: string;
-  x: number;
-  y: number;
-  align: NodeAlign;
+  angle: number;
 }
 
 const CENTER = { x: 50, y: 50 };
+const CARD_RADIUS = 38;
+const LINE_RADIUS = 24;
 
 const NODES: EcosystemNode[] = [
-  {
-    id: 1,
-    title: "Automation",
-    description: "Streamline workflows and eliminate manual tasks.",
-    icon: "settings",
-    x: 50,
-    y: 7,
-    align: "top",
-  },
-  {
-    id: 2,
-    title: "AI Agents",
-    description: "Intelligent agents that think, learn and automate for you.",
-    icon: "psychology",
-    x: 74,
-    y: 11,
-    align: "top-right",
-  },
-  {
-    id: 3,
-    title: "SaaS",
-    description: "Scalable SaaS products built for growth.",
-    icon: "bolt",
-    x: 91,
-    y: 30,
-    align: "right",
-  },
-  {
-    id: 4,
-    title: "Accounting",
-    description: "Smart accounting, bookkeeping and financial automation.",
-    icon: "account_balance",
-    x: 90,
-    y: 56,
-    align: "right",
-  },
-  {
-    id: 5,
-    title: "Marketing",
-    description: "Data-driven marketing that attracts and converts.",
-    icon: "campaign",
-    x: 74,
-    y: 76,
-    align: "bottom-right",
-  },
-  {
-    id: 6,
-    title: "Analytics",
-    description: "Real-time insights that help you make better decisions.",
-    icon: "analytics",
-    x: 50,
-    y: 84,
-    align: "bottom",
-  },
-  {
-    id: 7,
-    title: "CRM",
-    description: "Manage relationships and grow customer loyalty.",
-    icon: "groups",
-    x: 26,
-    y: 76,
-    align: "bottom-left",
-  },
-  {
-    id: 8,
-    title: "Cloud",
-    description: "Secure, scalable and reliable cloud infrastructure.",
-    icon: "cloud",
-    x: 9,
-    y: 30,
-    align: "left",
-  },
-  {
-    id: 9,
-    title: "Software",
-    description: "Custom software that solves real business problems.",
-    icon: "code",
-    x: 26,
-    y: 11,
-    align: "top-left",
-  },
+  { id: 1, title: "Automation", description: "Streamline workflows and eliminate manual tasks.", icon: "settings", angle: -90 },
+  { id: 2, title: "AI Agents", description: "Intelligent agents that think, learn and automate for you.", icon: "psychology", angle: -50 },
+  { id: 3, title: "SaaS", description: "Scalable SaaS products built for growth.", icon: "bolt", angle: -10 },
+  { id: 4, title: "Accounting", description: "Smart accounting, bookkeeping and financial automation.", icon: "account_balance", angle: 30 },
+  { id: 5, title: "Marketing", description: "Data-driven marketing that attracts and converts.", icon: "campaign", angle: 70 },
+  { id: 6, title: "Analytics", description: "Real-time insights that help you make better decisions.", icon: "analytics", angle: 110 },
+  { id: 7, title: "CRM", description: "Manage relationships and grow customer loyalty.", icon: "groups", angle: 150 },
+  { id: 8, title: "Cloud", description: "Secure, scalable and reliable cloud infrastructure.", icon: "cloud", angle: 190 },
+  { id: 9, title: "Software", description: "Custom software that solves real business problems.", icon: "code", angle: 230 },
 ];
 
 const PILLARS = [
-  {
-    title: "Fully Connected",
-    description: "Every module works together in perfect sync to power your business.",
-    icon: "hub",
-  },
-  {
-    title: "Built for Scale",
-    description: "From startups to enterprises, our ecosystem grows with your ambition.",
-    icon: "shield",
-  },
-  {
-    title: "Future Ready",
-    description: "Modern technology, continuous innovation and a vision for tomorrow.",
-    icon: "rocket_launch",
-  },
+  { title: "Fully Connected", description: "Every module works together in perfect sync to power your business.", icon: "hub" },
+  { title: "Built for Scale", description: "From startups to enterprises, our ecosystem grows with your ambition.", icon: "shield" },
+  { title: "Future Ready", description: "Modern technology, continuous innovation and a vision for tomorrow.", icon: "rocket_launch" },
 ];
 
-const ALIGN_CLASS: Record<NodeAlign, string> = {
-  top: styles.alignTop,
-  bottom: styles.alignBottom,
-  left: styles.alignLeft,
-  right: styles.alignRight,
-  "top-left": styles.alignTopLeft,
-  "top-right": styles.alignTopRight,
-  "bottom-left": styles.alignBottomLeft,
-  "bottom-right": styles.alignBottomRight,
-};
+function polar(angleDeg: number, radius: number) {
+  const rad = (angleDeg * Math.PI) / 180;
+  return {
+    x: CENTER.x + radius * Math.cos(rad),
+    y: CENTER.y + radius * Math.sin(rad),
+  };
+}
 
-function circuitPath(tx: number, ty: number) {
-  const { x: cx, y: cy } = CENTER;
-  const dx = tx - cx;
-  const dy = ty - cy;
-  const midX = cx + dx * 0.45;
-  const midY = cy + dy * 0.45;
+function circuitPath(angleDeg: number) {
+  const end = polar(angleDeg, LINE_RADIUS);
+  const rad = (angleDeg * Math.PI) / 180;
+  const elbow = {
+    x: CENTER.x + LINE_RADIUS * 0.55 * Math.cos(rad),
+    y: CENTER.y + LINE_RADIUS * 0.55 * Math.sin(rad),
+  };
 
-  if (Math.abs(dx) > Math.abs(dy)) {
-    return `M ${cx} ${cy} L ${midX} ${cy} L ${midX} ${midY} L ${tx} ${ty}`;
+  if (Math.abs(Math.cos(rad)) > Math.abs(Math.sin(rad))) {
+    return `M ${CENTER.x} ${CENTER.y} L ${elbow.x} ${CENTER.y} L ${elbow.x} ${elbow.y} L ${end.x} ${end.y}`;
   }
-  return `M ${cx} ${cy} L ${cx} ${midY} L ${midX} ${midY} L ${tx} ${ty}`;
+  return `M ${CENTER.x} ${CENTER.y} L ${CENTER.x} ${elbow.y} L ${elbow.x} ${elbow.y} L ${end.x} ${end.y}`;
 }
 
 function NodeCard({
@@ -171,7 +75,7 @@ function NodeCard({
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       onClick={onClick}
-      animate={{ scale: isActive ? 1.03 : 1 }}
+      animate={{ scale: isActive ? 1.04 : 1 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
       whileTap={{ scale: 0.98 }}
     >
@@ -217,7 +121,6 @@ export default function WhatWeBuild() {
       <div className={styles.radialGlow} />
 
       <div className={styles.container}>
-        {/* Header */}
         <motion.div
           className={styles.headerGrid}
           initial={{ opacity: 0, y: 24 }}
@@ -252,10 +155,7 @@ export default function WhatWeBuild() {
           </div>
         </motion.div>
 
-        {/* Desktop diagram */}
         <div className={styles.diagramStage}>
-          <span className={styles.sideLabel}>Per Aspera Ecosystem</span>
-
           <div className={styles.diagramWrap}>
             <svg
               className={styles.circuitSvg}
@@ -271,27 +171,27 @@ export default function WhatWeBuild() {
                   </feMerge>
                 </filter>
                 <radialGradient id="hubGrad" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="rgba(255,204,0,0.12)" />
+                  <stop offset="0%" stopColor="rgba(255,204,0,0.14)" />
                   <stop offset="100%" stopColor="rgba(255,204,0,0)" />
                 </radialGradient>
               </defs>
 
-              {/* Orbit ring */}
-              <ellipse
+              <circle
                 cx="50"
                 cy="50"
-                rx="38"
-                ry="36"
+                r={CARD_RADIUS}
                 fill="none"
-                stroke="rgba(255,204,0,0.06)"
-                strokeWidth="0.15"
-                strokeDasharray="1.5 2"
+                stroke="rgba(255,204,0,0.08)"
+                strokeWidth="0.2"
+                strokeDasharray="1.5 2.5"
               />
 
-              <circle cx="50" cy="50" r="14" fill="url(#hubGrad)" />
+              <circle cx="50" cy="50" r="16" fill="url(#hubGrad)" />
 
               {NODES.map((node) => {
-                const path = circuitPath(node.x, node.y);
+                const path = circuitPath(node.angle);
+                const junction = polar(node.angle, LINE_RADIUS);
+                const cardPos = polar(node.angle, CARD_RADIUS);
                 const isHighlighted = highlightedId === node.id;
 
                 return (
@@ -299,11 +199,22 @@ export default function WhatWeBuild() {
                     <path
                       d={path}
                       fill="none"
-                      stroke={isHighlighted ? "rgba(255,204,0,0.5)" : "rgba(255,204,0,0.1)"}
-                      strokeWidth={isHighlighted ? "0.3" : "0.18"}
+                      stroke={isHighlighted ? "rgba(255,204,0,0.65)" : "rgba(255,204,0,0.22)"}
+                      strokeWidth={isHighlighted ? "0.32" : "0.22"}
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       filter={isHighlighted ? "url(#circuitGlow)" : undefined}
+                      style={{ transition: "stroke 0.4s ease" }}
+                    />
+
+                    <line
+                      x1={junction.x}
+                      y1={junction.y}
+                      x2={cardPos.x}
+                      y2={cardPos.y}
+                      stroke={isHighlighted ? "rgba(255,204,0,0.55)" : "rgba(255,204,0,0.18)"}
+                      strokeWidth={isHighlighted ? "0.28" : "0.18"}
+                      strokeLinecap="round"
                       style={{ transition: "stroke 0.4s ease" }}
                     />
 
@@ -312,8 +223,8 @@ export default function WhatWeBuild() {
                         <path
                           d={path}
                           fill="none"
-                          stroke="rgba(255,204,0,0.55)"
-                          strokeWidth="0.4"
+                          stroke="rgba(255,204,0,0.7)"
+                          strokeWidth="0.38"
                           strokeDasharray="1.5 3"
                           style={{ animation: "circuitFlow 1.4s linear infinite" }}
                         />
@@ -324,18 +235,16 @@ export default function WhatWeBuild() {
                     )}
 
                     <circle
-                      cx={node.x}
-                      cy={node.y}
-                      r="0.5"
-                      fill={isHighlighted ? "#FFCC00" : "rgba(255,204,0,0.2)"}
-                      style={{ transition: "fill 0.4s ease" }}
+                      cx={junction.x}
+                      cy={junction.y}
+                      r="0.55"
+                      fill={isHighlighted ? "#FFCC00" : "rgba(255,204,0,0.35)"}
                     />
                   </g>
                 );
               })}
             </svg>
 
-            {/* Central hub */}
             <motion.div
               className={styles.hub}
               initial={{ opacity: 0, scale: 0.7 }}
@@ -359,32 +268,32 @@ export default function WhatWeBuild() {
                   </div>
                 </div>
               </div>
-              <span className={styles.hubBrand}>per</span>
             </motion.div>
 
-            {/* Orbital nodes */}
-            {NODES.map((node, i) => (
-              <motion.div
-                key={node.id}
-                className={`${styles.nodeAnchor} ${ALIGN_CLASS[node.align]}`}
-                style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.25 + i * 0.06, duration: 0.45 }}
-              >
-                <NodeCard
-                  node={node}
-                  isActive={highlightedId === node.id}
-                  onEnter={() => setHoveredId(node.id)}
-                  onLeave={() => setHoveredId(null)}
-                  onClick={() => setActiveId(node.id)}
-                />
-              </motion.div>
-            ))}
+            {NODES.map((node, i) => {
+              const pos = polar(node.angle, CARD_RADIUS);
+              return (
+                <motion.div
+                  key={node.id}
+                  className={styles.nodeAnchor}
+                  style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: 0.25 + i * 0.06, duration: 0.45 }}
+                >
+                  <NodeCard
+                    node={node}
+                    isActive={highlightedId === node.id}
+                    onEnter={() => setHoveredId(node.id)}
+                    onLeave={() => setHoveredId(null)}
+                    onClick={() => setActiveId(node.id)}
+                  />
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Mobile grid */}
         <div className={styles.mobileGrid}>
           {NODES.map((node, i) => (
             <motion.div
@@ -404,7 +313,6 @@ export default function WhatWeBuild() {
           ))}
         </div>
 
-        {/* Bottom pillars */}
         <motion.div
           className={styles.pillars}
           initial={{ opacity: 0, y: 32 }}

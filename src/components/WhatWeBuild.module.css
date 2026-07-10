@@ -22,12 +22,12 @@
 
 .radialGlow {
   position: absolute;
-  top: 48%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(1000px, 95vw);
-  height: min(600px, 70vw);
-  background: radial-gradient(ellipse, rgba(255, 204, 0, 0.07) 0%, transparent 68%);
+  width: min(720px, 88vw);
+  height: min(720px, 88vw);
+  background: radial-gradient(circle, rgba(255, 204, 0, 0.07) 0%, transparent 68%);
   pointer-events: none;
 }
 
@@ -137,36 +137,18 @@
 
 /* ── Diagram stage ── */
 .diagramStage {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
-.sideLabel {
-  position: absolute;
-  left: -8px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: center center;
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
-  color: rgba(255, 204, 0, 0.28);
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 3;
-}
-
 .diagramWrap {
   position: relative;
-  width: 100%;
-  max-width: 1060px;
-  aspect-ratio: 2 / 1.05;
-  min-height: 480px;
+  width: min(760px, 92vw);
+  height: min(760px, 92vw);
+  max-width: 760px;
+  max-height: 760px;
   margin: 0 auto;
   overflow: visible;
 }
@@ -194,8 +176,8 @@
 
 .pedestal {
   position: relative;
-  width: clamp(170px, 22vw, 240px);
-  height: clamp(170px, 22vw, 240px);
+  width: clamp(160px, 34%, 220px);
+  height: clamp(160px, 34%, 220px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -298,50 +280,14 @@
 }
 
 .hubBrand {
-  margin-top: 10px;
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.55);
-  letter-spacing: 0.08em;
+  display: none;
 }
 
 /* ── Node anchors ── */
 .nodeAnchor {
   position: absolute;
   z-index: 12;
-}
-
-.alignTop {
-  transform: translate(-50%, 0);
-}
-
-.alignBottom {
-  transform: translate(-50%, -100%);
-}
-
-.alignLeft {
-  transform: translate(0, -50%);
-}
-
-.alignRight {
-  transform: translate(-100%, -50%);
-}
-
-.alignTopLeft {
-  transform: translate(0, 0);
-}
-
-.alignTopRight {
-  transform: translate(-100%, 0);
-}
-
-.alignBottomLeft {
-  transform: translate(0, -100%);
-}
-
-.alignBottomRight {
-  transform: translate(-100%, -100%);
+  transform: translate(-50%, -50%);
 }
 
 /* ── Service node cards ── */
@@ -416,7 +362,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-top: 56px;
-  max-width: 1060px;
+  max-width: 760px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -506,10 +452,6 @@
 
   .headerRight {
     justify-content: center;
-  }
-
-  .sideLabel {
-    display: none;
   }
 
   .diagramWrap {
