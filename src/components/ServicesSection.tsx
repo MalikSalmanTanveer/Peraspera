@@ -58,7 +58,7 @@ import type { IconType } from "react-icons";
 const COLORS = {
   bg: "#0D0D0D",
   wire: "#F5F5F5",
-  accent: "#FF6B35",
+  accent: "#FFCC00",
 };
 
 interface ToolDef {
@@ -297,7 +297,7 @@ export default function ServicesSection() {
                 exit={{ scale: 0.4, opacity: 0 }}
                 transition={{ duration: 0.18 }}
                 style={{
-                  filter: "drop-shadow(0px 8px 32px rgba(255, 107, 53, 0.35))",
+                  filter: "drop-shadow(0px 8px 32px rgba(255, 204, 0, 0.35))",
                 }}
               >
                 {(() => {

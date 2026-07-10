@@ -4,6 +4,7 @@ import CustomCursor from "@/components/CustomCursor";
 import HeroBackground from "@/components/HeroBackground";
 import TypewriterHeading from "@/components/TypewriterHeading";
 import WordMarquee from "@/components/WordMarquee";
+import WhatWeBuild from "@/components/WhatWeBuild";
 import ServicesSection from "@/components/ServicesSection";
 import FeaturedWorks from "@/components/FeaturedWorks";
 import TrustedPartners from "@/components/TrustedPartners";
@@ -54,23 +55,23 @@ export default function Home() {
 
           {/* Hero Heading */}
           <h1 className={styles.heroTitle}>
-            WE CREATE <br />
+            Engineering Intelligent<br />
             <TypewriterHeading 
               words={[
-                "Feelings.", 
-                "Experiences.", 
-                "Design.", 
-                "Clarity.", 
-                "Connection.", 
-                "Simplicity.", 
-                "Depth."
+                "Businesses.", 
+                "Systems.", 
+                "Pipelines.", 
+                "Products.", 
+                "Brands.", 
+                "Operations.", 
+                "Futures."
               ]} 
             />
           </h1>
 
           {/* Subtitle */}
           <p className={styles.heroSubtitle}>
-            We are a digital product agency that crafts immersive digital experiences for ambitious brands.
+            We combine AI, automation, software engineering, branding, accounting, and digital strategy to build systems that help businesses scale.
           </p>
 
           {/* Explore Circular Button */}
@@ -86,6 +87,9 @@ export default function Home() {
 
       {/* 4.5 Kinetic Word Marquee */}
       <WordMarquee />
+
+      {/* 4.8 What We Build — Ecosystem overview with tabbed detail panel */}
+      <WhatWeBuild />
 
       {/* 5. Services — Scroll-driven stages with physics bubbles */}
       <ServicesSection />

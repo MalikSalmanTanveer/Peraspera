@@ -11,7 +11,7 @@ import * as THREE from 'three';
 const COLORS = {
   bg: '#0A0A0A',
   wire: '#F5F5F5',
-  accent: '#FF6B35', // Match Peraspera orange accent color
+  accent: '#FFCC00', // Per Aspera primary yellow accent color
   muted: '#6B6B6B',
 };
 

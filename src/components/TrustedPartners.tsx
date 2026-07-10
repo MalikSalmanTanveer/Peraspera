@@ -104,7 +104,7 @@ export default function TrustedPartners() {
           bottom: 0,
           pointerEvents: "none",
           background: isInView
-            ? `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 107, 53, 0.04), transparent 60%)`
+            ? `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 204, 0, 0.04), transparent 60%)`
             : "none",
           transition: "background 0.3s ease",
           zIndex: 0,
@@ -134,7 +134,7 @@ export default function TrustedPartners() {
           position: absolute;
           inset: 0;
           border-radius: 12px;
-          background: linear-gradient(135deg, rgba(255, 107, 53, 0.08), transparent 60%);
+          background: linear-gradient(135deg, rgba(255, 204, 0, 0.08), transparent 60%);
           opacity: 0;
           transition: opacity 0.4s ease;
         }
@@ -143,9 +143,9 @@ export default function TrustedPartners() {
         }
         .brand-card:hover {
           background: rgba(255, 255, 255, 0.06);
-          border-color: rgba(255, 107, 53, 0.4);
+          border-color: rgba(255, 204, 0, 0.4);
           transform: translateY(-4px) scale(1.03);
-          box-shadow: 0 12px 40px rgba(255, 107, 53, 0.12), 0 0 0 1px rgba(255, 107, 53, 0.15);
+          box-shadow: 0 12px 40px rgba(255, 204, 0, 0.12), 0 0 0 1px rgba(255, 204, 0, 0.15);
         }
         .brand-logo {
           max-width: 100%;
@@ -168,7 +168,7 @@ export default function TrustedPartners() {
           font-family: var(--font-mono);
           font-size: 0.7rem;
           font-weight: 500;
-          color: #FF6B35;
+          color: #FFCC00;
           letter-spacing: 0.05em;
           white-space: nowrap;
           opacity: 0;
@@ -220,7 +220,7 @@ export default function TrustedPartners() {
             fontFamily: "var(--font-mono)",
             fontSize: "0.875rem",
             fontWeight: 500,
-            color: "#FF6B35",
+            color: "#FFCC00",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             marginBottom: "16px",
@@ -256,8 +256,8 @@ export default function TrustedPartners() {
             gap: 8,
             padding: "8px 20px",
             borderRadius: "999px",
-            border: "1px solid rgba(255, 107, 53, 0.2)",
-            background: "rgba(255, 107, 53, 0.05)",
+            border: "1px solid rgba(255, 204, 0, 0.2)",
+            background: "rgba(255, 204, 0, 0.05)",
           }}
         >
           <span
@@ -265,7 +265,7 @@ export default function TrustedPartners() {
               fontFamily: "var(--font-display)",
               fontSize: "1.5rem",
               fontWeight: 800,
-              color: "#FF6B35",
+              color: "#FFCC00",
             }}
           >
             {count}+

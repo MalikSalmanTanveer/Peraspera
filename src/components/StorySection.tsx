@@ -70,7 +70,7 @@ function StageBlock({ stage, index, total, scrollYProgress }: StageBlockProps) {
           fontFamily: "var(--font-mono)",
           fontSize: "0.875rem",
           fontWeight: 500,
-          color: "#FFA94D",
+          color: "#FFCC00",
           marginBottom: 16,
           letterSpacing: "0.05em",
         }}
@@ -144,7 +144,7 @@ export default function StorySection() {
           }}
         >
           <div style={{ position: "absolute", inset: 0, background: "rgba(107,107,107,0.25)" }} />
-          <motion.div style={{ width: "100%", height: progressHeight, background: "#FFA94D" }} />
+          <motion.div style={{ width: "100%", height: progressHeight, background: "#FFCC00" }} />
         </div>
 
         <div

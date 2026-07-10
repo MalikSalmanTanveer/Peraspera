@@ -2,7 +2,7 @@
 
 :root {
   /* Brand Theme Colors */
-  --primary: #FF6B35;
+  --primary: #FFCC00;
   --secondary: #4A4E69;
   
   --background-light: #F8F9FA;
@@ -103,7 +103,7 @@ a {
 .cursor-outline {
   width: 40px;
   height: 40px;
-  border: 2px solid rgba(255, 107, 53, 0.5);
+  border: 2px solid rgba(255, 204, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
@@ -220,4 +220,9 @@ div::-webkit-scrollbar {
 @keyframes marqueeRight {
   0% { transform: translateX(-50%); }
   100% { transform: translateX(0%); }
+}
+
+@keyframes circuitFlow {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
 }
