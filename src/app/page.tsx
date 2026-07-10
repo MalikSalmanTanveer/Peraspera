@@ -4,8 +4,7 @@ import CustomCursor from "@/components/CustomCursor";
 import HeroBackground from "@/components/HeroBackground";
 import TypewriterHeading from "@/components/TypewriterHeading";
 import WordMarquee from "@/components/WordMarquee";
-import WhatWeBuild from "@/components/WhatWeBuild";
-import PerAsperaCore from "@/components/PerAsperaCore";
+import EcosystemIndex from "@/components/EcosystemIndex";
 import ServicesSection from "@/components/ServicesSection";
 import FeaturedWorks from "@/components/FeaturedWorks";
 import TrustedPartners from "@/components/TrustedPartners";
@@ -89,11 +88,8 @@ export default function Home() {
       {/* 4.5 Kinetic Word Marquee */}
       <WordMarquee />
 
-      {/* 4.8 What We Build — Intelligence Core ecosystem */}
-      <WhatWeBuild />
-
-      {/* 4.9 Per Aspera Core — One core, six connected services */}
-      <PerAsperaCore />
+      {/* 4.8 Ecosystem — Editorial index of nine disciplines */}
+      <EcosystemIndex />
 
       {/* 5. Services — Scroll-driven stages with physics bubbles */}
       <ServicesSection />
