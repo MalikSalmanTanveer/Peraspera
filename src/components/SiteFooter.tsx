@@ -53,7 +53,7 @@ const LINK_COLUMNS = [
   {
     label: "Company",
     links: [
-      { label: "About", href: "#ecosystem" },
+      { label: "About", href: "#about" },
       { label: "Careers", href: "#contact" },
       { label: "Contact", href: "#contact" },
       { label: "Press", href: "#contact" },

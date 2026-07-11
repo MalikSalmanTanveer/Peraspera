@@ -5,6 +5,7 @@ import HeroBackground from "@/components/HeroBackground";
 import TypewriterHeading from "@/components/TypewriterHeading";
 import WordMarquee from "@/components/WordMarquee";
 import IntelligenceEngine from "@/components/IntelligenceEngine";
+import PhilosophySection from "@/components/PhilosophySection";
 import EcosystemIndex from "@/components/EcosystemIndex";
 import ComparisonSection from "@/components/ComparisonSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -90,6 +91,9 @@ export default function Home() {
 
       {/* 4.2 Signature — The Intelligence Engine */}
       <IntelligenceEngine />
+
+      {/* 4.3 Philosophy — Why Per Aspera exists */}
+      <PhilosophySection />
 
       {/* 4.5 Kinetic Word Marquee */}
       <WordMarquee />
