@@ -4,8 +4,8 @@ import CustomCursor from "@/components/CustomCursor";
 import HeroBackground from "@/components/HeroBackground";
 import TypewriterHeading from "@/components/TypewriterHeading";
 import WordMarquee from "@/components/WordMarquee";
+import IntelligenceEngine from "@/components/IntelligenceEngine";
 import EcosystemIndex from "@/components/EcosystemIndex";
-import PerAsperaCore from "@/components/PerAsperaCore";
 import ComparisonSection from "@/components/ComparisonSection";
 import ServicesSection from "@/components/ServicesSection";
 import FeaturedWorks from "@/components/FeaturedWorks";
@@ -78,7 +78,7 @@ export default function Home() {
           </p>
 
           {/* Explore Circular Button */}
-          <Link href="#work" className={styles.exploreBtn}>
+          <Link href="#engine" className={styles.exploreBtn}>
             <div className={styles.exploreBtnWipe} />
             <div className={styles.exploreInner}>
               <span className={`material-icons ${styles.exploreIcon}`}>arrow_downward</span>
@@ -88,14 +88,14 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 4.2 Signature — The Intelligence Engine */}
+      <IntelligenceEngine />
+
       {/* 4.5 Kinetic Word Marquee */}
       <WordMarquee />
 
       {/* 4.8 Ecosystem — Editorial index of nine disciplines */}
       <EcosystemIndex />
-
-      {/* 4.9 Per Aspera Core — One core, six connected services */}
-      <PerAsperaCore />
 
       {/* 4.95 Comparison — Typical agency vs Per Aspera */}
       <ComparisonSection />
