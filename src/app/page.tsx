@@ -4,7 +4,6 @@ import CustomCursor from "@/components/CustomCursor";
 import HeroBackground from "@/components/HeroBackground";
 import TypewriterHeading from "@/components/TypewriterHeading";
 import WordMarquee from "@/components/WordMarquee";
-import IntelligenceEngine from "@/components/IntelligenceEngine";
 import PhilosophySection from "@/components/PhilosophySection";
 import EcosystemIndex from "@/components/EcosystemIndex";
 import PerAsperaCore from "@/components/PerAsperaCore";
@@ -80,7 +79,7 @@ export default function Home() {
           </p>
 
           {/* Explore Circular Button */}
-          <Link href="#engine" className={styles.exploreBtn}>
+          <Link href="#per-aspera-core" className={styles.exploreBtn}>
             <div className={styles.exploreBtnWipe} />
             <div className={styles.exploreInner}>
               <span className={`material-icons ${styles.exploreIcon}`}>arrow_downward</span>
@@ -89,9 +88,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
-      {/* 4.2 Signature — The Intelligence Engine */}
-      <IntelligenceEngine />
 
       {/* 4.3 Philosophy — Why Per Aspera exists */}
       <PhilosophySection />

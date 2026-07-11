@@ -17,7 +17,7 @@ const LINK_COLUMNS = [
   {
     label: "Products",
     links: [
-      { label: "SaaS Platforms", href: "#engine" },
+      { label: "SaaS Platforms", href: "#per-aspera-core" },
       { label: "Internal Tools", href: "#services" },
       { label: "Client Portals", href: "#services" },
       { label: "Dashboards", href: "#services" },
@@ -29,7 +29,7 @@ const LINK_COLUMNS = [
       { label: "AI Experiments", href: "#ecosystem" },
       { label: "Prototypes", href: "#services" },
       { label: "R&D", href: "#services" },
-      { label: "Innovation", href: "#engine" },
+      { label: "Innovation", href: "#per-aspera-core" },
     ],
   },
   {
