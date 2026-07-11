@@ -161,7 +161,7 @@ export default function PerAsperaCore() {
                   <motion.path
                     d={path}
                     fill="none"
-                    stroke={isActive ? "rgba(255,204,0,0.8)" : "rgba(255,204,0,0.25)"}
+                    stroke={isActive ? "rgba(245,149,49,0.8)" : "rgba(245,149,49,0.25)"}
                     strokeWidth={isActive ? "0.38" : "0.26"}
                     strokeLinecap="round"
                     filter={isActive ? "url(#coreLineGlow)" : undefined}
@@ -176,7 +176,7 @@ export default function PerAsperaCore() {
                       <motion.path
                         d={path}
                         fill="none"
-                        stroke="rgba(255,204,0,0.9)"
+                        stroke="rgba(245,149,49,0.9)"
                         strokeWidth="0.45"
                         strokeDasharray="1.5 3"
                         strokeLinecap="round"
@@ -184,7 +184,7 @@ export default function PerAsperaCore() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                       />
-                      <circle r="0.55" fill="#FFCC00">
+                      <circle r="0.55" fill="#F59531">
                         <animateMotion dur="1.4s" repeatCount="indefinite" path={path} />
                       </circle>
                     </>
@@ -194,7 +194,7 @@ export default function PerAsperaCore() {
                     cx={hubNode.x}
                     cy={hubNode.y}
                     r="0.7"
-                    fill={isActive ? "#FFCC00" : "rgba(255,204,0,0.5)"}
+                    fill={isActive ? "#F59531" : "rgba(245,149,49,0.5)"}
                     initial={{ scale: 0 }}
                     animate={isInView ? { scale: 1 } : {}}
                     transition={{ delay: 0.5 + i * 0.08, type: "spring", stiffness: 300 }}

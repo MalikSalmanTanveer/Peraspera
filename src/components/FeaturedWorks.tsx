@@ -78,7 +78,7 @@ export default function FeaturedWorks() {
           transform: "translateX(-50%)",
           width: "80%",
           height: "60%",
-          background: "radial-gradient(ellipse at center, rgba(255, 204, 0, 0.03), transparent 70%)",
+          background: "radial-gradient(ellipse at center, rgba(245, 149, 49, 0.03), transparent 70%)",
           pointerEvents: "none",
           zIndex: 0,
         }}
@@ -92,7 +92,7 @@ export default function FeaturedWorks() {
               fontFamily: "var(--font-mono)",
               fontSize: "0.875rem",
               fontWeight: 500,
-              color: "#FFCC00",
+              color: "#F59531",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               marginBottom: "16px",
@@ -184,7 +184,7 @@ export default function FeaturedWorks() {
                   borderRadius: "20px",
                   padding: "24px",
                   boxShadow: isHovered
-                    ? "0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 204, 0, 0.25)"
+                    ? "0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(245, 149, 49, 0.25)"
                     : "0 15px 35px rgba(0, 0, 0, 0.6)",
                   cursor: "pointer",
                   display: "flex",
@@ -208,7 +208,7 @@ export default function FeaturedWorks() {
                     {[...Array(5)].map((_, i) => (
                       <span
                         key={i}
-                        style={{ color: "#FFCC00", fontSize: "1rem" }}
+                        style={{ color: "#F59531", fontSize: "1rem" }}
                       >
                         ★
                       </span>
@@ -242,7 +242,7 @@ export default function FeaturedWorks() {
                         width: "6px",
                         height: "6px",
                         borderRadius: "50%",
-                        background: "#FFCC00",
+                        background: "#F59531",
                       }}
                     />
                   </div>
@@ -318,7 +318,7 @@ export default function FeaturedWorks() {
                       fontFamily: "var(--font-display)",
                       fontSize: "0.8rem",
                       fontWeight: 500,
-                      color: "#FFCC00",
+                      color: "#F59531",
                       margin: 0,
                     }}
                   >

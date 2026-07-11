@@ -16,7 +16,7 @@
   transform: translateY(-50%);
   width: min(520px, 60vw);
   height: min(520px, 60vw);
-  background: radial-gradient(circle, rgba(255, 204, 0, 0.07) 0%, transparent 68%);
+  background: radial-gradient(circle, rgba(245, 149, 49, 0.07) 0%, transparent 68%);
   pointer-events: none;
 }
 
@@ -126,11 +126,11 @@
 }
 
 .cardPerAspera {
-  background: rgba(255, 204, 0, 0.03);
-  border: 1px solid rgba(255, 204, 0, 0.28);
+  background: rgba(245, 149, 49, 0.03);
+  border: 1px solid rgba(245, 149, 49, 0.28);
   box-shadow:
-    0 0 0 1px rgba(255, 204, 0, 0.06),
-    0 0 48px rgba(255, 204, 0, 0.08);
+    0 0 0 1px rgba(245, 149, 49, 0.06),
+    0 0 48px rgba(245, 149, 49, 0.08);
   animation: cardGlow 4s ease-in-out infinite;
 }
 
@@ -247,8 +247,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(255, 204, 0, 0.1);
-  border: 1px solid rgba(255, 204, 0, 0.25);
+  background: rgba(245, 149, 49, 0.1);
+  border: 1px solid rgba(245, 149, 49, 0.25);
   color: var(--primary);
   font-size: 0.85rem;
   margin-top: 1px;
@@ -256,8 +256,8 @@
 }
 
 .benefitItem:hover .benefitIcon {
-  background: rgba(255, 204, 0, 0.18);
-  box-shadow: 0 0 12px rgba(255, 204, 0, 0.25);
+  background: rgba(245, 149, 49, 0.18);
+  box-shadow: 0 0 12px rgba(245, 149, 49, 0.25);
 }
 
 .cardFootnote {
@@ -267,19 +267,19 @@
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 204, 0, 0.45);
+  color: rgba(245, 149, 49, 0.45);
 }
 
 @keyframes cardGlow {
   0%, 100% {
     box-shadow:
-      0 0 0 1px rgba(255, 204, 0, 0.06),
-      0 0 48px rgba(255, 204, 0, 0.08);
+      0 0 0 1px rgba(245, 149, 49, 0.06),
+      0 0 48px rgba(245, 149, 49, 0.08);
   }
   50% {
     box-shadow:
-      0 0 0 1px rgba(255, 204, 0, 0.12),
-      0 0 64px rgba(255, 204, 0, 0.14);
+      0 0 0 1px rgba(245, 149, 49, 0.12),
+      0 0 64px rgba(245, 149, 49, 0.14);
   }
 }
 

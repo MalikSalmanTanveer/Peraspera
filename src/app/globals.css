@@ -2,7 +2,11 @@
 
 :root {
   /* Brand Theme Colors */
-  --primary: #FFCC00;
+  --primary: #F59531;
+  --primary-rgb: 245, 149, 49;
+  --primary-dark: #C47320;
+  --primary-deep: #8A4A12;
+  --primary-light: #FFB56A;
   --secondary: #4A4E69;
   
   --background-light: #F8F9FA;
@@ -85,41 +89,7 @@ a {
   text-decoration: none;
 }
 
-/* Custom Cursor */
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--primary);
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  z-index: 9999;
-  pointer-events: none;
-  display: none;
-}
-
-.cursor-outline {
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(255, 204, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  z-index: 9998;
-  pointer-events: none;
-  display: none;
-  transition: width 0.3s ease-out, height 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
-}
-
-@media (min-width: 768px) {
-  .cursor-dot, .cursor-outline {
-    display: block;
-  }
-}
+/* Custom Cursor — layered arrow handled in CustomCursor component */
 
 /* Glassmorphism */
 .glass {

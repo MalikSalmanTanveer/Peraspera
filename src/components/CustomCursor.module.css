@@ -1,0 +1,40 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  will-change: transform;
+  display: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 6px 12px rgba(138, 74, 18, 0.25));
+  transition: filter 0.2s ease;
+}
+
+.cursorHovered {
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 10px 20px rgba(245, 149, 49, 0.35));
+}
+
+.svg {
+  display: block;
+  width: 36px;
+  height: 36px;
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cursorHovered .svg {
+  transform: scale(1.15) rotate(-4deg);
+}
+
+@media (min-width: 768px) {
+  .cursor {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svg {
+    transition: none;
+  }
+}

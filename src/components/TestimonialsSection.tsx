@@ -135,12 +135,12 @@ export default function TestimonialsSection() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
             gap: "60px",
-            background: "rgba(255, 204, 0, 0.04)",
-            border: "1px solid rgba(255, 204, 0, 0.15)",
+            background: "rgba(245, 149, 49, 0.04)",
+            border: "1px solid rgba(245, 149, 49, 0.15)",
             borderRadius: "24px",
             padding: "60px 48px",
             backdropFilter: "blur(16px)",
-            boxShadow: "0 30px 80px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(255, 204, 0, 0.02)",
+            boxShadow: "0 30px 80px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(245, 149, 49, 0.02)",
             boxSizing: "border-box",
             position: "relative",
           }}
@@ -160,7 +160,7 @@ export default function TestimonialsSection() {
                 fontFamily: "var(--font-display)",
                 fontSize: "7rem",
                 fontWeight: 900,
-                color: "#FFCC00",
+                color: "#F59531",
                 lineHeight: 0.1,
                 marginBottom: "20px",
                 display: "block",
@@ -174,7 +174,7 @@ export default function TestimonialsSection() {
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.875rem",
                 fontWeight: 500,
-                color: "#FFCC00",
+                color: "#F59531",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
                 marginBottom: "16px",
@@ -215,7 +215,7 @@ export default function TestimonialsSection() {
               <button
                 onClick={handleNext}
                 style={{
-                  background: "#FFCC00",
+                  background: "#F59531",
                   border: "none",
                   borderRadius: "50%",
                   width: "56px",
@@ -225,18 +225,18 @@ export default function TestimonialsSection() {
                   justifyContent: "center",
                   color: "#FFFFFF",
                   cursor: "pointer",
-                  boxShadow: "0 8px 24px rgba(255, 204, 0, 0.35)",
+                  boxShadow: "0 8px 24px rgba(245, 149, 49, 0.35)",
                   transition: "background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = "#FFD700";
                   e.currentTarget.style.transform = "scale(1.05)";
-                  e.currentTarget.style.boxShadow = "0 12px 30px rgba(255, 204, 0, 0.45)";
+                  e.currentTarget.style.boxShadow = "0 12px 30px rgba(245, 149, 49, 0.45)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#FFCC00";
+                  e.currentTarget.style.background = "#F59531";
                   e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow = "0 8px 24px rgba(255, 204, 0, 0.35)";
+                  e.currentTarget.style.boxShadow = "0 8px 24px rgba(245, 149, 49, 0.35)";
                 }}
               >
                 <span className="material-icons" style={{ fontSize: "1.6rem" }}>
@@ -338,7 +338,7 @@ export default function TestimonialsSection() {
                         {[...Array(review.rating)].map((_, starIdx) => (
                           <span
                             key={starIdx}
-                            style={{ color: "#FFCC00", fontSize: "1.1rem" }}
+                            style={{ color: "#F59531", fontSize: "1.1rem" }}
                           >
                             ★
                           </span>
@@ -349,7 +349,7 @@ export default function TestimonialsSection() {
                           fontFamily: "var(--font-mono)",
                           fontSize: "0.68rem",
                           fontWeight: 700,
-                          color: "#FFCC00",
+                          color: "#F59531",
                           letterSpacing: "0.05em",
                           textTransform: "uppercase",
                         }}
@@ -381,7 +381,7 @@ export default function TestimonialsSection() {
                           width: "44px",
                           height: "44px",
                           borderRadius: "50%",
-                          background: "#FFCC00",
+                          background: "#F59531",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -417,7 +417,7 @@ export default function TestimonialsSection() {
                             userSelect: "none",
                           }}
                         >
-                          {review.role} <span style={{ color: "#FFCC00" }}>{review.company}</span>
+                          {review.role} <span style={{ color: "#F59531" }}>{review.company}</span>
                         </p>
                       </div>
                     </div>

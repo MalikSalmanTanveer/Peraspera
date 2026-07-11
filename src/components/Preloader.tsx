@@ -80,7 +80,7 @@ export default function Preloader() {
     >
       <div
         style={{
-          color: "#FFCC00",
+          color: "#F59531",
           fontFamily: "var(--font-mono)",
           fontSize: "clamp(5rem, 15vw, 8rem)",
           fontWeight: "bold",
@@ -131,7 +131,7 @@ export default function Preloader() {
           left: 0,
           width: "100%",
           height: wipeActive ? "100%" : "0%",
-          backgroundColor: "#FFCC00",
+          backgroundColor: "#F59531",
           zIndex: 5,
           transition: "height 0.6s cubic-bezier(0.77, 0, 0.175, 1)",
         }}

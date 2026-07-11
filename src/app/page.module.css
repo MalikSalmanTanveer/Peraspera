@@ -34,12 +34,12 @@
   width: auto;
   object-fit: contain;
   display: block;
-  filter: brightness(1.25) drop-shadow(0 0 8px rgba(255, 204, 0, 0.35));
+  filter: brightness(1.25) drop-shadow(0 0 8px rgba(245, 149, 49, 0.35));
   transition: filter 0.3s ease;
 }
 
 .logoImage:hover {
-  filter: brightness(1.4) drop-shadow(0 0 14px rgba(255, 204, 0, 0.6));
+  filter: brightness(1.4) drop-shadow(0 0 14px rgba(245, 149, 49, 0.6));
 }
 
 .logoDot {
@@ -319,14 +319,14 @@
 }
 
 .card:hover {
-  border-color: rgba(255, 204, 0, 0.5);
+  border-color: rgba(245, 149, 49, 0.5);
 }
 
 .iconWrapper {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: rgba(255, 204, 0, 0.2);
+  background-color: rgba(245, 149, 49, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;

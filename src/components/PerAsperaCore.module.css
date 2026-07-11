@@ -11,7 +11,7 @@
   position: absolute;
   inset: 0;
   opacity: 0.35;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30h20M40 30h20M30 0v20M30 40v20' stroke='rgba(255,204,0,0.06)' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30h20M40 30h20M30 0v20M30 40v20' stroke='rgba(245,149,49,0.06)' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
   pointer-events: none;
 }
 
@@ -22,7 +22,7 @@
   transform: translate(-50%, -50%);
   width: min(700px, 85vw);
   height: min(700px, 85vw);
-  background: radial-gradient(circle, rgba(255, 204, 0, 0.09) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(245, 149, 49, 0.09) 0%, transparent 65%);
   pointer-events: none;
   animation: orbPulse 5s ease-in-out infinite;
 }
@@ -39,8 +39,8 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: rgba(255, 204, 0, 0.5);
-  box-shadow: 0 0 6px rgba(255, 204, 0, 0.6);
+  background: rgba(245, 149, 49, 0.5);
+  box-shadow: 0 0 6px rgba(245, 149, 49, 0.6);
   animation: particleDrift linear infinite;
 }
 
@@ -122,15 +122,15 @@
   width: 148px;
   height: 148px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 204, 0, 0.55);
+  border: 2px solid rgba(245, 149, 49, 0.55);
   box-shadow:
-    0 0 0 4px rgba(255, 204, 0, 0.08),
-    0 0 40px rgba(255, 204, 0, 0.25),
-    inset 0 0 30px rgba(255, 204, 0, 0.06);
+    0 0 0 4px rgba(245, 149, 49, 0.08),
+    0 0 40px rgba(245, 149, 49, 0.25),
+    inset 0 0 30px rgba(245, 149, 49, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(255, 204, 0, 0.06) 0%, rgba(8, 8, 8, 0.95) 70%);
+  background: radial-gradient(circle, rgba(245, 149, 49, 0.06) 0%, rgba(8, 8, 8, 0.95) 70%);
   animation: corePulse 3s ease-in-out infinite;
 }
 
@@ -139,7 +139,7 @@
   position: absolute;
   inset: -8px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 204, 0, 0.15);
+  border: 1px solid rgba(245, 149, 49, 0.15);
   animation: ringExpand 3s ease-in-out infinite;
 }
 
@@ -147,7 +147,7 @@
   width: 80px;
   height: 80px;
   object-fit: contain;
-  filter: brightness(1.25) drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
+  filter: brightness(1.25) drop-shadow(0 0 10px rgba(245, 149, 49, 0.4));
   animation: logoFloat 4.5s ease-in-out infinite;
 }
 
@@ -164,7 +164,7 @@
   padding: 16px 18px;
   width: 230px;
   background: rgba(12, 12, 12, 0.88);
-  border: 1px solid rgba(255, 204, 0, 0.14);
+  border: 1px solid rgba(245, 149, 49, 0.14);
   border-radius: 14px;
   backdrop-filter: blur(12px);
   cursor: pointer;
@@ -174,10 +174,10 @@
 
 .card:hover,
 .cardActive {
-  border-color: rgba(255, 204, 0, 0.5);
+  border-color: rgba(245, 149, 49, 0.5);
   box-shadow:
-    0 0 0 1px rgba(255, 204, 0, 0.1),
-    0 0 36px rgba(255, 204, 0, 0.18);
+    0 0 0 1px rgba(245, 149, 49, 0.1),
+    0 0 36px rgba(245, 149, 49, 0.18);
   transform: translateY(-3px);
 }
 
@@ -189,16 +189,16 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(255, 204, 0, 0.1);
-  border: 1px solid rgba(255, 204, 0, 0.25);
+  background: rgba(245, 149, 49, 0.1);
+  border: 1px solid rgba(245, 149, 49, 0.25);
   color: var(--primary);
   transition: box-shadow 0.35s ease, background 0.35s ease;
 }
 
 .cardActive .cardIconWrap,
 .card:hover .cardIconWrap {
-  background: rgba(255, 204, 0, 0.18);
-  box-shadow: 0 0 16px rgba(255, 204, 0, 0.3);
+  background: rgba(245, 149, 49, 0.18);
+  box-shadow: 0 0 16px rgba(245, 149, 49, 0.3);
 }
 
 .cardIconWrap .material-icons {
@@ -241,8 +241,8 @@
 }
 
 @keyframes corePulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(255,204,0,0.08), 0 0 40px rgba(255,204,0,0.2), inset 0 0 30px rgba(255,204,0,0.06); }
-  50% { box-shadow: 0 0 0 6px rgba(255,204,0,0.12), 0 0 60px rgba(255,204,0,0.35), inset 0 0 40px rgba(255,204,0,0.1); }
+  0%, 100% { box-shadow: 0 0 0 4px rgba(245,149,49,0.08), 0 0 40px rgba(245,149,49,0.2), inset 0 0 30px rgba(245,149,49,0.06); }
+  50% { box-shadow: 0 0 0 6px rgba(245,149,49,0.12), 0 0 60px rgba(245,149,49,0.35), inset 0 0 40px rgba(245,149,49,0.1); }
 }
 
 @keyframes ringExpand {
