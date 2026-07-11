@@ -1,0 +1,47 @@
+{
+  "duration": {
+    "fast": "150ms",
+    "normal": "200ms",
+    "medium": "250ms",
+    "slow": "280ms",
+    "card": "300ms",
+    "image": "500ms",
+    "image-slow": "600ms",
+    "reveal": "700ms",
+    "marquee-left": "48s",
+    "marquee-left-slow": "58s",
+    "marquee-right": "48s",
+    "marquee-innov": "38s",
+    "marquee-testimonial": "44s"
+  },
+  "easing": {
+    "default": "ease",
+    "smooth": "cubic-bezier(0.23, 1, 0.32, 1)",
+    "linear": "linear"
+  },
+  "keyframes": {
+    "scrollLeft": {
+      "0%": { "transform": "translate3d(0, 0, 0)" },
+      "100%": { "transform": "translate3d(-50%, 0, 0)" }
+    },
+    "scrollRight": {
+      "0%": { "transform": "translate3d(-50%, 0, 0)" },
+      "100%": { "transform": "translate3d(0, 0, 0)" }
+    }
+  },
+  "transitions": {
+    "button": "background 250ms, color 250ms, transform 250ms, border-color 250ms",
+    "card": "transform 300ms, box-shadow 300ms",
+    "nav": "height 300ms, border-color 300ms, box-shadow 300ms, top 300ms, transform 300ms, width 300ms, border-radius 300ms, background 300ms, padding 300ms",
+    "mega": "opacity 280ms cubic-bezier(0.23, 1, 0.32, 1), transform 280ms cubic-bezier(0.23, 1, 0.32, 1)",
+    "reveal": "opacity 700ms ease, transform 700ms ease",
+    "wa-panel": "opacity 280ms ease, transform 280ms ease"
+  },
+  "hover": {
+    "lift-sm": "-2px",
+    "lift-md": "-6px",
+    "lift-lg": "-7px",
+    "scale-image": "1.08",
+    "scale-image-sm": "1.06"
+  }
+}

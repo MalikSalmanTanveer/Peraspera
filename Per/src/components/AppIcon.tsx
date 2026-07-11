@@ -1,0 +1,100 @@
+import {
+  Activity,
+  AppWindow,
+  Bot,
+  Box,
+  Brain,
+  Briefcase,
+  Building2,
+  ChevronUp,
+  Clapperboard,
+  Cloud,
+  Cpu,
+  FileText,
+  FlaskConical,
+  Globe,
+  GraduationCap,
+  HeartPulse,
+  Hexagon,
+  Image,
+  Layers,
+  LayoutGrid,
+  MapPin,
+  Megaphone,
+  MonitorSmartphone,
+  Package,
+  Palette,
+  PenTool,
+  Rocket,
+  Scale,
+  Search,
+  Server,
+  ShieldCheck,
+  ShoppingBag,
+  ShoppingCart,
+  Smartphone,
+  Sparkles,
+  Truck,
+  UtensilsCrossed,
+  Video,
+  Wrench,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react';
+
+const ICONS = {
+  Activity,
+  AppWindow,
+  Bot,
+  Box,
+  Brain,
+  Briefcase,
+  Building2,
+  ChevronUp,
+  Clapperboard,
+  Cloud,
+  Cpu,
+  FileText,
+  FlaskConical,
+  Globe,
+  GraduationCap,
+  HeartPulse,
+  Hexagon,
+  Image,
+  Layers,
+  LayoutGrid,
+  MapPin,
+  Megaphone,
+  MonitorSmartphone,
+  Package,
+  Palette,
+  PenTool,
+  Rocket,
+  Scale,
+  Search,
+  Server,
+  ShieldCheck,
+  ShoppingBag,
+  ShoppingCart,
+  Smartphone,
+  Sparkles,
+  Truck,
+  UtensilsCrossed,
+  Video,
+  Wrench,
+  Zap,
+} as const satisfies Record<string, LucideIcon>;
+
+export type AppIconName = keyof typeof ICONS;
+
+interface AppIconProps {
+  name: AppIconName;
+  className?: string;
+  strokeWidth?: number;
+}
+
+export function AppIcon({ name, className = 'w-4 h-4', strokeWidth = 2 }: AppIconProps) {
+  const Icon = ICONS[name];
+  if (!Icon) return null;
+  return <Icon className={className} strokeWidth={strokeWidth} aria-hidden="true" />;
+}
