@@ -1,0 +1,332 @@
+/* ComparisonSection — Typical Agency vs Per Aspera */
+
+.section {
+  position: relative;
+  width: 100%;
+  background: #080808;
+  padding: 110px 0 100px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.bgGlow {
+  position: absolute;
+  top: 50%;
+  right: 18%;
+  transform: translateY(-50%);
+  width: min(520px, 60vw);
+  height: min(520px, 60vw);
+  background: radial-gradient(circle, rgba(255, 204, 0, 0.07) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: #f5f5f5;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.titleAccent {
+  color: var(--primary);
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  color: rgba(255, 255, 255, 0.42);
+  margin-top: 14px;
+  line-height: 1.65;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+}
+
+/* VS divider */
+.divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  position: relative;
+}
+
+.dividerLine {
+  flex: 1;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.12) 20%,
+    rgba(255, 255, 255, 0.12) 80%,
+    transparent
+  );
+}
+
+.dividerBadge {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.25);
+  padding: 10px 0;
+  flex-shrink: 0;
+}
+
+/* Cards */
+.card {
+  position: relative;
+  padding: 36px 32px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+}
+
+.cardTypical {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  opacity: 0.75;
+}
+
+.cardPerAspera {
+  background: rgba(255, 204, 0, 0.03);
+  border: 1px solid rgba(255, 204, 0, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(255, 204, 0, 0.06),
+    0 0 48px rgba(255, 204, 0, 0.08);
+  animation: cardGlow 4s ease-in-out infinite;
+}
+
+.cardLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.cardTypical .cardLabel {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.cardPerAspera .cardLabel {
+  color: var(--primary);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 28px;
+  letter-spacing: -0.02em;
+}
+
+.cardTypical .cardTitle {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.cardPerAspera .cardTitle {
+  color: #f5f5f5;
+}
+
+/* Typical list */
+.typicalList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.typicalItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.typicalIcon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.9rem;
+}
+
+.typicalFootnote {
+  margin-top: auto;
+  padding-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+/* Per Aspera list */
+.benefitList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.benefitItem:hover {
+  color: #f5f5f5;
+  transform: translateX(4px);
+}
+
+.benefitIcon {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 204, 0, 0.1);
+  border: 1px solid rgba(255, 204, 0, 0.25);
+  color: var(--primary);
+  font-size: 0.85rem;
+  margin-top: 1px;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.benefitItem:hover .benefitIcon {
+  background: rgba(255, 204, 0, 0.18);
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.25);
+}
+
+.cardFootnote {
+  margin-top: auto;
+  padding-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 204, 0, 0.45);
+}
+
+@keyframes cardGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(255, 204, 0, 0.06),
+      0 0 48px rgba(255, 204, 0, 0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(255, 204, 0, 0.12),
+      0 0 64px rgba(255, 204, 0, 0.14);
+  }
+}
+
+@media (max-width: 820px) {
+  .section {
+    padding: 80px 0 70px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .divider {
+    flex-direction: row;
+    padding: 20px 0;
+  }
+
+  .dividerLine {
+    flex: 1;
+    width: auto;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.12) 20%,
+      rgba(255, 255, 255, 0.12) 80%,
+      transparent
+    );
+  }
+
+  .dividerBadge {
+    padding: 0 14px;
+  }
+
+  .card {
+    min-height: auto;
+    padding: 28px 24px;
+  }
+
+  .cardTypical {
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: 520px) {
+  .container {
+    padding: 0 20px;
+  }
+}

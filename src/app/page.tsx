@@ -6,6 +6,7 @@ import TypewriterHeading from "@/components/TypewriterHeading";
 import WordMarquee from "@/components/WordMarquee";
 import EcosystemIndex from "@/components/EcosystemIndex";
 import PerAsperaCore from "@/components/PerAsperaCore";
+import ComparisonSection from "@/components/ComparisonSection";
 import ServicesSection from "@/components/ServicesSection";
 import FeaturedWorks from "@/components/FeaturedWorks";
 import TrustedPartners from "@/components/TrustedPartners";
@@ -94,6 +95,9 @@ export default function Home() {
 
       {/* 4.9 Per Aspera Core — One core, six connected services */}
       <PerAsperaCore />
+
+      {/* 4.95 Comparison — Typical agency vs Per Aspera */}
+      <ComparisonSection />
 
       {/* 5. Services — Scroll-driven stages with physics bubbles */}
       <ServicesSection />
