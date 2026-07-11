@@ -1,0 +1,417 @@
+/* SiteFooter — Command Center */
+
+.footer {
+  position: relative;
+  background: #060606;
+  border-top: 1px solid rgba(255, 204, 0, 0.12);
+  padding-top: 72px;
+  overflow: hidden;
+}
+
+.gridTexture {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 204, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 204, 0, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── Top bar: brand + status ── */
+.topBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 48px;
+}
+
+.brandBlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(1.2) drop-shadow(0 0 8px rgba(255, 204, 0, 0.3));
+}
+
+.brandMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.commandLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.brandStatement {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.55;
+  max-width: 340px;
+  margin: 0;
+  font-style: italic;
+}
+
+.statusPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
+  animation: statusPulse 2.5s ease-in-out infinite;
+}
+
+.contactMail {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f5f5f5;
+  border-bottom: 1px solid rgba(255, 204, 0, 0.4);
+  padding-bottom: 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.contactMail:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* ── Link grid ── */
+.linkGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 32px 24px;
+  margin-bottom: 48px;
+}
+
+.colLabel {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 204, 0, 0.55);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.colLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.colLink {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+}
+
+.colLink:hover {
+  color: var(--primary);
+  transform: translateX(3px);
+}
+
+/* ── Bottom row: newsletter + socials ── */
+.bottomRow {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 40px;
+  padding: 40px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 32px;
+}
+
+.newsletterBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.newsletterTitle {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.newsletterDesc {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 0;
+  margin-top: 4px;
+  max-width: 420px;
+}
+
+.newsletterInput {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  color: #f5f5f5;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  outline: none;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.newsletterInput::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.newsletterInput:focus {
+  border-color: rgba(255, 204, 0, 0.4);
+  background: rgba(255, 204, 0, 0.03);
+}
+
+.newsletterBtn {
+  padding: 12px 20px;
+  background: rgba(255, 204, 0, 0.12);
+  border: 1px solid rgba(255, 204, 0, 0.35);
+  border-radius: 0 8px 8px 0;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+
+.newsletterBtn:hover {
+  background: rgba(255, 204, 0, 0.2);
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.15);
+}
+
+.newsletterSuccess {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--primary);
+  letter-spacing: 0.08em;
+}
+
+.socialBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.socialTitle {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.socialGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.socialLink:hover {
+  border-color: rgba(255, 204, 0, 0.35);
+  color: var(--primary);
+  background: rgba(255, 204, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.socialLink .material-icons {
+  font-size: 1rem;
+}
+
+/* ── Legal bar ── */
+.legalBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 48px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.28);
+  letter-spacing: 0.06em;
+}
+
+.legalLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.legalLink {
+  transition: color 0.2s ease;
+}
+
+.legalLink:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ── Watermark ── */
+.watermark {
+  width: 100%;
+  text-align: center;
+  transform: translateY(28%);
+  padding-bottom: 48px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.watermarkText {
+  font-size: 15vw;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.025);
+}
+
+.watermarkAccent {
+  color: rgba(255, 204, 0, 0.12);
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(255, 204, 0, 0.6); }
+  50% { opacity: 0.6; box-shadow: 0 0 4px rgba(255, 204, 0, 0.3); }
+}
+
+@media (max-width: 1024px) {
+  .linkGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .statusPanel {
+    align-items: flex-start;
+  }
+
+  .linkGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 16px;
+  }
+
+  .bottomRow {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .newsletterForm {
+    max-width: 100%;
+  }
+
+  .legalBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 420px) {
+  .linkGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletterForm {
+    flex-direction: column;
+  }
+
+  .newsletterInput {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+  }
+
+  .newsletterBtn {
+    border-radius: 8px;
+    width: 100%;
+  }
+}

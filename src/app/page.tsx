@@ -11,6 +11,7 @@ import ServicesSection from "@/components/ServicesSection";
 import FeaturedWorks from "@/components/FeaturedWorks";
 import TrustedPartners from "@/components/TrustedPartners";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import SiteFooter from "@/components/SiteFooter";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -111,41 +112,8 @@ export default function Home() {
       {/* 6.5 Testimonials — Interactive card shuffle with review.png background */}
       <TestimonialsSection />
 
-      {/* 7. Footer Section */}
-      <footer id="contact" className={styles.footer}>
-        <div className="container">
-          <div className={styles.footerGrid}>
-            <div>
-              <h3 className={styles.footerCTA}>Ready to start?</h3>
-              <a className={styles.footerMail} href="mailto:hello@peraspera.com">
-                hello@peraspera.com
-              </a>
-            </div>
-            
-            <div className={styles.footerLinks}>
-              <Link href="#" className={styles.footerLink}>Instagram</Link>
-              <Link href="#" className={styles.footerLink}>Twitter</Link>
-              <Link href="#" className={styles.footerLink}>LinkedIn</Link>
-              <Link href="#" className={styles.footerLink}>Dribbble</Link>
-            </div>
-          </div>
-
-          <div className={styles.footerBottom}>
-            <p>&copy; {new Date().getFullYear()} Per Aspera Agency.</p>
-            <div className={styles.footerBottomLinks}>
-              <Link href="#" className={styles.footerSubLink}>Privacy</Link>
-              <Link href="#" className={styles.footerSubLink}>Terms</Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Huge Heading Ticker overlay at the bottom */}
-        <div className={styles.footerHugeText}>
-          <h1 className={styles.hugeHeading}>
-            PER ASPERA<span className={styles.orangeLetter}>S</span>
-          </h1>
-        </div>
-      </footer>
+      {/* 7. Footer — Command Center */}
+      <SiteFooter />
     </>
   );
 }
