@@ -236,8 +236,8 @@ export default function IntelligenceEngine() {
               return (
                 <g key={node.id}>
                   <motion.line
-                    x1={CENTER.x}
-                    y1={CENTER.y}
+                    x1={hubEdge.x}
+                    y1={hubEdge.y}
                     x2={lineEnd.x}
                     y2={lineEnd.y}
                     stroke={
@@ -258,8 +258,8 @@ export default function IntelligenceEngine() {
                   {isActive && (
                     <>
                       <line
-                        x1={CENTER.x}
-                        y1={CENTER.y}
+                        x1={hubEdge.x}
+                        y1={hubEdge.y}
                         x2={lineEnd.x}
                         y2={lineEnd.y}
                         stroke="rgba(255,204,0,0.8)"
@@ -272,7 +272,7 @@ export default function IntelligenceEngine() {
                         <animateMotion
                           dur="1.4s"
                           repeatCount="indefinite"
-                          path={`M ${CENTER.x} ${CENTER.y} L ${lineEnd.x} ${lineEnd.y}`}
+                          path={`M ${hubEdge.x} ${hubEdge.y} L ${lineEnd.x} ${lineEnd.y}`}
                         />
                       </circle>
                     </>

@@ -7,6 +7,7 @@ import WordMarquee from "@/components/WordMarquee";
 import IntelligenceEngine from "@/components/IntelligenceEngine";
 import PhilosophySection from "@/components/PhilosophySection";
 import EcosystemIndex from "@/components/EcosystemIndex";
+import PerAsperaCore from "@/components/PerAsperaCore";
 import ComparisonSection from "@/components/ComparisonSection";
 import ServicesSection from "@/components/ServicesSection";
 import FeaturedWorks from "@/components/FeaturedWorks";
@@ -100,6 +101,9 @@ export default function Home() {
 
       {/* 4.8 Ecosystem — Editorial index of nine disciplines */}
       <EcosystemIndex />
+
+      {/* 4.9 Per Aspera Core — Logo hub with radiating service lines */}
+      <PerAsperaCore />
 
       {/* 4.95 Comparison — Typical agency vs Per Aspera */}
       <ComparisonSection />
