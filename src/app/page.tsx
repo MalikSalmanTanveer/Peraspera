@@ -4,7 +4,6 @@ import CustomCursor from "@/components/CustomCursor";
 import HeroBackground from "@/components/HeroBackground";
 import TypewriterHeading from "@/components/TypewriterHeading";
 import WordMarquee from "@/components/WordMarquee";
-import PhilosophySection from "@/components/PhilosophySection";
 import EcosystemIndex from "@/components/EcosystemIndex";
 import PerAsperaCore from "@/components/PerAsperaCore";
 import ComparisonSection from "@/components/ComparisonSection";
@@ -35,7 +34,7 @@ export default function Home() {
           <Link href="#partners" className={styles.navLink}>Partners</Link>
           <Link href="#testimonials" className={styles.navLink}>Reviews</Link>
           <Link href="#services" className={styles.navLink}>Services</Link>
-          <Link href="#about" className={styles.navLink}>About</Link>
+          <Link href="#per-aspera-core" className={styles.navLink}>About</Link>
         </div>
 
         <Link href="#contact" className={styles.navCTA}>
@@ -88,9 +87,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
-      {/* 4.3 Philosophy — Why Per Aspera exists */}
-      <PhilosophySection />
 
       {/* 4.5 Kinetic Word Marquee */}
       <WordMarquee />

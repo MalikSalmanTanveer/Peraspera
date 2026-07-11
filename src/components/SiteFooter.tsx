@@ -53,7 +53,7 @@ const LINK_COLUMNS = [
   {
     label: "Company",
     links: [
-      { label: "About", href: "#about" },
+      { label: "About", href: "#per-aspera-core" },
       { label: "Careers", href: "#contact" },
       { label: "Contact", href: "#contact" },
       { label: "Press", href: "#contact" },
