@@ -6,10 +6,12 @@ import saas from '../assets/services/SaaS-Development.png';
 import video from '../assets/services/video.png';
 
 export const SERVICE_IMAGE_BY_TITLE: Record<string, string> = {
-  'Brand Identity': brandIdentity,
-  'UI/UX Design': uiUx,
-  'Website Design': web,
-  'AI Automation': aiAutomation,
-  'SaaS Development': saas,
-  'Video & Motion': video,
+  'AI & Automation': aiAutomation,
+  'Software Engineering': saas,
+  'Web Design & Development': web,
+  'Mobile App Development': uiUx,
+  'SaaS & Product Development': saas,
+  'Branding & Creative': brandIdentity,
+  'UI / UX Design': uiUx,
+  'AI Creative Studio': video,
 };

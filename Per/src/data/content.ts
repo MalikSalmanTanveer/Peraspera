@@ -1,4 +1,5 @@
 import type { AppIconName } from '../components/AppIcon';
+import { SERVICE_CATEGORIES, formatOfferings } from './services';
 
 export interface ServiceItem {
   category: string;
@@ -8,56 +9,13 @@ export interface ServiceItem {
   gradient: string;
 }
 
-export const SERVICES: ServiceItem[] = [
-  {
-    category: 'Branding',
-    title: 'Brand Identity',
-    description:
-      'Logo systems, packaging, company profiles, social media branding, and visual guidelines for cohesive brands.',
-    linkLabel: 'Explore Branding',
-    gradient: 'from-amber-400/30 via-orange-300/20 to-yellow-200/30',
-  },
-  {
-    category: 'Product Design',
-    title: 'UI/UX Design',
-    description:
-      'SaaS UI, mobile apps, dashboards, wireframes, prototypes, design systems, and UX audits.',
-    linkLabel: 'Explore UI/UX',
-    gradient: 'from-violet-400/30 via-purple-300/20 to-indigo-200/30',
-  },
-  {
-    category: 'Web',
-    title: 'Website Design',
-    description:
-      'Corporate websites, landing pages, ecommerce stores, CMS development, and custom web solutions.',
-    linkLabel: 'Explore Websites',
-    gradient: 'from-blue-400/30 via-sky-300/20 to-cyan-200/30',
-  },
-  {
-    category: 'Automation',
-    title: 'AI Automation',
-    description:
-      'AI chatbots, WhatsApp automation, CRM automation, lead systems, and intelligent workflows.',
-    linkLabel: 'Explore AI',
-    gradient: 'from-red-400/20 via-rose-300/15 to-orange-200/25',
-  },
-  {
-    category: 'Software',
-    title: 'SaaS Development',
-    description:
-      'SaaS platforms, dashboards, CRM systems, AI SaaS products, web applications, and product redesigns.',
-    linkLabel: 'Explore SaaS',
-    gradient: 'from-emerald-400/30 via-teal-300/20 to-green-200/30',
-  },
-  {
-    category: 'Motion',
-    title: 'Video & Motion',
-    description:
-      'Motion graphics, logo animation, AI video, product promos, reels, shorts, and explainers.',
-    linkLabel: 'Explore Motion',
-    gradient: 'from-pink-400/25 via-fuchsia-300/15 to-purple-200/25',
-  },
-];
+export const SERVICES: ServiceItem[] = SERVICE_CATEGORIES.map((category) => ({
+  category: category.shortCategory,
+  title: category.title,
+  description: formatOfferings(category.offerings),
+  linkLabel: category.linkLabel,
+  gradient: category.gradient,
+}));
 
 export interface PortfolioItem {
   title: string;
@@ -147,7 +105,7 @@ export const PROCESS_STEPS = [
 
 export const WHY_STATS = [
   { value: '3x', label: 'Faster creative execution' },
-  { value: '55+', label: 'Service deliverables' },
+  { value: '120+', label: 'Service deliverables' },
   { value: '24/7', label: 'AI automation support' },
   { value: '1', label: 'Unified creative team' },
 ] as const;

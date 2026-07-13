@@ -8,7 +8,10 @@ import { Reveal } from '../components/Reveal';
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-end bg-ink text-white overflow-hidden pt-[170px] pb-28 px-nav-x max-md:pt-hero-pt-mobile max-md:pb-20 max-md:min-h-0 max-md:px-nav-x-mobile">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-end bg-ink text-white overflow-hidden pt-[170px] pb-28 px-nav-x max-md:pt-hero-pt-mobile max-md:pb-20 max-md:min-h-0 max-md:px-nav-x-mobile"
+    >
       <div className="hero-grid-bg absolute inset-0" aria-hidden="true" />
       <motion.div
         className="orb absolute rounded-full blur-[120px] w-[700px] h-[700px] bg-accent opacity-[0.18] -right-40 -top-[150px]"
@@ -45,8 +48,8 @@ export function Hero() {
             </h1>
 
             <p className="max-w-[760px] mt-8 text-xl font-light leading-body-xl text-overlay-white-55 max-md:text-md-plus">
-              Peraspera partners with teams to deliver brand identity, UI/UX, websites, SaaS
-              products, AI automation, mobile apps, MVPs, and ongoing creative support.
+              Peraspera partners with teams across AI & automation, software engineering, web,
+              mobile apps, SaaS, branding, UI/UX, creative, growth, finance, BI, and strategy.
             </p>
 
             <div className="flex gap-gap-xs flex-wrap mt-10 max-sm:flex-col">

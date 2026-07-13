@@ -1,183 +1,109 @@
 import { BRAND } from '../data/site';
-import { AppIcon } from '../components/AppIcon';
-import { Container } from '../components/Container';
-import { Logo } from '../components/Logo';
+import { SERVED_COUNTRIES } from '../data/countries';
+import { OrbitingServices } from '../components/OrbitingServices';
 
-const FOOTER_SERVICES = [
-  'UI/UX Design',
-  'Brand Identity',
-  'Web Design & Development',
-  'SaaS Development',
-  'AI Automation',
-  'AI Video & Content',
-  'Motion Design',
-  'App Development',
-  'MVP Development',
+const FOOTER_TAGLINE = [
+  'AI & Automation',
+  'Software Engineering',
+  'Web & SaaS',
+  'UI / UX Design',
+  'Digital Growth',
+  'Strategy & Consulting',
 ] as const;
 
-const FOOTER_LINKS = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
-  { label: 'Peraspera Labs', href: '#peraspera-labs', labs: true },
-  { label: 'Careers', href: '#contact' },
-  { label: 'Blog', href: '#contact' },
-  { label: 'Privacy Policy', href: '#contact' },
-  { label: 'Terms & Conditions', href: '#contact' },
-] as const;
-
-const FOOTER_REVIEWS = ['Clutch', 'Good Firms', 'Design Rush', 'Behance', 'Dribbble', 'Webflow'] as const;
-
-const OFFICES = [
-  { city: 'USA', address: '451 W 42nd St, New York, NY 10036, United States', phone: '+1 555 010 2000' },
-  { city: 'Dubai', address: 'Al Barsha 2, Dubai 25315, United Arab Emirates', phone: '+971 55 010 2000' },
-  { city: 'Berlin', address: 'Dresdener Str. 18, 10999 Berlin, Germany', phone: '+49 30 010 2000' },
-  { city: 'Canada', address: 'Montréal, QC H1E 4B3, Canada', phone: '+1 514 010 2000' },
-  { city: 'London', address: '15 Oakley St, London SW3 5NN, United Kingdom', phone: '+44 7367 010 200' },
-  { city: 'Pakistan Office', address: 'Gulberg III, Lahore, Pakistan', phone: '+92 321 010 2000' },
+const SOCIALS = [
+  { label: 'Facebook', icon: 'f' },
+  { label: 'LinkedIn', icon: 'in' },
+  { label: 'YouTube', icon: '▶' },
+  { label: 'X', icon: '𝕏' },
+  { label: 'Instagram', icon: 'Ig' },
 ] as const;
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-white overflow-hidden">
-      <Container wide className="px-nav-x pt-14 pb-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 max-md:px-nav-x-mobile max-md:pt-14 max-md:pb-10">
-        <div className="md:col-span-2 xl:col-span-1">
-          <a href="#" className="inline-block mb-3.5" aria-label={`${BRAND.name} home`}>
-            <Logo variant="primary" inverted className="h-9 w-auto max-w-[200px]" />
-          </a>
-          <p className="font-body text-[13.5px] text-overlay-footer-text-35 leading-body max-w-[220px] mb-7">
-            {BRAND.tagline}
+    <footer className="relative overflow-hidden bg-ink text-white">
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#1c1210] via-ink to-black"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -left-20 top-0 h-72 w-72 rounded-full bg-accent/12 blur-[140px]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full bg-accent/8 blur-[160px]"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-[1] px-nav-x pb-10 pt-16 max-md:px-nav-x-mobile">
+        <div className="mx-auto mb-8 flex max-w-container justify-center gap-3 md:gap-4">
+          {SERVED_COUNTRIES.map((country) => (
+            <span
+              key={country.code}
+              title={country.name}
+              className="text-2xl md:text-3xl"
+              role="img"
+              aria-label={country.name}
+            >
+              {country.flag}
+            </span>
+          ))}
+        </div>
+
+        <div className="mx-auto mb-10 h-px max-w-container bg-overlay-white-09" />
+
+        <div className="mx-auto mb-14 flex max-w-container flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+          <p className="max-w-md font-body text-sm leading-relaxed text-overlay-footer-text-35">
+            © 2026 <strong className="text-white">{BRAND.legalName}</strong>
+            <br />
+            Crafting premium digital experiences. All Rights Reserved.
           </p>
+          <p className="font-body text-[11px] font-semibold uppercase tracking-[0.18em] text-overlay-footer-text-40 md:text-right md:text-xs">
+            {FOOTER_TAGLINE.join(' • ')}
+          </p>
+        </div>
+
+        <OrbitingServices className="mb-6" />
+
+        <div className="mx-auto max-w-container overflow-hidden pb-2 pt-4 text-center">
+          <a
+            href="#home"
+            className="inline-block font-display text-[clamp(3.25rem,13.5vw,10.5rem)] font-extrabold leading-[0.88] tracking-tighter text-white transition-opacity duration-medium hover:opacity-90"
+            aria-label={`${BRAND.name} home`}
+          >
+            perasper<span className="text-accent">a.</span>
+          </a>
+        </div>
+
+        <div className="mx-auto mt-10 flex max-w-container flex-col items-center justify-between gap-6 border-t border-overlay-footer-border-07 pt-8 md:flex-row">
+          <a
+            href={`mailto:${BRAND.email}`}
+            className="font-body text-sm text-overlay-footer-text-35 transition-colors duration-normal hover:text-accent"
+          >
+            {BRAND.email}
+          </a>
+
+          <div className="flex gap-2">
+            {SOCIALS.map((social) => (
+              <a
+                key={social.label}
+                href="#"
+                aria-label={social.label}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-overlay-footer-border-10 text-sm text-white transition-colors duration-normal hover:bg-accent hover:text-ink"
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
+
           <a
             href="#contact"
-            className="inline-flex items-center bg-accent text-ink font-display text-sm-plus font-extrabold px-5 py-3 rounded-pill transition-all duration-medium hover:bg-white hover:-translate-y-0.5"
+            className="font-body text-sm font-semibold text-overlay-footer-text-35 transition-colors duration-normal hover:text-white"
           >
-            Contact us now →
+            Get in touch →
           </a>
         </div>
-
-        <div>
-          <h3 className="font-display text-xs font-extrabold uppercase tracking-footer-col text-overlay-footer-text-35 mb-4 pb-0 border-0">
-            Services
-          </h3>
-          <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
-            {FOOTER_SERVICES.map((item) => (
-              <li key={item}>
-                <a
-                  href="#services"
-                  className="font-body text-sm-plus text-overlay-footer-text-35 hover:text-white transition-colors duration-normal"
-                >
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-display text-xs font-extrabold uppercase tracking-footer-col text-overlay-footer-text-35 mb-4">
-            Quick Links
-          </h3>
-          <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
-            {FOOTER_LINKS.map((item) => (
-              <li key={item.label}>
-                <a
-                  href={item.href}
-                  className={`font-body text-sm-plus text-overlay-footer-text-35 hover:text-white transition-colors duration-normal ${'labs' in item && item.labs ? 'inline-flex items-center gap-1.5 hover:text-accent' : ''}`}
-                >
-                  {'labs' in item && item.labs && <AppIcon name="FlaskConical" className="w-3.5 h-3.5 text-accent" />}
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-display text-xs font-extrabold uppercase tracking-footer-col text-overlay-footer-text-35 mb-4">
-            Reviews
-          </h3>
-          <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
-            {FOOTER_REVIEWS.map((item) => (
-              <li key={item}>
-                <a
-                  href="#"
-                  className="font-body text-sm-plus text-overlay-footer-text-35 hover:text-white transition-colors duration-normal"
-                >
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Container>
-
-      <div className="border-t border-overlay-footer-border-07 py-8 flex justify-center overflow-visible px-nav-x max-md:px-nav-x-mobile">
-        <Logo
-          variant="primary"
-          inverted
-          className="h-16 md:h-20 w-auto max-w-[min(92vw,720px)] opacity-20"
-        />
       </div>
-
-      <div className="mx-nav-x-mobile md:mx-nav-x mb-0 bg-footer-office-bg border border-overlay-footer-border-07 rounded-2xl max-md:mx-nav-x-mobile">
-        <Container wide className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-0 px-nav-x py-8 max-md:px-nav-x-mobile max-md:py-7 max-md:gap-8">
-          {OFFICES.map((office) => (
-            <div key={office.city} className="py-4 px-4 max-md:p-0">
-              <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center mb-2.5" aria-hidden="true">
-                <AppIcon name="MapPin" className="w-4 h-4 text-accent" />
-              </div>
-              <h4 className="font-display text-2xl font-extrabold mb-2.5">{office.city}</h4>
-              <p className="font-body text-sm text-overlay-footer-text-35 leading-relaxed mb-2.5 max-md:text-sm">
-                {office.address}
-              </p>
-              <a
-                href={`tel:${office.phone.replace(/\s/g, '')}`}
-                className="font-body text-sm-plus text-white hover:text-accent transition-colors"
-              >
-                {office.phone}
-              </a>
-            </div>
-          ))}
-        </Container>
-      </div>
-
-      <Container
-        wide
-        className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-nav-x py-8 max-md:px-nav-x-mobile"
-      >
-        <a
-          href="#"
-          className="flex items-center gap-3 border border-overlay-footer-border-07 rounded-2xl px-4 py-3 hover:border-accent hover:bg-accent/5 transition-colors duration-normal"
-        >
-          <span className="w-11 h-11 rounded-full bg-overlay-footer-border-10 flex items-center justify-center">
-            <AppIcon name="FileText" className="w-5 h-5 text-accent" />
-          </span>
-          <span>
-            <span className="block font-display text-sm-plus font-bold text-white">
-              Company Deck PDF
-            </span>
-            <span className="block font-body text-xs text-overlay-footer-text-35">3 MB</span>
-          </span>
-        </a>
-
-        <div className="flex gap-2 max-md:w-full max-md:justify-start max-md:py-5 max-md:border-y max-md:border-overlay-footer-border-10">
-          {['f', 'in', '▶', '𝕏', 'Ig'].map((icon) => (
-            <a
-              key={icon}
-              href="#"
-              aria-label={`Social link ${icon}`}
-              className="w-11 h-11 rounded-full bg-overlay-footer-border-10 flex items-center justify-center text-sm text-white hover:bg-accent hover:text-ink transition-colors duration-normal"
-            >
-              {icon}
-            </a>
-          ))}
-        </div>
-
-        <p className="font-body text-sm text-overlay-footer-text-22 max-md:w-full">
-          © 2025–2026 {BRAND.legalName} | All Rights Reserved.
-        </p>
-      </Container>
     </footer>
   );
 }

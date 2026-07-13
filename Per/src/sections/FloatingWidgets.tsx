@@ -53,8 +53,8 @@ export function WhatsAppWidget() {
               className="flex items-center gap-3 p-3 rounded-wa-link bg-overlay-white-08 border border-overlay-white-08 text-white transition-all duration-medium hover:-translate-y-0.5 hover:border-overlay-accent-border-42 hover:bg-accent/10 pointer-events-auto"
               onClick={() => setOpen(false)}
             >
-              <span className="w-[42px] h-[42px] rounded-wa-flag bg-white text-ink grid place-items-center shrink-0">
-                <AppIcon name="MapPin" className="w-5 h-5 text-accent-dark" />
+              <span className="w-[42px] h-[42px] rounded-wa-flag bg-white text-ink grid place-items-center shrink-0 text-2xl">
+                <span role="img" aria-hidden="true">{region.flag}</span>
               </span>
               <span className="font-black text-md leading-tight flex-1">{region.country}</span>
               <span className="w-[30px] h-[30px] rounded-full bg-accent text-wa-arrow-text grid place-items-center font-black shrink-0">

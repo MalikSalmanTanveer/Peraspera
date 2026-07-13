@@ -75,17 +75,17 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: 'What does Peraspera do?',
     answer:
-      'Peraspera offers branding, logo design, UI/UX, website design, SaaS development, AI automation, AI video, motion graphics, app development, MVP development, company profiles, packaging, and monthly design retainers.',
+      'Peraspera offers AI & automation, software engineering, web design & development, mobile apps, SaaS & product development, branding & creative, UI/UX design, AI creative studio, digital growth, accounting & finance, business intelligence, and strategy & consulting.',
   },
   {
     question: 'Do you offer monthly retainers?',
     answer:
-      'Yes. Peraspera offers monthly retainer plans for teams that need ongoing branding, marketing, UI/UX, website, and product design support.',
+      'Yes. Peraspera offers monthly retainer plans for teams that need ongoing design, development, AI automation, marketing, finance, and product support.',
   },
   {
     question: 'Can Peraspera handle both design and development?',
     answer:
-      'Yes. Peraspera supports design and development for websites, dashboards, SaaS platforms, mobile apps, MVPs, and automation systems.',
+      'Yes. Peraspera supports design and development for websites, dashboards, SaaS platforms, mobile apps, MVPs, automation systems, and business operations.',
   },
   {
     question: 'Do I own the final files?',
@@ -100,20 +100,25 @@ export const FAQ_ITEMS: FaqItem[] = [
 ];
 
 export const WHATSAPP_REGIONS = [
-  { country: 'Pakistan' },
-  { country: 'United Kingdom' },
-  { country: 'USA' },
-  { country: 'Dubai' },
+  { country: 'Pakistan', flag: '🇵🇰' },
+  { country: 'United Kingdom', flag: '🇬🇧' },
+  { country: 'USA', flag: '🇺🇸' },
+  { country: 'Dubai', flag: '🇦🇪' },
 ] as const;
 
 export const SERVICE_OPTIONS: { icon: AppIconName; label: string }[] = [
-  { icon: 'Palette', label: 'Brand Identity' },
-  { icon: 'Smartphone', label: 'UI/UX Design' },
-  { icon: 'Globe', label: 'Website Design' },
-  { icon: 'Bot', label: 'AI Automation' },
-  { icon: 'Cloud', label: 'SaaS Development' },
-  { icon: 'Clapperboard', label: 'Motion & Video' },
-  { icon: 'Package', label: 'Creative Design Package' },
+  { icon: 'Bot', label: 'AI & Automation' },
+  { icon: 'Server', label: 'Software Engineering' },
+  { icon: 'Globe', label: 'Web Design & Development' },
+  { icon: 'Smartphone', label: 'Mobile App Development' },
+  { icon: 'Rocket', label: 'SaaS & Product Development' },
+  { icon: 'Sparkles', label: 'Branding & Creative' },
+  { icon: 'Hexagon', label: 'UI / UX Design' },
+  { icon: 'Clapperboard', label: 'AI Creative Studio' },
+  { icon: 'Megaphone', label: 'Digital Growth' },
+  { icon: 'Briefcase', label: 'Accounting & Finance' },
+  { icon: 'Activity', label: 'Business Intelligence' },
+  { icon: 'Brain', label: 'Strategy & Consulting' },
 ];
 
 export const BUDGET_OPTIONS = [

@@ -13,37 +13,31 @@ export const BRAND = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Peraspera Labs', href: '#peraspera-labs', isLabs: true },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Home', href: '#home' },
+  { label: 'Service', href: '#services', hasMega: true },
+  { label: 'Labs', href: '#peraspera-labs', isLabs: true },
+  { label: 'Blog', href: '#blog' },
+  { label: 'About Us', href: '#about' },
+  { label: 'Contact Us', href: '#contact' },
 ] as const;
 
-export const NAV_CATEGORIES = [
-  'UI/UX Design',
-  'Brand Identity',
-  'Web Design & Dev',
-  'SaaS Development',
-  'AI Automation',
-  'AI Video',
-  'Motion Design',
-  'App Development',
-  'MVP Development',
-] as const;
+import { SERVICE_CATEGORY_TITLES } from './services';
+
+export const NAV_CATEGORIES = SERVICE_CATEGORY_TITLES;
 
 export const HERO_STATS = [
-  { value: '55+', label: 'Creative Deliverables' },
+  { value: '120+', label: 'Creative Deliverables' },
   { value: '48h', label: 'Fast First Delivery' },
-  { value: '20+', label: 'Service Types' },
+  { value: '12', label: 'Service Categories' },
   { value: '100%', label: 'Source File Ownership' },
 ] as const;
 
 export const TRUST_PILLS = [
-  'Brand Identity',
-  'UI/UX',
-  'Websites',
-  'AI Automation',
-  'SaaS',
-  'Apps',
-  'MVPs',
+  'AI & Automation',
+  'Software Engineering',
+  'Web & SaaS',
+  'UI / UX',
+  'Branding',
+  'Digital Growth',
+  'Strategy',
 ] as const;

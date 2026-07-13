@@ -74,7 +74,7 @@ export function CreativeStudio() {
   ] as const;
 
   return (
-    <section className="bg-ink pt-padding-innov-y pb-16 overflow-hidden">
+    <section id="about" className="bg-ink pt-padding-innov-y pb-16 overflow-hidden">
       <Container wide className="px-nav-x max-md:px-nav-x-mobile">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-gap-innov items-center mb-16 max-lg:px-6">
           <h2 className="font-display text-innov font-extrabold leading-tight tracking-tight text-white">

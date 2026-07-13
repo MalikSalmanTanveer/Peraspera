@@ -1,15 +1,17 @@
 import { Navbar } from './sections/Navbar';
 import { Hero } from './sections/Hero';
 import { LogoMarquee } from './sections/LogoMarquee';
+import { GlobalReach } from './sections/GlobalReach';
 import { TrustStrip } from './sections/TrustStrip';
 import { ServicesGrid } from './sections/ServicesGrid';
 import { FeatureBlocks } from './sections/FeatureBlocks';
 import { PortfolioGrid } from './sections/PortfolioGrid';
 import { ProcessSteps } from './sections/ProcessSteps';
-import { WhyUsStats, CreativeStudio } from './sections/WhyUsStats';
+import { CreativeStudio } from './sections/WhyUsStats';
 import { IndustriesGrid, ToolsGrid } from './sections/IndustriesTools';
 import { Testimonials } from './sections/Testimonials';
 import { FAQ } from './sections/FAQ';
+import { BlogSection } from './sections/BlogSection';
 import { FinalCTA, PerasperaLabsBanner } from './sections/FinalCTA';
 import { ContactForm } from './sections/ContactForm';
 import { Footer } from './sections/Footer';
@@ -28,16 +30,17 @@ export default function App() {
       <main id="main">
         <Hero />
         <LogoMarquee />
+        <GlobalReach />
         <TrustStrip />
         <ServicesGrid />
         <FeatureBlocks />
         <PortfolioGrid />
         <ProcessSteps />
-        <WhyUsStats />
         <CreativeStudio />
         <IndustriesGrid />
         <ToolsGrid />
         <Testimonials />
+        <BlogSection />
         <FAQ />
         <PerasperaLabsBanner />
         <FinalCTA />

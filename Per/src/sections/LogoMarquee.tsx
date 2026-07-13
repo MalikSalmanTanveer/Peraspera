@@ -1,9 +1,17 @@
 import { BRAND_ROW_ONE, BRAND_ROW_TWO } from '../data/brands';
 import { Marquee } from '../components/Marquee';
 
-function BrandLogo({ src }: { src: string }) {
+function BrandLogo({ src, index }: { src: string; index: number }) {
+  const isRectangular = index % 2 === 0;
+
+  const slotClass = isRectangular
+    ? 'w-[180px] h-[96px] max-2xl:w-[160px] max-2xl:h-[85px] max-md:w-[140px] max-md:h-[75px] max-sm:w-[120px] max-sm:h-[64px]'
+    : 'w-[96px] h-[96px] max-2xl:w-[85px] max-2xl:h-[85px] max-md:w-[75px] max-md:h-[75px] max-sm:w-[64px] max-sm:h-[64px]';
+
   return (
-    <div className="w-[172px] h-16 max-2xl:w-[150px] max-2xl:h-[58px] max-md:w-[126px] max-md:h-[50px] max-sm:w-[108px] max-sm:h-11 flex items-center justify-center shrink-0 px-3">
+    <div
+      className={`${slotClass} flex items-center justify-center shrink-0 px-2`}
+    >
       <img
         src={src}
         alt=""
@@ -29,7 +37,7 @@ export function LogoMarquee() {
       <div className="mask-marquee max-md:mask-marquee-mobile mb-14 max-md:mb-10">
         <Marquee direction="left">
           {BRAND_ROW_ONE.map((src, i) => (
-            <BrandLogo key={`r1-${i}`} src={src} />
+            <BrandLogo key={`r1-${i}`} src={src} index={i} />
           ))}
         </Marquee>
       </div>
@@ -37,7 +45,7 @@ export function LogoMarquee() {
       <div className="mask-marquee max-md:mask-marquee-mobile">
         <Marquee direction="right">
           {BRAND_ROW_TWO.map((src, i) => (
-            <BrandLogo key={`r2-${i}`} src={src} />
+            <BrandLogo key={`r2-${i}`} src={src} index={BRAND_ROW_ONE.length + i} />
           ))}
         </Marquee>
       </div>

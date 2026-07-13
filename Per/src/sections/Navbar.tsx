@@ -28,12 +28,12 @@ export function Navbar() {
   const handleMegaLeave = () => setMegaOpen(false);
 
   const navItemClass = scrolled
-    ? 'font-body text-base font-normal px-3.5 py-2 rounded-md transition-colors duration-normal text-overlay-white-55 hover:text-white hover:bg-overlay-white-08 whitespace-nowrap'
-    : 'font-body text-base font-normal px-3.5 py-2 rounded-md transition-colors duration-normal text-muted hover:text-ink hover:bg-black/5 whitespace-nowrap';
+    ? 'font-body text-sm-plus font-normal px-2.5 py-2 rounded-md transition-colors duration-normal text-overlay-white-55 hover:text-white hover:bg-overlay-white-08 whitespace-nowrap'
+    : 'font-body text-sm-plus font-normal px-2.5 py-2 rounded-md transition-colors duration-normal text-muted hover:text-ink hover:bg-black/5 whitespace-nowrap';
 
   const labsLinkClass = scrolled
-    ? 'inline-flex items-center gap-1.5 font-body text-base font-semibold px-3.5 py-2 rounded-md transition-colors duration-normal text-accent hover:text-white border border-dashed border-accent/45 hover:border-accent whitespace-nowrap'
-    : 'inline-flex items-center gap-1.5 font-body text-base font-semibold px-3.5 py-2 rounded-md transition-colors duration-normal text-accent-dark hover:text-ink border border-dashed border-accent/50 hover:border-accent-dark whitespace-nowrap';
+    ? 'inline-flex items-center gap-1.5 font-body text-sm-plus font-semibold px-2.5 py-2 rounded-md transition-colors duration-normal text-accent hover:text-white border border-dashed border-accent/45 hover:border-accent whitespace-nowrap'
+    : 'inline-flex items-center gap-1.5 font-body text-sm-plus font-semibold px-2.5 py-2 rounded-md transition-colors duration-normal text-accent-dark hover:text-ink border border-dashed border-accent/50 hover:border-accent-dark whitespace-nowrap';
 
   const navClasses = scrolled
     ? 'top-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-container-nav-float rounded-pill bg-overlay-ink-92 border border-overlay-nav-floated-border px-6 shadow-nav-floated max-md:top-0 max-md:left-0 max-md:translate-x-0 max-md:w-full max-md:rounded-none max-md:px-nav-x-mobile max-md:max-w-full'
@@ -52,12 +52,18 @@ export function Navbar() {
       >
         <div className="flex items-center w-full max-w-container mx-auto h-[72px] shrink-0">
           <div className="flex flex-1 items-center justify-start min-w-0">
-            <a href="#" className="inline-flex shrink-0" aria-label={`${BRAND.name} home`}>
-              <Logo
-                variant="navbar"
-                inverted={scrolled}
-                className="h-9 w-auto max-w-[148px] md:h-10 md:max-w-[160px]"
-              />
+            <a
+              href="#home"
+              className="inline-flex shrink-0 items-center"
+              aria-label={`${BRAND.name} home`}
+            >
+              <span className="relative flex h-[56px] md:h-[64px] w-[min(58vw,240px)] md:w-[300px] shrink-0 items-center overflow-hidden">
+                <Logo
+                  variant="primary"
+                  inverted={scrolled}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 h-[220px] w-auto max-w-none"
+                />
+              </span>
             </a>
           </div>
 
@@ -66,24 +72,23 @@ export function Navbar() {
             aria-label="Primary"
           >
             <ul
-              className="flex items-center gap-1 list-none m-0 p-0"
+              className="flex items-center gap-0.5 list-none m-0 p-0"
               onMouseEnter={handleMegaEnter}
               onMouseLeave={handleMegaLeave}
             >
-              <li className="m-0 p-0">
-                <button
-                  type="button"
-                  className={`${navItemClass} cursor-pointer bg-transparent border-0`}
-                  aria-expanded={megaOpen}
-                  aria-haspopup="true"
-                  onClick={() => setMegaOpen((v) => !v)}
-                >
-                  Services ↓
-                </button>
-              </li>
               {NAV_LINKS.map((link) => (
                 <li key={link.label} className="m-0 p-0">
-                  {'isLabs' in link && link.isLabs ? (
+                  {'hasMega' in link && link.hasMega ? (
+                    <button
+                      type="button"
+                      className={`${navItemClass} cursor-pointer bg-transparent border-0`}
+                      aria-expanded={megaOpen}
+                      aria-haspopup="true"
+                      onClick={() => setMegaOpen((v) => !v)}
+                    >
+                      {link.label} ↓
+                    </button>
+                  ) : 'isLabs' in link && link.isLabs ? (
                     <a href={link.href} className={labsLinkClass}>
                       <AppIcon name="FlaskConical" className="w-3.5 h-3.5" />
                       {link.label}
@@ -135,13 +140,13 @@ export function Navbar() {
         </div>
 
         {!scrolled && (
-          <div className="hidden md:flex w-full max-w-container mx-auto h-nav-category items-center justify-center border-t border-overlay-nav-border shrink-0">
-            <div className="flex items-center gap-7 h-full">
+          <div className="hidden md:flex w-full max-w-container mx-auto h-nav-category items-center shrink-0 border-t border-overlay-nav-border overflow-x-auto">
+            <div className="flex items-center gap-5 h-full px-1 min-w-max mx-auto">
               {NAV_CATEGORIES.map((cat) => (
                 <a
                   key={cat}
                   href="#services"
-                  className="relative font-body text-[13.5px] font-medium text-muted hover:text-ink transition-colors duration-normal whitespace-nowrap flex items-center h-full after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent-dark after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-medium after:ease-smooth"
+                  className="relative font-body text-[12.5px] font-medium text-muted hover:text-ink transition-colors duration-normal whitespace-nowrap flex items-center h-full px-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent-dark after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-medium after:ease-smooth"
                 >
                   {cat}
                 </a>
@@ -152,7 +157,7 @@ export function Navbar() {
       </header>
 
       <div
-        className={`fixed left-1/2 -translate-x-1/2 w-[min(1060px,calc(100vw-48px))] z-[9000] bg-white border border-black/[0.09] rounded-mega shadow-mega overflow-hidden transition-all duration-slow ease-smooth ${megaOpen ? 'opacity-100 pointer-events-auto translate-y-0 scale-100' : 'opacity-0 pointer-events-none translate-y-3 scale-[0.97]'} ${megaTopClass}`}
+        className={`fixed left-1/2 -translate-x-1/2 w-[min(1280px,calc(100vw-32px))] z-[9000] bg-white border border-black/[0.09] rounded-mega shadow-mega overflow-hidden transition-all duration-slow ease-smooth ${megaOpen ? 'opacity-100 pointer-events-auto translate-y-0 scale-100' : 'opacity-0 pointer-events-none translate-y-3 scale-[0.97]'} ${megaTopClass}`}
         onMouseEnter={handleMegaEnter}
         onMouseLeave={handleMegaLeave}
         role="dialog"
@@ -171,7 +176,8 @@ export function Navbar() {
                 drives <em className="not-italic text-accent-emphasis">growth</em>
               </div>
               <p className="text-sm text-muted leading-body mb-3">
-                One subscription. Every design service your business needs — from brand to build.
+                Twelve connected service categories — from AI and engineering to branding,
+                growth, finance, and strategy.
               </p>
               <a
                 href="#peraspera-labs"
@@ -190,44 +196,46 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="p-4 grid grid-cols-3 auto-rows-min gap-0 relative">
+          <div className="p-3 md:p-4 grid grid-cols-2 lg:grid-cols-4 auto-rows-min gap-0 relative max-h-[min(72vh,680px)] overflow-y-auto">
             {MEGA_COLUMNS.map((col, i) => (
               <div
                 key={col.id}
-                className={`p-3 border-b border-r border-black/[0.05] ${(i + 1) % 3 === 0 ? 'border-r-0' : ''} ${i >= 6 ? 'border-b-0' : ''}`}
+                className={`p-2.5 md:p-3 border-b border-r border-black/[0.05] ${(i + 1) % 4 === 0 ? 'lg:border-r-0' : ''} ${(i + 1) % 2 === 0 ? 'max-lg:border-r-0' : ''} ${i >= 8 ? 'lg:border-b-0' : ''} ${i >= 10 ? 'max-lg:border-b-0' : ''}`}
               >
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-1.5">
                   <div
-                    className={`w-7 h-7 rounded-lg flex items-center justify-center ${col.iconClass}`}
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${col.iconClass}`}
                   >
                     <AppIcon name={col.icon} className="w-3.5 h-3.5 text-ink" />
                   </div>
-                  <span className="font-display text-sm font-extrabold text-ink hover:text-accent-dark transition-colors">
+                  <span className="font-display text-[13px] font-extrabold text-ink leading-tight">
                     {col.title}
                   </span>
                 </div>
-                {col.links.map((link) => (
-                  <a
-                    key={link.label}
-                    href="#services"
-                    className="flex items-center gap-2 py-1.5 px-1.5 rounded-lg text-sm text-muted hover:bg-black/[0.04] hover:text-ink transition-colors duration-fast"
-                    onClick={closeMega}
-                  >
-                    <span className="w-5 flex items-center justify-center shrink-0 text-accent-dark">
-                      <AppIcon name={link.icon} className="w-3.5 h-3.5" />
-                    </span>
-                    <span className="flex-1">{link.label}</span>
-                    {link.isNew && (
-                      <span className="text-2xs font-black uppercase bg-accent text-ink px-1.5 py-0.5 rounded-md">
-                        NEW
+                <div className="max-h-[220px] overflow-y-auto pr-1">
+                  {col.links.map((link) => (
+                    <a
+                      key={link.label}
+                      href="#services"
+                      className="flex items-center gap-2 py-1 px-1 rounded-lg text-[12.5px] text-muted hover:bg-black/[0.04] hover:text-ink transition-colors duration-fast"
+                      onClick={closeMega}
+                    >
+                      <span className="w-4 flex items-center justify-center shrink-0 text-accent-dark">
+                        <AppIcon name={link.icon} className="w-3 h-3" />
                       </span>
-                    )}
-                  </a>
-                ))}
+                      <span className="flex-1 leading-snug">{link.label}</span>
+                      {link.isNew && (
+                        <span className="text-[9px] font-black uppercase bg-accent text-ink px-1 py-0.5 rounded-md shrink-0">
+                          NEW
+                        </span>
+                      )}
+                    </a>
+                  ))}
+                </div>
               </div>
             ))}
 
-            <div className="col-span-3 flex flex-wrap items-center gap-2 px-3 py-3 border-t border-black/[0.05]">
+            <div className="col-span-2 lg:col-span-4 flex flex-wrap items-center gap-2 px-2 md:px-3 py-3 border-t border-black/[0.05] sticky bottom-0 bg-white">
               <span className="text-2xs text-muted-light font-semibold uppercase tracking-wide mr-1">
                 Popular:
               </span>
@@ -253,13 +261,20 @@ export function Navbar() {
           aria-label="Mobile navigation"
         >
           <a
+            href="#home"
+            className="font-display text-3xl font-bold text-ink block py-4 border-b border-border"
+            onClick={() => setMobileOpen(false)}
+          >
+            Home
+          </a>
+          <a
             href="#services"
             className="font-display text-3xl font-bold text-ink block py-4 border-b border-border"
             onClick={() => setMobileOpen(false)}
           >
-            Services
+            Service
           </a>
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS.filter((link) => !('hasMega' in link && link.hasMega) && link.label !== 'Home').map((link) => (
             <a
               key={link.label}
               href={link.href}

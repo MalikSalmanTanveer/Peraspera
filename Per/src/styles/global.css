@@ -52,6 +52,26 @@
   .wa-panel-gradient {
     background: linear-gradient(145deg, #080808 0%, #111 62%, theme('colors.overlay.wa-gradient-end') 100%);
   }
+
+  @keyframes orbit-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes orbit-spin-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  .animate-orbit-slow {
+    animation: orbit-spin 42s linear infinite;
+  }
+
+  .animate-orbit-reverse-slow {
+    animation: orbit-spin-reverse 42s linear infinite;
+  }
 }
 
 @layer components {
@@ -138,7 +158,9 @@
   .animate-scroll-left-slow,
   .animate-scroll-right,
   .animate-scroll-left-innov,
-  .animate-scroll-left-testi {
+  .animate-scroll-left-testi,
+  .animate-orbit-slow,
+  .animate-orbit-reverse-slow {
     animation: none !important;
   }
 }
