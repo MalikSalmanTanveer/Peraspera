@@ -98,23 +98,6 @@ export const CLIENT_WORKS: ClientWork[] = [
     },
   },
   {
-    id: 'niit',
-    title: 'NIIT',
-    url: 'https://niit.edu.pk/',
-    category: 'Education',
-    services: ['Institutional Web', 'Web Design', 'CMS'],
-    description:
-      'An education institution website with structured programs, admissions info, and accessible navigation.',
-    testimonial: {
-      quote:
-        'Students and parents can find what they need quickly. The site structure made our content much clearer.',
-      name: 'NIIT Administration',
-      role: 'Education Institution',
-    },
-    featured: true,
-    span: 'standard',
-  },
-  {
     id: 'rootsraices',
     title: 'Roots Raíces',
     url: 'https://rootsraices.com/',
@@ -208,8 +191,10 @@ export const CLIENT_WORKS: ClientWork[] = [
   },
 ];
 
+export const FEATURED_CLIENT_WORKS = CLIENT_WORKS.filter((work) => work.featured);
+
 export const WORKS_PAGE_STATS = [
-  { value: '11', label: 'Live Client Projects' },
+  { value: '10', label: 'Live Client Projects' },
   { value: '6', label: 'Industries Served' },
   { value: '100%', label: 'Responsive Builds' },
   { value: '48h', label: 'Fast First Delivery' },

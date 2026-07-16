@@ -34,7 +34,7 @@ export function PortfolioGrid() {
               to="/portfolio"
               className="font-body text-sm-plus font-semibold text-muted transition-colors hover:text-ink"
             >
-              11 live websites →
+              10 live websites →
             </Link>
           </div>
         </Reveal>

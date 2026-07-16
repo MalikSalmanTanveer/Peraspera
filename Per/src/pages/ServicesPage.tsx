@@ -82,12 +82,12 @@ export function ServicesPage() {
 
             <span className="section-label section-label-light">Our Services</span>
             <h1 className="mt-4 max-w-[900px] font-display text-[clamp(2.5rem,5.5vw,4.25rem)] font-extrabold leading-[1.02] tracking-tighter">
-              Six categories.{' '}
-              <em className="not-italic text-accent">Thirty specialized offerings.</em>
+              Seven categories.{' '}
+              <em className="not-italic text-accent">Thirty-five specialized offerings.</em>
             </h1>
             <p className="mt-6 max-w-[680px] text-lg font-light leading-body-xl text-overlay-white-55">
               A structured look at everything Peraspera delivers — from AI automation and branding to
-              UI/UX, web, SaaS products, and AI creative production.
+              UI/UX, web, SaaS products, finance, and AI creative production.
             </p>
 
             <div className="mt-14 grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
@@ -201,7 +201,7 @@ export function ServicesPage() {
                                 <div
                                   className={`flex h-11 w-11 items-center justify-center rounded-xl ${category.iconClass}`}
                                 >
-                                  <AppIcon name={category.icon} className="h-5 w-5 text-ink" />
+                                  <AppIcon name={category.icon} className="h-5 w-5 text-white" />
                                 </div>
                                 <span className="text-xs font-black uppercase tracking-widest text-accent">
                                   {category.shortCategory}

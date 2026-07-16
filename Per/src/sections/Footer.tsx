@@ -8,7 +8,7 @@ const FOOTER_TAGLINE = [
   'UI / UX Design',
   'Web & Development',
   'SaaS & Product',
-  'AI Creative Studio',
+  'Finance',
 ] as const;
 
 const SOCIALS = [
@@ -69,7 +69,7 @@ export function Footer() {
         <div className="mx-auto max-w-container overflow-hidden pb-2 pt-4 text-center">
           <a
             href="/"
-            className="inline-block font-display text-[clamp(3.25rem,13.5vw,10.5rem)] font-extrabold leading-[0.88] tracking-tighter text-white transition-opacity duration-medium hover:opacity-90"
+            className="inline-block font-display text-[clamp(4rem,18vw,14rem)] font-extrabold leading-[0.86] tracking-tighter text-white transition-opacity duration-medium hover:opacity-90"
             aria-label={`${BRAND.name} home`}
           >
             perasper<span className="text-accent">a.</span>

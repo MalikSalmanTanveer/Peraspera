@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CLIENT_WORKS,
+  FEATURED_CLIENT_WORKS,
   WORK_CATEGORIES,
   WORKS_PAGE_STATS,
   type WorkCategory,
@@ -11,6 +12,10 @@ import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { AppIcon } from '../components/AppIcon';
 import { WorkScreenshot } from '../components/WorkScreenshot';
+import {
+  FeaturedWorksCarousel,
+  FeaturedWorksCarouselCompact,
+} from '../components/FeaturedWorksCarousel';
 
 function WorkExternalLink({ href, title }: { href: string; title: string }) {
   return (
@@ -63,7 +68,7 @@ export function PortfolioPage() {
     return CLIENT_WORKS.filter((work) => work.category === activeFilter);
   }, [activeFilter]);
 
-  const featuredWork = CLIENT_WORKS.find((work) => work.featured && work.span === 'large') ?? CLIENT_WORKS[0];
+  const featuredWorks = FEATURED_CLIENT_WORKS;
 
   const scrollToProjects = () => {
     document.getElementById('portfolio-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -128,25 +133,7 @@ export function PortfolioPage() {
             </Reveal>
 
             <Reveal delay={0.08} className="hidden xl:block">
-              <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0d0d0d]">
-                <div className="aspect-[16/11] overflow-hidden">
-                  <WorkScreenshot
-                    id={featuredWork.id}
-                    url={featuredWork.url}
-                    title={featuredWork.title}
-                    priority
-                    className="transition-transform duration-image-slow group-hover:scale-[1.03]"
-                  />
-                </div>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent p-6">
-                  <p className="text-2xs font-black uppercase tracking-widest text-accent">
-                    {featuredWork.category}
-                  </p>
-                  <p className="mt-1 font-display text-xl font-extrabold text-white">
-                    {featuredWork.title}
-                  </p>
-                </div>
-              </div>
+              <FeaturedWorksCarouselCompact works={featuredWorks} priority />
             </Reveal>
           </div>
         </Container>
@@ -185,35 +172,13 @@ export function PortfolioPage() {
           <Reveal>
             <div className="relative mb-14 overflow-hidden rounded-8xl border border-border bg-white">
               <div className="relative min-h-[280px] overflow-hidden bg-ink lg:min-h-[420px]">
-                <WorkScreenshot
-                  id={featuredWork.id}
-                  url={featuredWork.url}
-                  title={featuredWork.title}
+                <FeaturedWorksCarousel
+                  works={featuredWorks}
                   priority
+                  showVisitLink
+                  className="h-full min-h-[280px] lg:min-h-[420px]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/30 to-transparent" />
-                <WorkExternalLink href={featuredWork.url} title={featuredWork.title} />
-                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10 lg:max-w-[55%]">
-                  <span className="text-2xs font-black uppercase tracking-widest text-accent">
-                    Featured Project
-                  </span>
-                  <h2 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.75rem)] font-extrabold leading-tight text-white">
-                    {featuredWork.title}
-                  </h2>
-                  <p className="mt-4 text-md-plus leading-body-lg text-overlay-white-55">
-                    {featuredWork.description}
-                  </p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {featuredWork.services.map((service) => (
-                      <span
-                        key={service}
-                        className="rounded-pill border border-overlay-white-16 bg-overlay-white-08 px-3 py-1.5 text-xs font-semibold text-white"
-                      >
-                        {service}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/20 to-transparent" />
               </div>
             </div>
           </Reveal>

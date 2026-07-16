@@ -17,6 +17,11 @@ export const SERVICES: ServiceItem[] = SERVICE_CATEGORIES.map((category) => ({
   gradient: category.gradient,
 }));
 
+/** Homepage shows six core categories — Finance at #6, AI Creative Studio on services page only. */
+export const HOME_SERVICES: ServiceItem[] = SERVICES.filter(
+  (service) => service.title !== 'AI Creative Studio',
+);
+
 export interface PortfolioItem {
   title: string;
   category: string;

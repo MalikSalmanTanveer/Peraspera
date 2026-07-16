@@ -112,7 +112,7 @@ export const SERVICE_OPTIONS: { icon: AppIconName; label: string }[] = [
   { icon: 'Hexagon', label: 'UI / UX Design' },
   { icon: 'Globe', label: 'Web Design & Development' },
   { icon: 'Rocket', label: 'SaaS & Product Development' },
-  { icon: 'Clapperboard', label: 'AI Creative Studio' },
+  { icon: 'Landmark', label: 'Finance' },
 ];
 
 export const BUDGET_OPTIONS = [

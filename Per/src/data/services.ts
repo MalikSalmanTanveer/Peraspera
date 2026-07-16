@@ -245,6 +245,52 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     gradient: 'from-teal-400/30 via-cyan-300/20 to-sky-200/30',
   },
   {
+    id: 'finance',
+    title: 'Finance',
+    shortCategory: 'Finance',
+    icon: 'Landmark',
+    iconClass: 'bg-mega-icon-finance',
+    tagline: 'Financial systems that keep your business organized and audit-ready.',
+    overview:
+      'We set up bookkeeping workflows, invoicing systems, and finance dashboards — connecting QuickBooks, Xero, and your business tools so numbers stay accurate and decisions stay clear.',
+    offerings: [
+      'Bookkeeping & Accounting',
+      'Financial Reporting',
+      'Invoicing & Billing',
+      'Tax Preparation Support',
+      'Finance Dashboards',
+    ],
+    offeringDetails: [
+      {
+        description:
+          'Structured bookkeeping with chart of accounts, reconciliations, and monthly close processes tailored to your business model.',
+        deliverables: ['Chart of accounts', 'Monthly reconciliations', 'Expense categorization'],
+      },
+      {
+        description:
+          'P&L statements, balance sheets, and cash-flow reports formatted for owners, investors, and stakeholders.',
+        deliverables: ['Monthly reports', 'KPI summaries', 'Export-ready statements'],
+      },
+      {
+        description:
+          'Automated invoicing, payment tracking, and billing workflows integrated with your CRM or project tools.',
+        deliverables: ['Invoice templates', 'Payment reminders', 'Receivables tracking'],
+      },
+      {
+        description:
+          'Organized records and documentation support to simplify tax season and compliance reviews.',
+        deliverables: ['Document organization', 'Deduction tracking', 'Year-end prep'],
+      },
+      {
+        description:
+          'Custom finance dashboards that surface revenue, expenses, and runway in one clear view.',
+        deliverables: ['Dashboard design', 'Tool integrations', 'Automated data sync'],
+      },
+    ],
+    linkLabel: 'Explore Finance',
+    gradient: 'from-emerald-400/25 via-green-300/15 to-lime-200/25',
+  },
+  {
     id: 'ai-creative',
     title: 'AI Creative Studio',
     shortCategory: 'Creative',
@@ -324,12 +370,12 @@ export const MEGA_POPULAR_PILLS = [
   'UI / UX Design',
   'Web Design & Development',
   'SaaS & Product Development',
-  'AI Creative Studio',
+  'Finance',
 ] as const;
 
 export const SERVICES_PAGE_STATS = [
-  { value: '6', label: 'Service Categories' },
-  { value: '30', label: 'Specialized Offerings' },
+  { value: '7', label: 'Service Categories' },
+  { value: '35', label: 'Specialized Offerings' },
   { value: '48h', label: 'First Delivery' },
   { value: '100%', label: 'Source File Ownership' },
 ] as const;

@@ -34,7 +34,7 @@ function toolInitials(name: string): string {
 }
 
 function ToolBadge({ tool }: { tool: StackTool }) {
-  const glow = tool.color ? `#${tool.color}` : '#fea327';
+  const brandColor = tool.color ? `#${tool.color}` : '#fea327';
   const sources = toolIconSources(tool);
   const [sourceIndex, setSourceIndex] = useState(0);
   const iconUrl = sources[sourceIndex];
@@ -51,21 +51,22 @@ function ToolBadge({ tool }: { tool: StackTool }) {
   return (
     <div
       className="group/badge relative flex h-[88px] w-[88px] shrink-0 items-center justify-center md:h-[96px] md:w-[96px]"
-      title={tool.name}
       aria-label={tool.name}
     >
       <div
-        className="pointer-events-none absolute inset-[18%] rounded-full opacity-50 blur-2xl transition-opacity duration-normal group-hover/badge:opacity-80"
-        style={{ background: glow }}
+        className="pointer-events-none absolute inset-[22%] rounded-full opacity-0 blur-xl transition-opacity duration-normal group-hover/badge:opacity-70"
+        style={{ background: brandColor }}
         aria-hidden="true"
       />
+
       {showIcon && sourceIndex < sources.length ? (
         <img
           src={iconUrl}
           alt=""
-          className="relative h-12 w-12 object-contain transition-transform duration-normal group-hover/badge:scale-110 md:h-[52px] md:w-[52px]"
+          className="relative h-12 w-12 object-contain transition-all duration-normal group-hover/badge:scale-110 group-hover/badge:[filter:drop-shadow(0_0_8px_var(--tool-glow))_drop-shadow(0_0_18px_var(--tool-glow-soft))] md:h-[52px] md:w-[52px]"
           style={{
-            filter: `drop-shadow(0 0 10px ${glow}) drop-shadow(0 0 22px ${glow}aa)`,
+            ['--tool-glow' as string]: brandColor,
+            ['--tool-glow-soft' as string]: `${brandColor}99`,
           }}
           loading="lazy"
           decoding="async"
@@ -73,12 +74,15 @@ function ToolBadge({ tool }: { tool: StackTool }) {
         />
       ) : (
         <span
-          className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.06] font-display text-sm font-extrabold md:h-[52px] md:w-[52px] md:text-base"
-          style={{ color: glow, textShadow: `0 0 14px ${glow}` }}
+          className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.06] font-display text-sm font-extrabold text-white transition-all duration-normal group-hover/badge:scale-110 group-hover/badge:border-white/30 md:h-[52px] md:w-[52px] md:text-base"
         >
           {toolInitials(tool.name)}
         </span>
       )}
+
+      <span className="pointer-events-none absolute -bottom-1 left-1/2 z-10 w-max max-w-[140px] -translate-x-1/2 translate-y-full rounded-lg border border-white/12 bg-ink/90 px-3 py-1.5 text-center text-[11px] font-bold leading-tight tracking-wide text-white opacity-0 shadow-lg backdrop-blur-sm transition-all duration-normal group-hover/badge:opacity-100 md:text-xs">
+        {tool.name}
+      </span>
     </div>
   );
 }

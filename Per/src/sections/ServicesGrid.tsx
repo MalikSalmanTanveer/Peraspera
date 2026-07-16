@@ -1,4 +1,4 @@
-import { SERVICES } from '../data/content';
+import { HOME_SERVICES } from '../data/content';
 import { SERVICE_CATEGORIES } from '../data/services';
 import { SERVICE_IMAGE_BY_TITLE } from '../data/service-images';
 import { Container } from '../components/Container';
@@ -16,12 +16,12 @@ export function ServicesGrid() {
           <SectionHeader
             label="Services"
             title="Everything your business needs to look professional and grow online."
-            description="Six focused service categories across AI, branding, design, web, product, and creative."
+            description="Six focused service categories across AI, branding, design, web, product, and finance."
           />
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 3xl:grid-cols-3 gap-gap-service">
-          {SERVICES.map((service, i) => {
+          {HOME_SERVICES.map((service, i) => {
             const image = SERVICE_IMAGE_BY_TITLE[service.title];
             const category = SERVICE_CATEGORIES.find((item) => item.title === service.title);
 
