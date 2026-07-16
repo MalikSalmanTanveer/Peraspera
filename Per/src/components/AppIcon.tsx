@@ -1,6 +1,7 @@
 import {
   Activity,
   AppWindow,
+  ArrowUpRight,
   Bot,
   Box,
   Brain,
@@ -45,6 +46,7 @@ import {
 const ICONS = {
   Activity,
   AppWindow,
+  ArrowUpRight,
   Bot,
   Box,
   Brain,

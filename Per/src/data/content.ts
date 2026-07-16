@@ -105,7 +105,7 @@ export const PROCESS_STEPS = [
 
 export const WHY_STATS = [
   { value: '3x', label: 'Faster creative execution' },
-  { value: '120+', label: 'Service deliverables' },
+  { value: '30+', label: 'Service deliverables' },
   { value: '24/7', label: 'AI automation support' },
   { value: '1', label: 'Unified creative team' },
 ] as const;

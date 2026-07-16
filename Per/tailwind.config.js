@@ -79,6 +79,8 @@ export default {
         'scroll-right': `scrollRight ${animations.duration['marquee-right']} ${animations.easing.linear} infinite`,
         'scroll-left-innov': `scrollLeft ${animations.duration['marquee-innov']} ${animations.easing.linear} infinite`,
         'scroll-left-testi': `scrollLeft ${animations.duration['marquee-testimonial']} ${animations.easing.linear} infinite`,
+        'scroll-left-tools': `scrollLeft ${animations.duration['marquee-tools-left']} ${animations.easing.linear} infinite`,
+        'scroll-right-tools': `scrollRight ${animations.duration['marquee-tools-right']} ${animations.easing.linear} infinite`,
       },
       maxWidth: {
         container: spacing.container,

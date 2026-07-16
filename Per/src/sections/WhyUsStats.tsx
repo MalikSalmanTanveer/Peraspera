@@ -89,7 +89,7 @@ export function CreativeStudio() {
               Use this studio support for launches, redesigns, marketing systems, and ongoing design
               needs.
             </p>
-            <Button variant="yellow" href="#services" className="text-sm-plus py-3 px-6">
+            <Button variant="yellow" href="/services" className="text-sm-plus py-3 px-6">
               Explore Services →
             </Button>
           </div>

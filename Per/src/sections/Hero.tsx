@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { HERO_STATS } from '../data/site';
+import { HERO_COPY, HERO_STATS } from '../data/site';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { CountUp } from '../components/CountUp';
@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-end bg-ink text-white overflow-hidden pt-[170px] pb-28 px-nav-x max-md:pt-hero-pt-mobile max-md:pb-20 max-md:min-h-0 max-md:px-nav-x-mobile"
+      className="relative min-h-screen flex items-end bg-ink text-white overflow-hidden pt-[120px] pb-28 px-nav-x max-md:pt-hero-pt-mobile max-md:pb-20 max-md:min-h-0 max-md:px-nav-x-mobile"
     >
       <div className="hero-grid-bg absolute inset-0" aria-hidden="true" />
       <motion.div
@@ -33,31 +33,31 @@ export function Hero() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              Peraspera — Design · Web · AI Studio
+              {HERO_COPY.eyebrow}
             </motion.div>
 
             <h1 className="font-display text-hero font-extrabold leading-hero tracking-tighter max-md:text-hero-mobile">
-              Design, websites and AI systems built to help your brand{' '}
+              {HERO_COPY.headline}{' '}
               <motion.em
                 className="not-italic text-accent inline-block"
                 animate={{ textShadow: ['0 0 0px transparent', '0 0 24px rgba(254,163,39,0.35)', '0 0 0px transparent'] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               >
-                stand apart.
-              </motion.em>
+                {HERO_COPY.headlineAccent}
+              </motion.em>{' '}
+              {HERO_COPY.headlineEnd}
             </h1>
 
             <p className="max-w-[760px] mt-8 text-xl font-light leading-body-xl text-overlay-white-55 max-md:text-md-plus">
-              Peraspera partners with teams across AI & automation, software engineering, web,
-              mobile apps, SaaS, branding, UI/UX, creative, growth, finance, BI, and strategy.
+              {HERO_COPY.subheading}
             </p>
 
             <div className="flex gap-gap-xs flex-wrap mt-10 max-sm:flex-col">
-              <Button variant="yellow" href="#contact">
-                Start a Project ↗
+              <Button variant="yellow" href={HERO_COPY.primaryCta.href}>
+                {HERO_COPY.primaryCta.label} ↗
               </Button>
-              <Button variant="light" href="#services">
-                Explore Services
+              <Button variant="light" href={HERO_COPY.secondaryCta.href}>
+                {HERO_COPY.secondaryCta.label}
               </Button>
             </div>
 
@@ -105,7 +105,8 @@ export function Hero() {
                 Peraspera Retainer
               </span>
               <p className="text-base text-overlay-white-72 leading-loose">
-                One studio partner for branding, web, UI/UX, AI, and product design.
+                Connected ecosystems where AI, software, automation, finance, and brand move as
+                one system.
               </p>
             </motion.div>
           </div>

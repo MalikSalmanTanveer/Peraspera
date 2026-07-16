@@ -1,5 +1,10 @@
 import type { AppIconName } from '../components/AppIcon';
 
+export interface ServiceOfferingDetail {
+  description: string;
+  deliverables: string[];
+}
+
 export interface ServiceCategory {
   id: string;
   title: string;
@@ -7,8 +12,11 @@ export interface ServiceCategory {
   icon: AppIconName;
   iconClass: string;
   offerings: string[];
+  offeringDetails: ServiceOfferingDetail[];
   linkLabel: string;
   gradient: string;
+  tagline: string;
+  overview: string;
 }
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
@@ -18,104 +26,45 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'AI',
     icon: 'Bot',
     iconClass: 'bg-mega-icon-ai',
+    tagline: 'Intelligent systems that save time and scale operations.',
+    overview:
+      'We design and deploy AI-powered workflows that connect your tools, automate repetitive tasks, and keep your team focused on high-value work — from chatbots to full CRM automation.',
     offerings: [
-      'AI Agents',
       'AI Chatbots',
       'Workflow Automation',
       'CRM Automation',
       'WhatsApp Automation',
-      'Email Automation',
       'Lead Generation',
-      'AI Knowledge Base',
-      'AI Accounting',
-      'Custom AI Solutions',
+    ],
+    offeringDetails: [
+      {
+        description:
+          'Custom AI assistants trained on your business context — handling support, FAQs, and lead qualification around the clock.',
+        deliverables: ['Conversation flows', 'Knowledge base setup', 'Multi-channel deployment'],
+      },
+      {
+        description:
+          'End-to-end automation pipelines that connect apps, trigger actions, and eliminate manual handoffs between teams.',
+        deliverables: ['Process mapping', 'Zapier/Make workflows', 'Monitoring & alerts'],
+      },
+      {
+        description:
+          'CRM integrations that auto-tag leads, assign tasks, send follow-ups, and keep your pipeline moving without manual entry.',
+        deliverables: ['CRM setup', 'Auto-assignment rules', 'Email & task triggers'],
+      },
+      {
+        description:
+          'WhatsApp Business automation for order updates, appointment reminders, support replies, and broadcast campaigns.',
+        deliverables: ['Message templates', 'Auto-replies', 'Broadcast sequences'],
+      },
+      {
+        description:
+          'AI-assisted lead capture systems that qualify prospects, enrich contact data, and route hot leads to your sales team.',
+        deliverables: ['Lead forms', 'Scoring logic', 'CRM sync'],
+      },
     ],
     linkLabel: 'Explore AI',
     gradient: 'from-red-400/20 via-rose-300/15 to-orange-200/25',
-  },
-  {
-    id: 'software-engineering',
-    title: 'Software Engineering',
-    shortCategory: 'Engineering',
-    icon: 'Server',
-    iconClass: 'bg-mega-icon-saas',
-    offerings: [
-      'Custom Web Applications',
-      'Enterprise Software',
-      'SaaS Platforms',
-      'CRM Systems',
-      'Admin Dashboards',
-      'Client Portals',
-      'API Development',
-      'API Integration',
-      'Business Tools',
-      'Database Solutions',
-    ],
-    linkLabel: 'Explore Engineering',
-    gradient: 'from-emerald-400/30 via-teal-300/20 to-green-200/30',
-  },
-  {
-    id: 'web',
-    title: 'Web Design & Development',
-    shortCategory: 'Web',
-    icon: 'Globe',
-    iconClass: 'bg-mega-icon-web',
-    offerings: [
-      'Corporate Websites',
-      'Business Websites',
-      'Landing Pages',
-      'E-commerce Stores',
-      'CMS Development',
-      'Website Redesign',
-      'Portfolio Websites',
-      'Performance Optimization',
-      'Website Maintenance',
-      'SEO Optimization',
-    ],
-    linkLabel: 'Explore Web',
-    gradient: 'from-blue-400/30 via-sky-300/20 to-cyan-200/30',
-  },
-  {
-    id: 'mobile',
-    title: 'Mobile App Development',
-    shortCategory: 'Mobile',
-    icon: 'Smartphone',
-    iconClass: 'bg-mega-icon-app',
-    offerings: [
-      'iOS Apps',
-      'Android Apps',
-      'Cross Platform Apps',
-      'Business Apps',
-      'Customer Apps',
-      'App UI/UX',
-      'API Integration',
-      'App Maintenance',
-      'App Store Deployment',
-      'MVP Apps',
-    ],
-    linkLabel: 'Explore Apps',
-    gradient: 'from-indigo-400/30 via-violet-300/20 to-purple-200/30',
-  },
-  {
-    id: 'saas-product',
-    title: 'SaaS & Product Development',
-    shortCategory: 'Product',
-    icon: 'Rocket',
-    iconClass: 'bg-mega-icon-mvp',
-    offerings: [
-      'SaaS MVP',
-      'Startup MVP',
-      'AI SaaS Products',
-      'Dashboard Systems',
-      'Customer Portals',
-      'Admin Panels',
-      'Subscription Platforms',
-      'Product Validation',
-      'Product Scaling',
-      'Product Strategy',
-    ],
-    linkLabel: 'Explore SaaS',
-    gradient: 'from-teal-400/30 via-cyan-300/20 to-sky-200/30',
   },
   {
     id: 'branding',
@@ -123,17 +72,42 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Branding',
     icon: 'Sparkles',
     iconClass: 'bg-mega-icon-brand',
+    tagline: 'Visual identity that makes your brand impossible to ignore.',
+    overview:
+      'From first impression to every touchpoint, we craft cohesive brand systems — logos, guidelines, packaging, and marketing assets that communicate who you are with clarity and confidence.',
     offerings: [
       'Brand Identity',
       'Logo Design',
-      'Brand Strategy',
       'Brand Guidelines',
-      'Company Profiles',
       'Packaging Design',
-      'Presentation Design',
-      'Pitch Decks',
-      'Rebranding',
       'Marketing Assets',
+    ],
+    offeringDetails: [
+      {
+        description:
+          'A complete visual foundation — color palette, typography, imagery style, and voice — built to scale across every channel.',
+        deliverables: ['Mood boards', 'Color & type systems', 'Brand architecture'],
+      },
+      {
+        description:
+          'Distinctive logo marks and wordmarks designed for versatility across digital, print, and merchandise applications.',
+        deliverables: ['Primary & secondary logos', 'Icon variants', 'Export files (SVG, PNG)'],
+      },
+      {
+        description:
+          'A living document that keeps your team and partners aligned on how to use your brand correctly and consistently.',
+        deliverables: ['Usage rules', 'Do/don\'t examples', 'Asset library'],
+      },
+      {
+        description:
+          'Shelf-ready packaging that tells your product story and stands out in competitive retail and eCommerce environments.',
+        deliverables: ['Structural concepts', 'Print-ready artwork', 'Mockup renders'],
+      },
+      {
+        description:
+          'Campaign-ready creatives — social posts, banners, pitch decks, and ad sets — designed to match your brand system.',
+        deliverables: ['Social templates', 'Ad creatives', 'Presentation decks'],
+      },
     ],
     linkLabel: 'Explore Branding',
     gradient: 'from-amber-400/30 via-orange-300/20 to-yellow-200/30',
@@ -144,20 +118,131 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Design',
     icon: 'Hexagon',
     iconClass: 'bg-mega-icon-ux',
-    offerings: [
-      'UX Research',
-      'Wireframing',
-      'User Flows',
-      'UI Design',
-      'Dashboard Design',
-      'Mobile UI',
-      'Design Systems',
-      'Interactive Prototypes',
-      'SaaS UI Design',
-      'UX Audits',
+    tagline: 'Interfaces people understand — and actually enjoy using.',
+    overview:
+      'We research how users think, map clear journeys, and design polished interfaces that reduce friction and increase conversion across web and mobile products.',
+    offerings: ['UX Research', 'Wireframing', 'UI Design', 'Design Systems', 'UX Audits'],
+    offeringDetails: [
+      {
+        description:
+          'User interviews, journey mapping, and competitive analysis to uncover what your audience needs before a single pixel is placed.',
+        deliverables: ['User personas', 'Journey maps', 'Research report'],
+      },
+      {
+        description:
+          'Low-fidelity layouts that validate structure, navigation, and content hierarchy before investing in visual design.',
+        deliverables: ['Screen flows', 'Clickable prototypes', 'Feedback rounds'],
+      },
+      {
+        description:
+          'High-fidelity interface design with attention to typography, spacing, states, and responsive behavior across devices.',
+        deliverables: ['Figma UI files', 'Component specs', 'Dev handoff'],
+      },
+      {
+        description:
+          'Reusable component libraries and token systems that keep your product visually consistent as it grows.',
+        deliverables: ['Component library', 'Design tokens', 'Documentation'],
+      },
+      {
+        description:
+          'Expert review of your existing product to identify usability issues, accessibility gaps, and conversion blockers.',
+        deliverables: ['Heuristic review', 'Priority fixes', 'Action plan'],
+      },
     ],
     linkLabel: 'Explore UI/UX',
     gradient: 'from-violet-400/30 via-purple-300/20 to-indigo-200/30',
+  },
+  {
+    id: 'web',
+    title: 'Web Design & Development',
+    shortCategory: 'Web',
+    icon: 'Globe',
+    iconClass: 'bg-mega-icon-web',
+    tagline: 'Websites that look premium and perform under pressure.',
+    overview:
+      'We design and build fast, responsive websites — from corporate sites and landing pages to full eCommerce stores — optimized for SEO, conversion, and long-term maintainability.',
+    offerings: [
+      'Corporate Websites',
+      'Landing Pages',
+      'E-commerce Stores',
+      'CMS Development',
+      'SEO Optimization',
+    ],
+    offeringDetails: [
+      {
+        description:
+          'Multi-page company websites with clear service positioning, team pages, case studies, and contact flows built for credibility.',
+        deliverables: ['Custom design', 'Responsive build', 'CMS integration'],
+      },
+      {
+        description:
+          'High-converting single-page experiences for product launches, campaigns, and lead capture with focused messaging.',
+        deliverables: ['Hero & CTA design', 'A/B-ready layout', 'Analytics setup'],
+      },
+      {
+        description:
+          'Full online stores on Shopify, WooCommerce, or custom stacks — product pages, checkout, and inventory-ready structure.',
+        deliverables: ['Store setup', 'Payment integration', 'Product templates'],
+      },
+      {
+        description:
+          'Content management systems that let your team update pages, blogs, and media without touching code.',
+        deliverables: ['Admin dashboard', 'Content models', 'Editor training'],
+      },
+      {
+        description:
+          'Technical and on-page SEO — meta structure, schema markup, Core Web Vitals, and content recommendations for ranking.',
+        deliverables: ['SEO audit', 'On-page fixes', 'Performance report'],
+      },
+    ],
+    linkLabel: 'Explore Web',
+    gradient: 'from-blue-400/30 via-sky-300/20 to-cyan-200/30',
+  },
+  {
+    id: 'saas-product',
+    title: 'SaaS & Product Development',
+    shortCategory: 'Product',
+    icon: 'Rocket',
+    iconClass: 'bg-mega-icon-mvp',
+    tagline: 'From MVP to production — products built to ship and scale.',
+    overview:
+      'We help founders and product teams go from idea to live software — MVPs, dashboards, admin panels, and full web applications with clear architecture and room to grow.',
+    offerings: [
+      'SaaS MVP',
+      'Dashboard Systems',
+      'Admin Panels',
+      'Web Applications',
+      'Product Strategy',
+    ],
+    offeringDetails: [
+      {
+        description:
+          'Lean first versions with core features only — designed to validate your idea fast and attract early users or investors.',
+        deliverables: ['Feature scoping', 'MVP build', 'Launch support'],
+      },
+      {
+        description:
+          'Data-rich interfaces with charts, filters, real-time updates, and role-based views for analytics and operations teams.',
+        deliverables: ['Dashboard UI', 'API integration', 'Role permissions'],
+      },
+      {
+        description:
+          'Back-office tools for managing users, content, orders, and settings — built for non-technical team members.',
+        deliverables: ['Admin UI', 'CRUD operations', 'Audit logs'],
+      },
+      {
+        description:
+          'Full-stack web applications with authentication, databases, APIs, and deployment pipelines ready for production.',
+        deliverables: ['Frontend & backend', 'Database schema', 'Deployment config'],
+      },
+      {
+        description:
+          'Roadmap planning, feature prioritization, and technical architecture guidance before development begins.',
+        deliverables: ['Product brief', 'Tech stack recommendation', 'Sprint plan'],
+      },
+    ],
+    linkLabel: 'Explore SaaS',
+    gradient: 'from-teal-400/30 via-cyan-300/20 to-sky-200/30',
   },
   {
     id: 'ai-creative',
@@ -165,104 +250,39 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Creative',
     icon: 'Clapperboard',
     iconClass: 'bg-mega-icon-video',
-    offerings: [
-      'AI Images',
-      'AI Videos',
-      'AI Commercials',
-      'AI Voiceovers',
-      'Social Media Creatives',
-      'Ad Creatives',
-      'Motion Graphics',
-      'Reels & Shorts',
-      'Product Videos',
-      'Thumbnail Design',
+    tagline: 'AI-powered visuals and video content at studio quality.',
+    overview:
+      'Our creative studio combines AI tools with human art direction to produce images, videos, motion graphics, and social content — faster than traditional production without sacrificing polish.',
+    offerings: ['AI Images', 'AI Videos', 'Motion Graphics', 'Reels & Shorts', 'Product Videos'],
+    offeringDetails: [
+      {
+        description:
+          'Custom AI-generated imagery for campaigns, product shots, social content, and brand storytelling with consistent style.',
+        deliverables: ['Prompt libraries', 'Styled image sets', 'High-res exports'],
+      },
+      {
+        description:
+          'AI-assisted video production for explainers, ads, and brand films — scripted, storyboarded, and edited to brief.',
+        deliverables: ['Storyboard', 'Edited video', 'Multiple formats'],
+      },
+      {
+        description:
+          'Animated logos, lower thirds, transitions, and UI motion that bring your brand and product interfaces to life.',
+        deliverables: ['After Effects files', 'Lottie exports', 'Brand motion kit'],
+      },
+      {
+        description:
+          'Vertical-first content optimized for Instagram Reels, TikTok, YouTube Shorts, and paid social campaigns.',
+        deliverables: ['Script & hooks', '9:16 edits', 'Caption variants'],
+      },
+      {
+        description:
+          'Studio-style product showcases with lighting, angles, and motion designed to drive eCommerce conversions.',
+        deliverables: ['Product shots', '360° views', 'Ad-ready cuts'],
+      },
     ],
     linkLabel: 'Explore Creative',
     gradient: 'from-pink-400/25 via-fuchsia-300/15 to-purple-200/25',
-  },
-  {
-    id: 'digital-growth',
-    title: 'Digital Growth',
-    shortCategory: 'Growth',
-    icon: 'Megaphone',
-    iconClass: 'bg-mega-icon-motion',
-    offerings: [
-      'SEO',
-      'Google Ads',
-      'Meta Ads',
-      'LinkedIn Marketing',
-      'Social Media Management',
-      'Content Marketing',
-      'Email Marketing',
-      'Marketing Automation',
-      'Analytics',
-      'CRO',
-    ],
-    linkLabel: 'Explore Growth',
-    gradient: 'from-orange-400/25 via-amber-300/15 to-yellow-200/25',
-  },
-  {
-    id: 'accounting',
-    title: 'Accounting & Finance',
-    shortCategory: 'Finance',
-    icon: 'Briefcase',
-    iconClass: 'bg-mega-icon-brand',
-    offerings: [
-      'Bookkeeping',
-      'Payroll',
-      'Tax Services',
-      'Financial Reports',
-      'Cash Flow Management',
-      'Budget Planning',
-      'CFO Services',
-      'Invoice Management',
-      'Accounting Automation',
-      'Financial Dashboards',
-    ],
-    linkLabel: 'Explore Finance',
-    gradient: 'from-stone-400/20 via-neutral-300/15 to-zinc-200/25',
-  },
-  {
-    id: 'business-intelligence',
-    title: 'Business Intelligence',
-    shortCategory: 'Intelligence',
-    icon: 'Activity',
-    iconClass: 'bg-mega-icon-saas',
-    offerings: [
-      'KPI Dashboards',
-      'Data Analytics',
-      'Sales Reports',
-      'Marketing Analytics',
-      'Financial Analytics',
-      'Customer Insights',
-      'Executive Dashboards',
-      'Forecasting',
-      'Data Visualization',
-      'Business Reporting',
-    ],
-    linkLabel: 'Explore BI',
-    gradient: 'from-cyan-400/25 via-blue-300/15 to-indigo-200/25',
-  },
-  {
-    id: 'strategy',
-    title: 'Strategy & Consulting',
-    shortCategory: 'Strategy',
-    icon: 'Brain',
-    iconClass: 'bg-mega-icon-ux',
-    offerings: [
-      'AI Consulting',
-      'Digital Transformation',
-      'Business Automation',
-      'Technology Strategy',
-      'Product Discovery',
-      'Startup Consulting',
-      'SaaS Consulting',
-      'Process Optimization',
-      'Business Analysis',
-      'CTO Advisory',
-    ],
-    linkLabel: 'Explore Strategy',
-    gradient: 'from-slate-400/20 via-gray-300/15 to-zinc-200/25',
   },
 ];
 
@@ -282,22 +302,16 @@ const LINK_ICONS: AppIconName[] = [
   'Globe',
   'Smartphone',
   'Cloud',
-  'Activity',
   'Palette',
   'PenTool',
-  'Package',
-  'Briefcase',
   'Megaphone',
   'Image',
   'Video',
   'Clapperboard',
   'Server',
-  'Wrench',
-  'ShieldCheck',
   'Rocket',
   'Sparkles',
   'Hexagon',
-  'Brain',
 ];
 
 export function offeringIcon(index: number): AppIconName {
@@ -306,11 +320,16 @@ export function offeringIcon(index: number): AppIconName {
 
 export const MEGA_POPULAR_PILLS = [
   'AI & Automation',
-  'Software Engineering',
+  'Branding & Creative',
+  'UI / UX Design',
   'Web Design & Development',
   'SaaS & Product Development',
-  'UI / UX Design',
-  'Branding & Creative',
-  'Digital Growth',
-  'Strategy & Consulting',
+  'AI Creative Studio',
+] as const;
+
+export const SERVICES_PAGE_STATS = [
+  { value: '6', label: 'Service Categories' },
+  { value: '30', label: 'Specialized Offerings' },
+  { value: '48h', label: 'First Delivery' },
+  { value: '100%', label: 'Source File Ownership' },
 ] as const;

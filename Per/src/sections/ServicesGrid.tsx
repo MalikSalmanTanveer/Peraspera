@@ -1,4 +1,5 @@
 import { SERVICES } from '../data/content';
+import { SERVICE_CATEGORIES } from '../data/services';
 import { SERVICE_IMAGE_BY_TITLE } from '../data/service-images';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
@@ -13,19 +14,23 @@ export function ServicesGrid() {
       <Container>
         <Reveal>
           <SectionHeader
-            label="What We Do"
+            label="Services"
             title="Everything your business needs to look professional and grow online."
-            description="Twelve connected service categories across AI, engineering, design, growth, finance, intelligence, and strategy."
+            description="Six focused service categories across AI, branding, design, web, product, and creative."
           />
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-gap-service">
+        <div className="grid grid-cols-1 md:grid-cols-2 3xl:grid-cols-3 gap-gap-service">
           {SERVICES.map((service, i) => {
             const image = SERVICE_IMAGE_BY_TITLE[service.title];
+            const category = SERVICE_CATEGORIES.find((item) => item.title === service.title);
 
             return (
               <Reveal key={service.title} delay={i * 0.05}>
-                <article className="bg-white border border-border rounded-8xl overflow-hidden transition-all duration-card hover:-translate-y-[7px] hover:shadow-card-hover group">
+                <a
+                  href={category ? `/services#${category.id}` : '/services'}
+                  className="block bg-white border border-border rounded-8xl overflow-hidden transition-all duration-card hover:-translate-y-[7px] hover:shadow-card-hover group"
+                >
                   {image ? (
                     <div className="h-[280px] w-full overflow-hidden bg-ink">
                       <img
@@ -46,7 +51,7 @@ export function ServicesGrid() {
                     <p className="text-sm text-muted leading-body mb-[18px] line-clamp-4">{service.description}</p>
                     <strong className="text-sm-plus font-bold">{service.linkLabel} ↗</strong>
                   </div>
-                </article>
+                </a>
               </Reveal>
             );
           })}

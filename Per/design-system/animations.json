@@ -11,6 +11,8 @@
     "marquee-left": "48s",
     "marquee-left-slow": "58s",
     "marquee-right": "48s",
+    "marquee-tools-left": "110s",
+    "marquee-tools-right": "120s",
     "marquee-innov": "38s",
     "marquee-testimonial": "44s"
   },

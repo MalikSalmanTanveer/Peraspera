@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 
 interface MarqueeProps {
   children: ReactNode;
-  direction?: 'left' | 'right' | 'left-slow' | 'left-innov' | 'left-testi';
+  direction?: 'left' | 'right' | 'left-slow' | 'left-innov' | 'left-testi' | 'left-tools' | 'right-tools';
   className?: string;
   gapClass?: string;
 }
@@ -13,6 +13,8 @@ const animationClass = {
   'left-slow': 'animate-scroll-left-slow',
   'left-innov': 'animate-scroll-left-innov',
   'left-testi': 'animate-scroll-left-testi',
+  'left-tools': 'animate-scroll-left-tools',
+  'right-tools': 'animate-scroll-right-tools',
 } as const;
 
 export function Marquee({

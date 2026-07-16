@@ -1,21 +1,37 @@
+import { useEffect, type ReactNode } from 'react';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
+import { ServicesPage } from './pages/ServicesPage';
+import { PortfolioPage } from './pages/PortfolioPage';
+import { BlogPage } from './pages/BlogPage';
+import { AboutPage } from './pages/AboutPage';
+import { LabsPage } from './pages/LabsPage';
 import { Navbar } from './sections/Navbar';
-import { Hero } from './sections/Hero';
-import { LogoMarquee } from './sections/LogoMarquee';
-import { GlobalReach } from './sections/GlobalReach';
-import { TrustStrip } from './sections/TrustStrip';
-import { ServicesGrid } from './sections/ServicesGrid';
-import { FeatureBlocks } from './sections/FeatureBlocks';
-import { PortfolioGrid } from './sections/PortfolioGrid';
-import { ProcessSteps } from './sections/ProcessSteps';
-import { CreativeStudio } from './sections/WhyUsStats';
-import { IndustriesGrid, ToolsGrid } from './sections/IndustriesTools';
-import { Testimonials } from './sections/Testimonials';
-import { FAQ } from './sections/FAQ';
-import { BlogSection } from './sections/BlogSection';
-import { FinalCTA, PerasperaLabsBanner } from './sections/FinalCTA';
-import { ContactForm } from './sections/ContactForm';
 import { Footer } from './sections/Footer';
 import { WhatsAppWidget, BackToTop } from './sections/FloatingWidgets';
+
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) return;
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
+
+  return null;
+}
+
+function PageShell({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <Navbar />
+      <main id="main">{children}</main>
+      <Footer />
+      <WhatsAppWidget />
+      <BackToTop />
+    </>
+  );
+}
 
 export default function App() {
   return (
@@ -26,29 +42,51 @@ export default function App() {
       >
         Skip to main content
       </a>
-      <Navbar />
-      <main id="main">
-        <Hero />
-        <LogoMarquee />
-        <GlobalReach />
-        <TrustStrip />
-        <ServicesGrid />
-        <FeatureBlocks />
-        <PortfolioGrid />
-        <ProcessSteps />
-        <CreativeStudio />
-        <IndustriesGrid />
-        <ToolsGrid />
-        <Testimonials />
-        <BlogSection />
-        <FAQ />
-        <PerasperaLabsBanner />
-        <FinalCTA />
-        <ContactForm />
-      </main>
-      <Footer />
-      <WhatsAppWidget />
-      <BackToTop />
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/services"
+          element={
+            <PageShell>
+              <ServicesPage />
+            </PageShell>
+          }
+        />
+        <Route
+          path="/portfolio"
+          element={
+            <PageShell>
+              <PortfolioPage />
+            </PageShell>
+          }
+        />
+        <Route path="/works" element={<Navigate to="/portfolio" replace />} />
+        <Route
+          path="/blog"
+          element={
+            <PageShell>
+              <BlogPage />
+            </PageShell>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <PageShell>
+              <AboutPage />
+            </PageShell>
+          }
+        />
+        <Route
+          path="/labs"
+          element={
+            <PageShell>
+              <LabsPage />
+            </PageShell>
+          }
+        />
+      </Routes>
     </>
   );
 }

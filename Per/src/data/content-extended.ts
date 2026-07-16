@@ -75,7 +75,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: 'What does Peraspera do?',
     answer:
-      'Peraspera offers AI & automation, software engineering, web design & development, mobile apps, SaaS & product development, branding & creative, UI/UX design, AI creative studio, digital growth, accounting & finance, business intelligence, and strategy & consulting.',
+      'Peraspera offers AI & automation, branding & creative, UI/UX design, web design & development, SaaS & product development, and AI creative studio services.',
   },
   {
     question: 'Do you offer monthly retainers?',
@@ -108,17 +108,11 @@ export const WHATSAPP_REGIONS = [
 
 export const SERVICE_OPTIONS: { icon: AppIconName; label: string }[] = [
   { icon: 'Bot', label: 'AI & Automation' },
-  { icon: 'Server', label: 'Software Engineering' },
-  { icon: 'Globe', label: 'Web Design & Development' },
-  { icon: 'Smartphone', label: 'Mobile App Development' },
-  { icon: 'Rocket', label: 'SaaS & Product Development' },
   { icon: 'Sparkles', label: 'Branding & Creative' },
   { icon: 'Hexagon', label: 'UI / UX Design' },
+  { icon: 'Globe', label: 'Web Design & Development' },
+  { icon: 'Rocket', label: 'SaaS & Product Development' },
   { icon: 'Clapperboard', label: 'AI Creative Studio' },
-  { icon: 'Megaphone', label: 'Digital Growth' },
-  { icon: 'Briefcase', label: 'Accounting & Finance' },
-  { icon: 'Activity', label: 'Business Intelligence' },
-  { icon: 'Brain', label: 'Strategy & Consulting' },
 ];
 
 export const BUDGET_OPTIONS = [

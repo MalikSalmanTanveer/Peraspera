@@ -1,7 +1,8 @@
-import { SERVED_COUNTRIES } from '../data/countries';
+import mapImage from '../assets/maps.jpg';
+import { GLOBAL_REACH_STATS } from '../data/countries';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
-import { WorldMap } from '../components/WorldMap';
+import { CountryFlagsMarquee } from '../components/CountryFlagsMarquee';
 
 export function GlobalReach() {
   return (
@@ -10,37 +11,40 @@ export function GlobalReach() {
       className="bg-ink text-white py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile"
     >
       <Container>
-        <div className="grid grid-cols-1 xl:grid-cols-[0.9fr_1.1fr] gap-gap-xl items-center">
-          <Reveal>
-            <span className="section-label section-label-light">Global Reach</span>
+        <Reveal>
+          <div className="mx-auto max-w-[920px] text-center">
+            <span className="section-label section-label-light">Global Dominance</span>
             <h2 className="section-heading text-white">
-              Serving clients across six countries worldwide.
+              A worldwide footprint built on trust and delivery.
             </h2>
-            <p className="text-overlay-white-55 leading-body-2xl mt-6 max-w-[480px]">
-              Peraspera works with teams in the United States, Canada, United Kingdom, Germany,
-              UAE, and Pakistan — delivering design, web, and AI projects remotely and on-site.
-            </p>
+          </div>
+        </Reveal>
 
-            <div className="flex flex-wrap gap-4 mt-10">
-              {SERVED_COUNTRIES.map((country) => (
-                <div
-                  key={country.code}
-                  title={country.name}
-                  className="flex items-center justify-center w-14 h-14 rounded-2xl bg-overlay-white-08 border border-overlay-white-12 text-3xl hover:border-accent/50 hover:bg-accent/10 transition-colors duration-normal"
-                  aria-label={country.name}
-                >
-                  <span role="img" aria-hidden="true">
-                    {country.flag}
-                  </span>
+        <Reveal delay={0.06}>
+          <div className="relative mt-10 overflow-hidden rounded-3xl border border-white/10 bg-black">
+            <img
+              src={mapImage}
+              alt="World map showing countries where Per Aspera serves clients"
+              className="w-full object-cover object-center"
+              loading="lazy"
+            />
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <div className="mt-10 grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+            {GLOBAL_REACH_STATS.map((stat) => (
+              <div key={stat.label} className="text-center md:text-left">
+                <div className="font-display text-3xl font-extrabold text-accent md:text-4xl">
+                  {stat.value}
                 </div>
-              ))}
-            </div>
-          </Reveal>
+                <div className="mt-1 text-sm text-overlay-white-48">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
 
-          <Reveal delay={0.1}>
-            <WorldMap />
-          </Reveal>
-        </div>
+        <CountryFlagsMarquee />
       </Container>
     </section>
   );

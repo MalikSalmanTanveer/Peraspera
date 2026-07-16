@@ -19,14 +19,7 @@ export interface MegaColumn {
   links: MegaLink[];
 }
 
-const NEW_OFFERINGS = new Set([
-  'AI Agents',
-  'AI Chatbots',
-  'AI SaaS Products',
-  'AI Images',
-  'AI Videos',
-  'AI Consulting',
-]);
+const NEW_OFFERINGS = new Set(['AI Chatbots', 'AI Images', 'AI Videos']);
 
 export const MEGA_COLUMNS: MegaColumn[] = SERVICE_CATEGORIES.map((category) => ({
   id: category.id,

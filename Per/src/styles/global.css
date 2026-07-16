@@ -159,6 +159,8 @@
   .animate-scroll-right,
   .animate-scroll-left-innov,
   .animate-scroll-left-testi,
+  .animate-scroll-left-tools,
+  .animate-scroll-right-tools,
   .animate-orbit-slow,
   .animate-orbit-reverse-slow {
     animation: none !important;

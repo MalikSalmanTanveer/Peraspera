@@ -1,14 +1,14 @@
 import { BRAND } from '../data/site';
 import { SERVED_COUNTRIES } from '../data/countries';
-import { OrbitingServices } from '../components/OrbitingServices';
+import { CountryFlag } from '../components/CountryFlag';
 
 const FOOTER_TAGLINE = [
   'AI & Automation',
-  'Software Engineering',
-  'Web & SaaS',
+  'Branding & Creative',
   'UI / UX Design',
-  'Digital Growth',
-  'Strategy & Consulting',
+  'Web & Development',
+  'SaaS & Product',
+  'AI Creative Studio',
 ] as const;
 
 const SOCIALS = [
@@ -36,16 +36,19 @@ export function Footer() {
       />
 
       <div className="relative z-[1] px-nav-x pb-10 pt-16 max-md:px-nav-x-mobile">
-        <div className="mx-auto mb-8 flex max-w-container justify-center gap-3 md:gap-4">
+        <div className="mx-auto mb-8 flex max-w-container flex-wrap justify-center gap-2 md:gap-2.5">
           {SERVED_COUNTRIES.map((country) => (
             <span
               key={country.code}
               title={country.name}
-              className="text-2xl md:text-3xl"
-              role="img"
+              className="inline-flex overflow-hidden rounded-md ring-1 ring-white/10"
               aria-label={country.name}
             >
-              {country.flag}
+              <CountryFlag
+                code={country.code}
+                name={country.name}
+                className="h-5 w-7 object-cover md:h-6 md:w-8"
+              />
             </span>
           ))}
         </div>
@@ -63,11 +66,9 @@ export function Footer() {
           </p>
         </div>
 
-        <OrbitingServices className="mb-6" />
-
         <div className="mx-auto max-w-container overflow-hidden pb-2 pt-4 text-center">
           <a
-            href="#home"
+            href="/"
             className="inline-block font-display text-[clamp(3.25rem,13.5vw,10.5rem)] font-extrabold leading-[0.88] tracking-tighter text-white transition-opacity duration-medium hover:opacity-90"
             aria-label={`${BRAND.name} home`}
           >
@@ -97,7 +98,7 @@ export function Footer() {
           </div>
 
           <a
-            href="#contact"
+            href="/#contact"
             className="font-body text-sm font-semibold text-overlay-footer-text-35 transition-colors duration-normal hover:text-white"
           >
             Get in touch →

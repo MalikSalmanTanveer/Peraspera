@@ -1,4 +1,5 @@
 import { BRAND } from '../data/site';
+import { LABS_PROJECTS } from '../data/tools-stack';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { AppIcon } from '../components/AppIcon';
@@ -30,7 +31,7 @@ export function FinalCTA() {
             <Button variant="dark" href="#contact">
               Request Quote ↗
             </Button>
-            <Button variant="outline" href="#services">
+            <Button variant="outline" href="/services">
               Explore Services
             </Button>
           </div>
@@ -46,27 +47,76 @@ export function PerasperaLabsBanner() {
       id="peraspera-labs"
       className="py-24 px-nav-x bg-ink text-white max-md:py-20 max-md:px-nav-x-mobile border-y border-overlay-footer-border-07"
     >
-      <Container className="max-w-container-cta text-center">
+      <Container className="max-w-container">
         <Reveal>
-          <div className="inline-flex items-center gap-2 rounded-pill border border-overlay-accent-border-42 bg-accent/10 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-accent mb-6">
-            <AppIcon name="FlaskConical" className="w-4 h-4" />
-            Innovation Arm
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 rounded-pill border border-overlay-accent-border-42 bg-accent/10 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-accent mb-6">
+              <AppIcon name="FlaskConical" className="w-4 h-4" />
+              Innovation Arm
+            </div>
+            <h2 className="font-display text-section font-extrabold leading-snug tracking-snug mb-5">
+              {BRAND.labsLabel}
+            </h2>
+            <p className="text-md text-overlay-white-55 leading-body-xl max-w-[620px] mx-auto mb-10">
+              Our lab explores AI products, automation prototypes, and experimental design systems —
+              extending Peraspera&apos;s studio work into research and rapid builds.
+            </p>
           </div>
-          <h2 className="font-display text-section font-extrabold leading-snug tracking-snug mb-5">
-            {BRAND.labsLabel}
-          </h2>
-          <p className="text-md text-overlay-white-55 leading-body-xl max-w-[620px] mx-auto mb-8">
-            Our lab explores AI products, automation prototypes, and experimental design systems —
-            extending Peraspera&apos;s studio work into research and rapid builds.
-          </p>
-          <span
-            className="inline-flex items-center gap-2 font-display text-sm-plus font-extrabold text-accent border-b border-dashed border-accent/60 pb-1 cursor-default"
-            aria-label="Peraspera Labs link placeholder"
-          >
-            perasperalabs.com
-            <AppIcon name="Globe" className="w-4 h-4" />
-          </span>
         </Reveal>
+
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {LABS_PROJECTS.map((project, index) => (
+            <Reveal key={project.title} delay={index * 0.06}>
+              <article className="flex h-full flex-col rounded-3xl border border-overlay-white-12 bg-overlay-white-08 p-6 md:p-8">
+                <div className="mb-4 flex items-start gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/15">
+                    <AppIcon name="Brain" className="h-5 w-5 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-xl font-extrabold leading-snug text-white md:text-2xl">
+                      {project.title}
+                    </h3>
+                  </div>
+                </div>
+                <p className="flex-1 text-sm leading-body text-overlay-white-55 md:text-md">
+                  {project.description}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-pill border border-overlay-white-12 bg-black/30 px-3 py-1 text-2xs font-bold uppercase tracking-wide text-accent"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-6 flex flex-wrap items-center gap-5">
+                  {project.liveUrl ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-display text-sm-plus font-extrabold text-accent transition-colors hover:text-white"
+                    >
+                      Live Demo
+                      <AppIcon name="ArrowUpRight" className="h-4 w-4" strokeWidth={2.25} />
+                    </a>
+                  ) : null}
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 font-display text-sm-plus font-extrabold text-white transition-colors hover:text-accent"
+                  >
+                    View on GitHub
+                    <AppIcon name="ArrowUpRight" className="h-4 w-4" strokeWidth={2.25} />
+                  </a>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </Container>
     </section>
   );

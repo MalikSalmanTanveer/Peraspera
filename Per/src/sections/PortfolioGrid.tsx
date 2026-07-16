@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
 import { PORTFOLIO } from '../data/content';
 import { WORK_IMAGES } from '../data/works';
 import { Container } from '../components/Container';
 import { PlaceholderImage } from '../components/PlaceholderImage';
 import { Reveal } from '../components/Reveal';
 import { SectionHeader } from '../components/SectionHeader';
+import { Button } from '../components/Button';
 
 const PORTFOLIO_SPANS: Record<string, string> = {
   'col-span-7 row-span-2': 'xl:col-span-7 xl:row-span-2',
@@ -24,13 +26,25 @@ export function PortfolioGrid() {
             title="Sample projects across branding, websites, UI/UX, and campaigns."
             description="A selection of Peraspera studio work — brand systems, product UI, landing pages, and campaign visuals."
           />
+          <div className="mb-10 flex flex-wrap items-center justify-center gap-4">
+            <Button variant="dark" href="/portfolio">
+              View All Client Projects ↗
+            </Button>
+            <Link
+              to="/portfolio"
+              className="font-body text-sm-plus font-semibold text-muted transition-colors hover:text-ink"
+            >
+              11 live websites →
+            </Link>
+          </div>
         </Reveal>
 
         <div className="grid grid-cols-1 xl:grid-cols-12 auto-rows-[300px] xl:auto-rows-[280px] gap-5 xl:gap-gap-portfolio mt-4">
           {PORTFOLIO.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.06}>
-              <article
-                className={`relative rounded-8xl overflow-hidden bg-dark-elevated text-white transition-transform duration-card hover:-translate-y-2 group h-full min-h-[280px] ${PORTFOLIO_SPANS[item.span] ?? ''}`}
+              <Link
+                to="/portfolio"
+                className={`relative block rounded-8xl overflow-hidden bg-dark-elevated text-white transition-transform duration-card hover:-translate-y-2 group h-full min-h-[280px] ${PORTFOLIO_SPANS[item.span] ?? ''}`}
               >
                 {item.imageIndex !== undefined ? (
                   <img
@@ -52,7 +66,7 @@ export function PortfolioGrid() {
                   </span>
                   <h3 className="font-display text-4xl md:text-5xl font-extrabold mt-3">{item.title}</h3>
                 </div>
-              </article>
+              </Link>
             </Reveal>
           ))}
         </div>
