@@ -171,14 +171,13 @@ export function PortfolioPage() {
         <Container>
           <Reveal>
             <div className="relative mb-14 overflow-hidden rounded-8xl border border-border bg-white">
-              <div className="relative min-h-[280px] overflow-hidden bg-ink lg:min-h-[420px]">
+              <div className="relative overflow-hidden bg-[#f4f4f4]">
                 <FeaturedWorksCarousel
                   works={featuredWorks}
                   priority
                   showVisitLink
-                  className="h-full min-h-[280px] lg:min-h-[420px]"
+                  captionBelow
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/20 to-transparent" />
               </div>
             </div>
           </Reveal>
@@ -186,29 +185,27 @@ export function PortfolioPage() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {filteredWorks.map((work, index) => (
               <Reveal key={work.id} delay={index * 0.04}>
-                <article
-                  className={`group overflow-hidden rounded-8xl border border-border bg-white transition-all duration-card hover:-translate-y-1 hover:shadow-card-hover ${
-                    work.span === 'large' ? 'xl:col-span-2' : ''
-                  }`}
-                >
-                  <div
-                    className={`relative overflow-hidden bg-ink ${work.span === 'large' ? 'h-[320px]' : 'h-[240px]'}`}
-                  >
-                    <WorkScreenshot id={work.id} url={work.url} title={work.title} />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent opacity-80 transition-opacity group-hover:opacity-95" />
+                <article className="group flex h-full flex-col overflow-hidden rounded-8xl border border-border bg-white transition-all duration-card hover:-translate-y-1 hover:shadow-card-hover">
+                  <div className="relative h-[240px] shrink-0 overflow-hidden bg-[#f4f4f4] md:h-[260px]">
+                    <WorkScreenshot
+                      id={work.id}
+                      url={work.url}
+                      title={work.title}
+                      previewSrc={work.previewSrc}
+                    />
                     <WorkExternalLink href={work.url} title={work.title} />
-                    <div className="absolute inset-0 flex flex-col justify-end p-6">
-                      <span className="text-2xs font-black uppercase tracking-widest text-accent">
-                        {work.category}
-                      </span>
-                      <h3 className="mt-2 font-display text-2xl font-extrabold text-white md:text-3xl">
-                        {work.title}
-                      </h3>
-                    </div>
                   </div>
 
-                  <div className="p-6">
-                    <p className="text-sm leading-body text-muted md:text-md">{work.description}</p>
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="text-2xs font-black uppercase tracking-widest text-accent">
+                      {work.category}
+                    </span>
+                    <h3 className="mt-2 font-display text-2xl font-extrabold text-ink md:text-[1.65rem]">
+                      {work.title}
+                    </h3>
+                    <p className="mt-3 flex-1 text-sm leading-body text-muted md:text-md">
+                      {work.description}
+                    </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {work.services.map((service) => (
                         <span

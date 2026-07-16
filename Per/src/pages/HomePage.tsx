@@ -8,8 +8,6 @@ import { ServicesGrid } from '../sections/ServicesGrid';
 
 import { FeatureBlocks } from '../sections/FeatureBlocks';
 
-import { PortfolioGrid } from '../sections/PortfolioGrid';
-
 import { ProcessSteps } from '../sections/ProcessSteps';
 
 import { PerasperaLabsPromo } from '../sections/PerasperaLabsPromo';
@@ -51,8 +49,6 @@ export function HomePage() {
         <ServicesGrid />
 
         <FeatureBlocks />
-
-        <PortfolioGrid />
 
         <ProcessSteps />
 

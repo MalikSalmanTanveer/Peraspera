@@ -189,13 +189,12 @@ export function ServicesPage() {
                             <img
                               src={image}
                               alt=""
-                              className="h-full w-full object-cover object-right opacity-90"
+                              className="h-full w-full object-cover object-right"
                             />
                             <div
-                              className={`absolute inset-0 bg-gradient-to-r ${category.gradient}`}
+                              className="pointer-events-none absolute inset-y-0 left-0 w-[min(100%,520px)] bg-gradient-to-r from-ink/85 via-ink/45 to-transparent"
                               aria-hidden="true"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
                             <div className="absolute bottom-0 left-0 p-6 md:p-8">
                               <div className="flex items-center gap-3">
                                 <div

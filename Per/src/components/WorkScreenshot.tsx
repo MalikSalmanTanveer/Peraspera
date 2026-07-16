@@ -5,6 +5,7 @@ interface WorkScreenshotProps {
   id: string;
   url: string;
   title: string;
+  previewSrc?: string;
   priority?: boolean;
   className?: string;
 }
@@ -13,10 +14,11 @@ export function WorkScreenshot({
   id,
   url,
   title,
+  previewSrc,
   priority = false,
   className = '',
 }: WorkScreenshotProps) {
-  const [src, setSrc] = useState(workScreenshotSrc(id));
+  const [src, setSrc] = useState(previewSrc ?? workScreenshotSrc(id));
   const [loaded, setLoaded] = useState(false);
   const [usedFallback, setUsedFallback] = useState(false);
 
@@ -34,11 +36,17 @@ export function WorkScreenshot({
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : 'auto'}
         decoding="async"
-        className={`h-full w-full object-cover object-top transition-all duration-image-slow group-hover:scale-[1.05] ${
+        className={`h-full w-full object-cover object-top transition-transform duration-image-slow group-hover:scale-[1.03] ${
           loaded ? 'opacity-100' : 'opacity-0'
         }`}
         onLoad={() => setLoaded(true)}
         onError={() => {
+          if (previewSrc && src === previewSrc) {
+            setUsedFallback(true);
+            setLoaded(false);
+            setSrc(workScreenshotSrc(id));
+            return;
+          }
           if (!usedFallback) {
             setUsedFallback(true);
             setLoaded(false);

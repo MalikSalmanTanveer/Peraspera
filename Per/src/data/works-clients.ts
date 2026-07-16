@@ -20,6 +20,8 @@ export interface ClientWork {
   };
   featured?: boolean;
   span?: 'large' | 'standard';
+  /** When the live site blocks bots (e.g. Cloudflare), use a remote preview URL */
+  previewSrc?: string;
 }
 
 export const WORK_CATEGORIES: Array<WorkCategory | 'All'> = [
@@ -48,7 +50,6 @@ export const CLIENT_WORKS: ClientWork[] = [
       role: 'Tourism & Travel',
     },
     featured: true,
-    span: 'large',
   },
   {
     id: 'hildes',
@@ -65,7 +66,6 @@ export const CLIENT_WORKS: ClientWork[] = [
       role: 'Business Services',
     },
     featured: true,
-    span: 'large',
   },
   {
     id: 'karynsuarez',
@@ -101,6 +101,8 @@ export const CLIENT_WORKS: ClientWork[] = [
     id: 'rootsraices',
     title: 'Roots Raíces',
     url: 'https://rootsraices.com/',
+    previewSrc:
+      'https://image.thum.io/get/width/1440/crop/900/noanimate/rootsraices.com',
     category: 'Real Estate',
     services: ['Real Estate Web', 'Branding', 'Lead Capture'],
     description:
@@ -114,17 +116,17 @@ export const CLIENT_WORKS: ClientWork[] = [
   },
   {
     id: 'manchester',
-    title: 'Manchester Properties',
+    title: 'Manchester',
     url: 'https://manchester.us/',
-    category: 'Real Estate',
-    services: ['Property Website', 'Web Design', 'UI/UX'],
+    category: 'eCommerce',
+    services: ['Fashion eCommerce', 'Web Design', 'UI/UX'],
     description:
-      'A property-focused website built to highlight listings, services, and regional market expertise.',
+      'A modern clothing and apparel storefront with seasonal collections, product categories, and a polished shopping experience.',
     testimonial: {
       quote:
-        'Clean design, fast delivery, and a site that finally matches the quality of our property portfolio.',
+        'The site showcases our apparel beautifully — shoppers can browse shirts, jeans, and promotions with ease.',
       name: 'Manchester Team',
-      role: 'Real Estate',
+      role: 'Fashion & Apparel',
     },
   },
   {
@@ -187,7 +189,6 @@ export const CLIENT_WORKS: ClientWork[] = [
       role: 'eCommerce Brand',
     },
     featured: true,
-    span: 'standard',
   },
 ];
 
@@ -202,7 +203,7 @@ export const WORKS_PAGE_STATS = [
 
 /** Local screenshot in /public/works, with thum.io fallback */
 export function workScreenshotSrc(id: string): string {
-  return `/works/${id}.png`;
+  return `/works/${id}.png?v=20260716`;
 }
 
 export function workScreenshotFallback(url: string): string {
