@@ -72,9 +72,42 @@
   .animate-orbit-reverse-slow {
     animation: orbit-spin-reverse 42s linear infinite;
   }
+
+  @keyframes comingSoonScroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .coming-soon-track {
+    animation: comingSoonScroll 28s linear infinite;
+  }
+
+  @keyframes comingSoonPulse {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scale(0.92);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .coming-soon-dot {
+    animation: comingSoonPulse 1.6s ease-in-out infinite;
+  }
 }
 
 @layer components {
+  .label-pill-equal {
+    @apply inline-flex min-h-[30px] min-w-[9.5rem] items-center justify-center rounded-md px-3 py-1.5 text-center text-2xs font-bold uppercase tracking-wide;
+  }
+
   .btn-base {
     @apply inline-flex items-center justify-center font-bold transition-all duration-medium rounded-pill;
   }

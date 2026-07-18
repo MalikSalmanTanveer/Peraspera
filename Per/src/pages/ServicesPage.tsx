@@ -200,7 +200,7 @@ export function ServicesPage() {
                                 >
                                   <AppIcon name={category.icon} className="h-5 w-5 text-white" />
                                 </div>
-                                <span className="text-xs font-black uppercase tracking-widest text-accent-gold">
+                                <span className="label-pill-equal bg-accent/10 text-accent-gold">
                                   {category.shortCategory}
                                 </span>
                               </div>
@@ -220,7 +220,7 @@ export function ServicesPage() {
                               >
                                 <AppIcon name={category.icon} className="h-5 w-5 text-ink" />
                               </div>
-                              <span className="text-xs font-black uppercase tracking-widest text-accent-gold">
+                              <span className="label-pill-equal bg-accent/10 text-accent-gold">
                                 {category.shortCategory}
                               </span>
                             </div>

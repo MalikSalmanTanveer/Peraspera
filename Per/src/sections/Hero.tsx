@@ -3,105 +3,78 @@ import { HERO_COPY, HERO_STATS } from '../data/site';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { CountUp } from '../components/CountUp';
-import { PlaceholderImage } from '../components/PlaceholderImage';
 import { Reveal } from '../components/Reveal';
 
 export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-end bg-ink text-white overflow-hidden pt-[120px] pb-28 px-nav-x max-md:pt-hero-pt-mobile max-md:pb-20 max-md:min-h-0 max-md:px-nav-x-mobile"
+      className="relative flex min-h-[92vh] items-center justify-center overflow-hidden bg-ink px-nav-x pb-24 pt-[132px] text-white max-md:min-h-0 max-md:px-nav-x-mobile max-md:pb-20 max-md:pt-[120px]"
     >
-      <div className="hero-grid-bg absolute inset-0" aria-hidden="true" />
+      <div className="hero-grid-bg absolute inset-0 opacity-55" aria-hidden="true" />
       <motion.div
-        className="orb absolute rounded-full blur-[120px] w-[700px] h-[700px] bg-accent opacity-[0.18] -right-40 -top-[150px]"
+        className="orb absolute -right-32 -top-24 h-[560px] w-[560px] rounded-full bg-accent opacity-[0.14] blur-[120px]"
         aria-hidden="true"
-        animate={{ scale: [1, 1.08, 1], opacity: [0.16, 0.22, 0.16] }}
+        animate={{ scale: [1, 1.07, 1], opacity: [0.12, 0.18, 0.12] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
       />
       <div
-        className="orb absolute rounded-full blur-[120px] w-[460px] h-[460px] bg-white opacity-[0.055] -left-[90px] -bottom-[120px]"
+        className="orb absolute -bottom-24 -left-20 h-[380px] w-[380px] rounded-full bg-white opacity-[0.04] blur-[100px]"
         aria-hidden="true"
       />
 
       <Container className="relative z-[2] w-full">
-        <div className="grid grid-cols-1 3xl:grid-cols-[1.06fr_0.94fr] gap-gap-xl items-end">
-          <Reveal>
-            <h1 className="font-display text-hero font-extrabold leading-hero tracking-tighter max-md:text-hero-mobile">
-              {HERO_COPY.headline}{' '}
-              <motion.em
-                className="not-italic text-accent inline-block"
-                animate={{ textShadow: ['0 0 0px transparent', '0 0 24px rgba(254,163,39,0.35)', '0 0 0px transparent'] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                {HERO_COPY.headlineAccent}
-              </motion.em>{' '}
-              {HERO_COPY.headlineEnd}
-            </h1>
-
-            <p className="max-w-[760px] mt-8 text-xl font-light leading-body-xl text-overlay-white-55 max-md:text-md-plus">
-              {HERO_COPY.subheading}
-            </p>
-
-            <div className="flex gap-gap-xs flex-wrap mt-10 max-sm:flex-col">
-              <Button variant="yellow" href={HERO_COPY.primaryCta.href}>
-                {HERO_COPY.primaryCta.label} ↗
-              </Button>
-              <Button variant="light" href={HERO_COPY.secondaryCta.href}>
-                {HERO_COPY.secondaryCta.label}
-              </Button>
-            </div>
-
-            <dl className="grid grid-cols-2 md:grid-cols-4 gap-gap-md mt-20 pt-12 border-t border-overlay-white-09 max-sm:grid-cols-1">
-              {HERO_STATS.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                >
-                  <dt className="font-display text-7xl text-white leading-none">
-                    <CountUp value={stat.value} />
-                  </dt>
-                  <dd className="mt-2 text-sm-plus text-overlay-white-43">{stat.label}</dd>
-                </motion.div>
-              ))}
-            </dl>
-          </Reveal>
-
-          <div className="relative min-h-[580px] hidden 3xl:block">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+        <Reveal className="mx-auto flex max-w-[920px] flex-col items-center text-center">
+          <h1 className="font-display text-[clamp(2.75rem,6.5vw,5.5rem)] font-extrabold leading-[1.02] tracking-tighter max-md:text-hero-mobile">
+            {HERO_COPY.headline}{' '}
+            <motion.em
+              className="inline-block not-italic text-accent"
+              animate={{
+                textShadow: [
+                  '0 0 0px transparent',
+                  '0 0 28px rgba(254,163,39,0.4)',
+                  '0 0 0px transparent',
+                ],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <PlaceholderImage
-                gradient="from-violet-500/40 via-indigo-600/30 to-ink"
-                className="absolute left-0 top-0 w-[54%] h-[300px] rounded-hero-image border border-overlay-white-12 shadow-hero-image object-cover"
-                label="Agency workspace preview"
-              />
-              <PlaceholderImage
-                gradient="from-orange-400/35 via-accent/25 to-ink"
-                className="absolute right-0 bottom-0 w-[78%] h-[430px] rounded-hero-image border border-overlay-white-12 shadow-hero-image object-cover"
-                label="Creative team collaboration"
-              />
-            </motion.div>
-            <motion.div
-              className="absolute left-[12%] bottom-[70px] bg-overlay-white-08 backdrop-blur-[18px] border border-overlay-white-12 rounded-floating-card p-5 max-w-[260px]"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <span className="inline-flex bg-accent text-ink rounded-pill px-2.5 py-[5px] text-2xs font-black uppercase tracking-wider mb-3">
-                Peraspera Retainer
-              </span>
-              <p className="text-base text-overlay-white-72 leading-loose">
-                Connected ecosystems where AI, software, automation, finance, and brand move as
-                one system.
-              </p>
-            </motion.div>
+              {HERO_COPY.headlineAccent}
+            </motion.em>
+            <br className="hidden sm:block" />
+            <span className="text-white"> {HERO_COPY.headlineEnd}</span>
+          </h1>
+
+          <p className="mt-8 max-w-[680px] text-lg font-light leading-body-xl text-overlay-white-55 max-md:text-md-plus">
+            {HERO_COPY.subheading}
+          </p>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-gap-xs max-sm:flex-col max-sm:items-stretch">
+            <Button variant="yellow" href={HERO_COPY.primaryCta.href}>
+              {HERO_COPY.primaryCta.label} ↗
+            </Button>
+            <Button variant="light" href={HERO_COPY.secondaryCta.href}>
+              {HERO_COPY.secondaryCta.label}
+            </Button>
           </div>
-        </div>
+
+          <dl className="mt-16 grid w-full max-w-[820px] grid-cols-2 gap-gap-md border-t border-overlay-white-09 pt-12 md:grid-cols-4 max-sm:grid-cols-1">
+            {HERO_STATS.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+              >
+                <dt className="font-display text-5xl leading-none text-white md:text-6xl">
+                  <CountUp value={stat.value} />
+                </dt>
+                <dd className="mt-2 text-sm-plus text-overlay-white-43">{stat.label}</dd>
+              </motion.div>
+            ))}
+          </dl>
+        </Reveal>
       </Container>
     </section>
   );

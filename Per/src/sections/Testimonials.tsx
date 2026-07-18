@@ -2,6 +2,7 @@ import { TESTIMONIALS } from '../data/content-extended';
 import { Marquee } from '../components/Marquee';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
+import { SectionGridDark } from '../components/SectionGridDark';
 
 function Stars() {
   return (
@@ -25,15 +26,17 @@ function TestimonialCard({
   avatarColor,
 }: (typeof TESTIMONIALS)[number]) {
   return (
-    <article className="w-[380px] shrink-0 rounded-6xl border border-border bg-white p-padding-card-lg">
+    <article className="flex h-[320px] w-[380px] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[300px] max-md:w-[340px]">
       <Stars />
-      <blockquote className="text-md leading-body-lg text-muted">&ldquo;{quote}&rdquo;</blockquote>
-      <footer className="mt-6 flex items-center gap-3.5">
+      <blockquote className="line-clamp-6 flex-1 text-md leading-body-lg text-muted">
+        &ldquo;{quote}&rdquo;
+      </blockquote>
+      <footer className="mt-6 flex items-center gap-3.5 border-t border-border pt-5">
         {avatarSrc ? (
           <img
             src={avatarSrc}
             alt=""
-            className="h-12 w-12 shrink-0 rounded-full object-cover ring-2 ring-border"
+            className="h-12 w-12 shrink-0 rounded-full object-cover object-top ring-2 ring-border"
           />
         ) : (
           <div
@@ -43,10 +46,12 @@ function TestimonialCard({
             {initials}
           </div>
         )}
-        <div>
-          <cite className="font-display text-md font-extrabold not-italic text-ink">{name}</cite>
-          <p className="mt-0.5 text-sm font-semibold text-ink/80">{title}</p>
-          <p className="text-sm-plus text-muted">{role}</p>
+        <div className="min-w-0">
+          <cite className="block truncate font-display text-md font-extrabold not-italic text-ink">
+            {name}
+          </cite>
+          <p className="mt-0.5 truncate text-sm font-semibold text-ink/80">{title}</p>
+          <p className="truncate text-sm-plus text-muted">{role}</p>
         </div>
       </footer>
     </article>
@@ -55,13 +60,15 @@ function TestimonialCard({
 
 export function Testimonials() {
   return (
-    <section className="overflow-hidden bg-paper pb-padding-testi-b pt-padding-testi-y">
+    <SectionGridDark className="overflow-hidden pb-padding-testi-b pt-padding-testi-y">
       <Container className="mb-[52px] px-nav-x max-md:px-nav-x-mobile">
         <Reveal>
-          <span className="section-label">Client Love</span>
-          <h2 className="font-display text-section-alt font-extrabold leading-snug tracking-snug">
-            Trusted by founders and teams who need premium design fast.
-          </h2>
+          <div className="mx-auto max-w-[820px] text-center">
+            <span className="section-label section-label-light">Client Love</span>
+            <h2 className="mt-4 font-display text-section-alt font-extrabold leading-snug tracking-snug text-white">
+              Trusted by founders and teams who need premium design fast.
+            </h2>
+          </div>
         </Reveal>
       </Container>
 
@@ -70,6 +77,6 @@ export function Testimonials() {
           <TestimonialCard key={t.name} {...t} />
         ))}
       </Marquee>
-    </section>
+    </SectionGridDark>
   );
 }

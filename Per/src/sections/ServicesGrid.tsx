@@ -3,24 +3,25 @@ import { SERVICE_CATEGORIES } from '../data/services';
 import { SERVICE_IMAGE_BY_TITLE } from '../data/service-images';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
-import { SectionHeader } from '../components/SectionHeader';
+import { SectionGridDark } from '../components/SectionGridDark';
 
 export function ServicesGrid() {
   return (
-    <section
-      id="services"
-      className="py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile"
-    >
+    <SectionGridDark id="services" className="py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
       <Container>
         <Reveal>
-          <SectionHeader
-            label="Services"
-            title="Everything your business needs to look professional and grow online."
-            description="Six focused service categories across AI, branding, design, web, product, and finance."
-          />
+          <div className="mx-auto mb-14 max-w-[820px] text-center md:mb-16">
+            <span className="section-label section-label-light">Services</span>
+            <h2 className="mt-4 font-display text-section font-extrabold leading-snug tracking-snug text-white">
+              Everything your business needs to look professional and grow online.
+            </h2>
+            <p className="mx-auto mt-5 max-w-[640px] text-md-plus leading-body-lg text-overlay-white-55">
+              Six focused service categories across AI, branding, design, web, product, and finance.
+            </p>
+          </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 3xl:grid-cols-3 gap-gap-service">
+        <div className="grid grid-cols-1 gap-gap-service md:grid-cols-2 3xl:grid-cols-3">
           {HOME_SERVICES.map((service, i) => {
             const image = SERVICE_IMAGE_BY_TITLE[service.title];
             const category = SERVICE_CATEGORIES.find((item) => item.title === service.title);
@@ -29,10 +30,10 @@ export function ServicesGrid() {
               <Reveal key={service.title} delay={i * 0.05}>
                 <a
                   href={category ? `/services#${category.id}` : '/services'}
-                  className="block bg-white border border-border rounded-8xl overflow-hidden transition-all duration-card hover:-translate-y-[7px] hover:shadow-card-hover group"
+                  className="group flex h-full flex-col overflow-hidden rounded-8xl border border-overlay-white-10 bg-white transition-all duration-card hover:-translate-y-[7px] hover:shadow-card-hover"
                 >
                   {image ? (
-                    <div className="h-[280px] w-full overflow-hidden bg-ink">
+                    <div className="h-[280px] w-full shrink-0 overflow-hidden bg-ink">
                       <img
                         src={image}
                         alt={`${service.title} preview`}
@@ -41,15 +42,17 @@ export function ServicesGrid() {
                       />
                     </div>
                   ) : null}
-                  <div className="p-padding-card">
-                    <span className="text-xs font-black uppercase tracking-widest text-accent-gold">
+                  <div className="flex flex-1 flex-col p-padding-card">
+                    <span className="label-pill-equal self-start bg-accent/10 text-accent-gold">
                       {service.category}
                     </span>
-                    <h3 className="font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold my-3 leading-tight">
+                    <h3 className="my-3 font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold leading-tight text-ink">
                       {service.title}
                     </h3>
-                    <p className="text-sm text-muted leading-body mb-[18px] line-clamp-4">{service.description}</p>
-                    <strong className="text-sm-plus font-bold">{service.linkLabel} ↗</strong>
+                    <p className="mb-[18px] line-clamp-4 flex-1 text-sm leading-body text-muted">
+                      {service.description}
+                    </p>
+                    <strong className="text-sm-plus font-bold text-ink">{service.linkLabel} ↗</strong>
                   </div>
                 </a>
               </Reveal>
@@ -57,6 +60,6 @@ export function ServicesGrid() {
           })}
         </div>
       </Container>
-    </section>
+    </SectionGridDark>
   );
 }

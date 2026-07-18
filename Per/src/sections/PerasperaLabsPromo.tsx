@@ -1,53 +1,49 @@
 import { Link } from 'react-router-dom';
+import labsLogo from '../assets/logos/PERASPERALAB.png';
 import { BRAND } from '../data/site';
+import { LABS_HERO } from '../data/labs';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { AppIcon } from '../components/AppIcon';
+import { SectionGridDark } from '../components/SectionGridDark';
 
 export function PerasperaLabsPromo() {
   return (
-    <section
+    <SectionGridDark
       id="peraspera-labs-promo"
-      className="relative overflow-hidden bg-accent py-14 px-nav-x text-ink max-md:py-12 max-md:px-nav-x-mobile"
+      className="border-y border-overlay-white-08 py-16 px-nav-x max-md:px-nav-x-mobile max-md:py-14"
       aria-labelledby="labs-promo-heading"
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-40"
-        aria-hidden="true"
-        style={{
-          background:
-            'radial-gradient(circle at 15% 20%, rgba(255,255,255,0.55), transparent 42%), radial-gradient(circle at 85% 80%, rgba(13,13,13,0.08), transparent 38%)',
-        }}
-      />
-
-      <Container className="relative z-[1]">
+      <Container>
         <Reveal>
-          <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
-            <div className="max-w-2xl">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-pill border border-ink/10 bg-ink/5 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-ink">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-pill border border-overlay-accent-border-42 bg-accent/10 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-accent">
                 <AppIcon name="FlaskConical" className="h-4 w-4" />
-                Innovation Arm
+                {LABS_HERO.eyebrow}
               </div>
-              <h2
+              <img
+                src={labsLogo}
+                alt={LABS_HERO.title}
                 id="labs-promo-heading"
-                className="font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-tight tracking-tight"
-              >
-                Explore {BRAND.labsLabel}
-              </h2>
-              <p className="mt-4 max-w-xl text-md-plus leading-body-lg text-overlay-ink-68">
-                Our lab builds AI prototypes, automation experiments, and research projects — the
-                innovation layer behind Peraspera&apos;s studio work.
+                className="mb-4 h-auto w-[min(100%,320px)] object-contain"
+              />
+              <p className="font-display text-xl font-extrabold text-accent md:text-2xl">
+                {LABS_HERO.tagline}
+              </p>
+              <p className="mt-4 max-w-xl text-md-plus leading-body-lg text-overlay-white-55">
+                {LABS_HERO.homeSummary}
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <Button variant="dark" href={BRAND.labsUrl}>
+            <div className="flex flex-wrap gap-4 lg:justify-end">
+              <Button variant="yellow" href={BRAND.labsUrl}>
                 Visit Labs →
               </Button>
               <Link
                 to={BRAND.labsUrl}
-                className="inline-flex items-center gap-2 self-center font-display text-sm-plus font-extrabold text-ink transition-opacity hover:opacity-75"
+                className="inline-flex items-center gap-2 self-center font-display text-sm-plus font-extrabold text-white transition-opacity hover:text-accent"
               >
                 See live experiments
                 <AppIcon name="ArrowUpRight" className="h-4 w-4" strokeWidth={2.25} />
@@ -56,6 +52,6 @@ export function PerasperaLabsPromo() {
           </div>
         </Reveal>
       </Container>
-    </section>
+    </SectionGridDark>
   );
 }

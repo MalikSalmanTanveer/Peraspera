@@ -194,8 +194,6 @@ export const CLIENT_WORKS: ClientWork[] = [
     id: 'pilatessplendor',
     title: 'Pilates Splendor',
     url: 'https://www.instagram.com/pilatessplendor/',
-    previewSrc:
-      'https://image.thum.io/get/width/1440/crop/900/noanimate/www.instagram.com/pilatessplendor/',
     category: 'Websites',
     services: ['Social Media Management', 'Brand Direction', 'Content Strategy'],
     description:
@@ -220,7 +218,7 @@ export const WORKS_PAGE_STATS = [
 
 /** Local screenshot in /public/works, with thum.io fallback */
 export function workScreenshotSrc(id: string): string {
-  return `/works/${id}.png?v=20260716`;
+  return `/works/${id}.png?v=20260718`;
 }
 
 export function workScreenshotFallback(url: string): string {

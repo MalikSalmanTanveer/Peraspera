@@ -11,35 +11,12 @@ import { TESTIMONIALS } from '../data/content-extended';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
-import { AppIcon } from '../components/AppIcon';
-import { WorkScreenshot } from '../components/WorkScreenshot';
 import {
   FeaturedWorksCarousel,
   FeaturedWorksCarouselCompact,
 } from '../components/FeaturedWorksCarousel';
-
-function WorkExternalLink({ href, title }: { href: string; title: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`View ${title} live site`}
-      className="group/link absolute right-4 top-4 z-10 flex items-center gap-0 overflow-hidden rounded-full border border-white/25 bg-ink/40 p-1 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-normal hover:border-accent/70 hover:bg-ink/55 hover:pr-1"
-    >
-      <span className="max-w-0 overflow-hidden whitespace-nowrap pl-0 text-[11px] font-extrabold uppercase tracking-wider text-white opacity-0 transition-all duration-normal group-hover/link:max-w-[72px] group-hover/link:pl-3 group-hover/link:opacity-100">
-        Visit
-      </span>
-      <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-ink ring-2 ring-white/20 transition-transform duration-normal group-hover/link:scale-105 group-hover/link:ring-accent/40">
-        <span
-          className="absolute inset-0 rounded-full bg-gradient-to-br from-white/35 to-transparent"
-          aria-hidden="true"
-        />
-        <AppIcon name="ArrowUpRight" className="relative h-[18px] w-[18px]" strokeWidth={2.25} />
-      </span>
-    </a>
-  );
-}
+import { PortfolioWorksStrip } from '../components/PortfolioWorksStrip';
+import { SectionGridDark } from '../components/SectionGridDark';
 
 function Stars() {
   return (
@@ -79,16 +56,17 @@ export function PortfolioPage() {
     <div className="bg-ink">
       {/* Hero */}
       <section className="relative overflow-hidden text-white pt-[72px]">
+        <div className="hero-grid-bg absolute inset-0 opacity-45" aria-hidden="true" />
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_70%_-10%,rgba(254,163,39,0.12),transparent_55%)]"
           aria-hidden="true"
         />
 
         <Container className="relative z-[2] px-nav-x py-12 md:py-16 max-md:px-nav-x-mobile">
-          <div className="grid grid-cols-1 items-center gap-10 xl:grid-cols-[1.05fr_0.95fr] xl:gap-14">
+          <div className="mx-auto max-w-[920px] text-center">
             <Reveal>
               <nav
-                className="mb-6 flex items-center gap-2 text-sm text-overlay-white-48"
+                className="mb-6 flex items-center justify-center gap-2 text-sm text-overlay-white-48"
                 aria-label="Breadcrumb"
               >
                 <Link to="/" className="transition-colors hover:text-white">
@@ -99,16 +77,16 @@ export function PortfolioPage() {
               </nav>
 
               <span className="section-label section-label-light">Portfolio & Testimonials</span>
-              <h1 className="mt-4 max-w-[820px] font-display text-[clamp(2.5rem,5.5vw,4.25rem)] font-extrabold leading-[1.04] tracking-tighter">
+              <h1 className="mt-4 font-display text-[clamp(2.5rem,5.5vw,4.25rem)] font-extrabold leading-[1.04] tracking-tighter">
                 Websites and brands we&apos;ve{' '}
                 <em className="not-italic text-accent">shipped live.</em>
               </h1>
-              <p className="mt-6 max-w-[560px] text-lg font-light leading-body-xl text-overlay-white-55 max-md:text-md-plus">
+              <p className="mx-auto mt-6 max-w-[560px] text-lg font-light leading-body-xl text-overlay-white-55 max-md:text-md-plus">
                 Real projects across tourism, real estate, education, eCommerce, and food — with
                 client testimonials for every build.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Button variant="yellow" href="/#contact">
                   Start a Project ↗
                 </Button>
@@ -121,7 +99,7 @@ export function PortfolioPage() {
                 </button>
               </div>
 
-              <div className="mt-12 grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+              <div className="mx-auto mt-12 grid max-w-[820px] grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
                 {WORKS_PAGE_STATS.map((stat) => (
                   <div key={stat.label}>
                     <div className="font-display text-3xl font-extrabold text-accent md:text-4xl">
@@ -132,11 +110,11 @@ export function PortfolioPage() {
                 ))}
               </div>
             </Reveal>
-
-            <Reveal delay={0.08} className="hidden xl:block">
-              <FeaturedWorksCarouselCompact works={featuredWorks} priority />
-            </Reveal>
           </div>
+
+          <Reveal delay={0.08} className="mt-12 hidden xl:block">
+            <FeaturedWorksCarouselCompact works={featuredWorks} priority />
+          </Reveal>
         </Container>
 
         {/* Filter bar */}
@@ -164,14 +142,14 @@ export function PortfolioPage() {
         </div>
       </section>
 
-      {/* Featured spotlight */}
-      <section
+      {/* Featured spotlight + animated project strip */}
+      <SectionGridDark
         id="portfolio-grid"
-        className="scroll-mt-[132px] relative z-[1] rounded-t-[2rem] bg-paper py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile md:rounded-t-[2.5rem]"
+        className="scroll-mt-[132px] rounded-t-[2rem] py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile md:rounded-t-[2.5rem]"
       >
         <Container>
           <Reveal>
-            <div className="relative mb-14 overflow-hidden rounded-8xl border border-border bg-white">
+            <div className="relative mb-14 overflow-hidden rounded-8xl border border-overlay-white-12 bg-white">
               <div className="relative overflow-hidden bg-[#f4f4f4]">
                 <FeaturedWorksCarousel
                   works={featuredWorks}
@@ -183,51 +161,23 @@ export function PortfolioPage() {
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {filteredWorks.map((work, index) => (
-              <Reveal key={work.id} delay={index * 0.04}>
-                <article className="group flex h-full flex-col overflow-hidden rounded-8xl border border-border bg-white transition-all duration-card hover:-translate-y-1 hover:shadow-card-hover">
-                  <div className="relative h-[240px] shrink-0 overflow-hidden bg-[#f4f4f4] md:h-[260px]">
-                    <WorkScreenshot
-                      id={work.id}
-                      url={work.url}
-                      title={work.title}
-                      previewSrc={work.previewSrc}
-                    />
-                    <WorkExternalLink href={work.url} title={work.title} />
-                  </div>
+          <Reveal>
+            <div className="mb-8 text-center">
+              <span className="section-label section-label-light">All Projects</span>
+              <h2 className="mt-3 font-display text-3xl font-extrabold text-white md:text-4xl">
+                {activeFilter === 'All' ? 'Every live build in one scroll.' : `${activeFilter} projects.`}
+              </h2>
+            </div>
+          </Reveal>
 
-                  <div className="flex flex-1 flex-col p-6">
-                    <span className="text-2xs font-black uppercase tracking-widest text-accent">
-                      {work.category}
-                    </span>
-                    <h3 className="mt-2 font-display text-2xl font-extrabold text-ink md:text-[1.65rem]">
-                      {work.title}
-                    </h3>
-                    <p className="mt-3 flex-1 text-sm leading-body text-muted md:text-md">
-                      {work.description}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {work.services.map((service) => (
-                        <span
-                          key={service}
-                          className="rounded-md bg-paper px-2.5 py-1 text-2xs font-bold uppercase tracking-wide text-muted"
-                        >
-                          {service}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          <PortfolioWorksStrip works={filteredWorks} />
         </Container>
-      </section>
+      </SectionGridDark>
 
       {/* Client testimonials */}
-      <section className="bg-paper py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
-        <Container>
+      <section className="relative overflow-hidden bg-paper py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile">
+        <div className="hero-grid-bg pointer-events-none absolute inset-0 opacity-[0.05]" aria-hidden="true" />
+        <Container className="relative z-[1]">
           <Reveal>
             <div className="mx-auto max-w-[820px] text-center">
               <span className="section-label">Client Love</span>
@@ -241,9 +191,9 @@ export function PortfolioPage() {
           <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {TESTIMONIALS.map((review, index) => (
               <Reveal key={review.name} delay={index * 0.03}>
-                <article className="flex h-full flex-col rounded-6xl border border-border bg-white p-padding-card-lg">
+                <article className="flex h-full min-h-[320px] flex-col rounded-6xl border border-border bg-white p-padding-card-lg">
                   <Stars />
-                  <blockquote className="flex-1 text-md leading-body-lg text-muted">
+                  <blockquote className="line-clamp-8 flex-1 text-md leading-body-lg text-muted">
                     &ldquo;{review.quote}&rdquo;
                   </blockquote>
                   <footer className="mt-6 flex items-center gap-3.5 border-t border-border pt-5">
@@ -251,7 +201,7 @@ export function PortfolioPage() {
                       <img
                         src={review.avatarSrc}
                         alt=""
-                        className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-border"
+                        className="h-11 w-11 shrink-0 rounded-full object-cover object-top ring-2 ring-border"
                       />
                     ) : (
                       <div
@@ -260,12 +210,12 @@ export function PortfolioPage() {
                         {review.initials}
                       </div>
                     )}
-                    <div>
-                      <cite className="font-display text-md font-extrabold not-italic text-ink">
+                    <div className="min-w-0">
+                      <cite className="block truncate font-display text-md font-extrabold not-italic text-ink">
                         {review.name}
                       </cite>
-                      <p className="mt-0.5 text-sm font-semibold text-ink/80">{review.title}</p>
-                      <p className="text-sm-plus text-muted">{review.role}</p>
+                      <p className="mt-0.5 truncate text-sm font-semibold text-ink/80">{review.title}</p>
+                      <p className="truncate text-sm-plus text-muted">{review.role}</p>
                     </div>
                   </footer>
                 </article>

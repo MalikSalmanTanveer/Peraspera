@@ -2,6 +2,7 @@ import { FEATURE_IMAGES } from '../data/feature-images';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
+import { SectionGridDark } from '../components/SectionGridDark';
 
 const FEATURES = [
   {
@@ -17,7 +18,6 @@ const FEATURES = [
     ],
     cta: 'Start Branding Project ↗',
     image: FEATURE_IMAGES.brandTrusted,
-    reverse: false,
   },
   {
     label: 'Web, Product & AI',
@@ -32,45 +32,64 @@ const FEATURES = [
     ],
     cta: 'Explore Full Services ↗',
     image: FEATURE_IMAGES.webProductAi,
-    reverse: true,
   },
 ] as const;
 
 export function FeatureBlocks() {
   return (
-    <section className="bg-white py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
+    <SectionGridDark className="py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
       <Container>
-        {FEATURES.map((feature, i) => (
-          <Reveal key={feature.title}>
-            <div
-              className={`grid grid-cols-1 xl:grid-cols-2 gap-gap-xl items-center ${i < FEATURES.length - 1 ? 'mb-gap-split' : ''} ${feature.reverse ? 'xl:[&>*:first-child]:order-2' : ''}`}
-            >
-              <div className="relative rounded-hero-image overflow-hidden min-h-[500px] max-md:min-h-[340px] bg-ink">
-                <img
-                  src={feature.image}
-                  alt={feature.label}
-                  loading="lazy"
-                  className="w-full h-full min-h-[500px] max-md:min-h-[340px] object-cover object-right"
-                />
-              </div>
+        <Reveal>
+          <div className="mx-auto mb-12 max-w-[760px] text-center md:mb-14">
+            <span className="section-label section-label-light">What We Deliver</span>
+            <h2 className="mt-4 font-display text-section font-extrabold leading-snug tracking-snug text-white">
+              Brand clarity and technical execution — unified in one studio.
+            </h2>
+          </div>
+        </Reveal>
 
-              <div>
-                <span className="section-label">{feature.label}</span>
-                <h2 className="section-heading">{feature.title}</h2>
-                <p className="text-muted leading-body-2xl mt-5">{feature.description}</p>
-                <ul className="check-list">
-                  {feature.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-                <Button variant="dark" href="#contact">
-                  {feature.cta}
-                </Button>
-              </div>
+        <Reveal delay={0.05}>
+          <div className="overflow-hidden rounded-[2rem] border border-overlay-white-12 bg-white shadow-[0_40px_120px_rgba(0,0,0,0.35)]">
+            <div className="grid grid-cols-1 xl:grid-cols-2">
+              {FEATURES.map((feature, index) => (
+                <article
+                  key={feature.title}
+                  className={`flex flex-col ${index === 0 ? 'border-b border-border xl:border-b-0 xl:border-r' : ''}`}
+                >
+                  <div className="relative h-[260px] overflow-hidden bg-ink md:h-[320px]">
+                    <img
+                      src={feature.image}
+                      alt={feature.label}
+                      loading="lazy"
+                      className="h-full w-full object-cover object-center"
+                    />
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-8 md:p-10">
+                    <span className="label-pill-equal self-start bg-paper text-accent-gold">
+                      {feature.label}
+                    </span>
+                    <h3 className="mt-4 font-display text-[clamp(1.5rem,2.4vw,2rem)] font-extrabold leading-snug text-ink">
+                      {feature.title}
+                    </h3>
+                    <p className="mt-4 text-muted leading-body-2xl">{feature.description}</p>
+                    <ul className="check-list mt-6 flex-1">
+                      {feature.items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                    <div className="mt-8">
+                      <Button variant="dark" href="#contact">
+                        {feature.cta}
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+              ))}
             </div>
-          </Reveal>
-        ))}
+          </div>
+        </Reveal>
       </Container>
-    </section>
+    </SectionGridDark>
   );
 }
