@@ -1,6 +1,4 @@
 import { BRAND } from '../data/site';
-import { SERVED_COUNTRIES } from '../data/countries';
-import { CountryFlag } from '../components/CountryFlag';
 
 const FOOTER_TAGLINE = [
   'AI & Automation',
@@ -36,25 +34,6 @@ export function Footer() {
       />
 
       <div className="relative z-[1] px-nav-x pb-10 pt-16 max-md:px-nav-x-mobile">
-        <div className="mx-auto mb-8 flex max-w-container flex-wrap justify-center gap-2 md:gap-2.5">
-          {SERVED_COUNTRIES.map((country) => (
-            <span
-              key={country.code}
-              title={country.name}
-              className="inline-flex overflow-hidden rounded-md ring-1 ring-white/10"
-              aria-label={country.name}
-            >
-              <CountryFlag
-                code={country.code}
-                name={country.name}
-                className="h-5 w-7 object-cover md:h-6 md:w-8"
-              />
-            </span>
-          ))}
-        </div>
-
-        <div className="mx-auto mb-10 h-px max-w-container bg-overlay-white-09" />
-
         <div className="mx-auto mb-14 flex max-w-container flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <p className="max-w-md font-body text-sm leading-relaxed text-overlay-footer-text-35">
             © 2026 <strong className="text-white">{BRAND.legalName}</strong>

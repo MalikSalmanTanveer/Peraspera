@@ -7,6 +7,7 @@ import {
   WORKS_PAGE_STATS,
   type WorkCategory,
 } from '../data/works-clients';
+import { TESTIMONIALS } from '../data/content-extended';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
@@ -238,31 +239,33 @@ export function PortfolioPage() {
           </Reveal>
 
           <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {CLIENT_WORKS.map((work, index) => (
-              <Reveal key={work.id} delay={index * 0.03}>
+            {TESTIMONIALS.map((review, index) => (
+              <Reveal key={review.name} delay={index * 0.03}>
                 <article className="flex h-full flex-col rounded-6xl border border-border bg-white p-padding-card-lg">
                   <Stars />
                   <blockquote className="flex-1 text-md leading-body-lg text-muted">
-                    &ldquo;{work.testimonial.quote}&rdquo;
+                    &ldquo;{review.quote}&rdquo;
                   </blockquote>
                   <footer className="mt-6 flex items-center gap-3.5 border-t border-border pt-5">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/15 font-display text-sm-plus font-extrabold text-accent-dark">
-                      {work.title.slice(0, 2).toUpperCase()}
-                    </div>
+                    {review.avatarSrc ? (
+                      <img
+                        src={review.avatarSrc}
+                        alt=""
+                        className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-border"
+                      />
+                    ) : (
+                      <div
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-display text-sm-plus font-extrabold text-white ${review.avatarColor}`}
+                      >
+                        {review.initials}
+                      </div>
+                    )}
                     <div>
                       <cite className="font-display text-md font-extrabold not-italic text-ink">
-                        {work.testimonial.name}
+                        {review.name}
                       </cite>
-                      <p className="mt-0.5 text-sm-plus text-muted">{work.testimonial.role}</p>
-                      <a
-                        href={work.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-accent-dark hover:text-ink"
-                      >
-                        View project
-                        <AppIcon name="ArrowUpRight" className="h-3.5 w-3.5" strokeWidth={2.25} />
-                      </a>
+                      <p className="mt-0.5 text-sm font-semibold text-ink/80">{review.title}</p>
+                      <p className="text-sm-plus text-muted">{review.role}</p>
                     </div>
                   </footer>
                 </article>

@@ -5,7 +5,7 @@ import { Reveal } from '../components/Reveal';
 
 function Stars() {
   return (
-    <div className="flex gap-[3px] mb-3.5" aria-label="5 out of 5 stars">
+    <div className="mb-3.5 flex gap-[3px]" aria-label="5 out of 5 stars">
       {Array.from({ length: 5 }).map((_, i) => (
         <span key={i} className="text-star text-md-plus">
           ★
@@ -17,25 +17,36 @@ function Stars() {
 
 function TestimonialCard({
   quote,
-  initials,
   name,
+  title,
   role,
+  avatarSrc,
+  initials,
   avatarColor,
 }: (typeof TESTIMONIALS)[number]) {
   return (
-    <article className="bg-white border border-border rounded-6xl p-padding-card-lg w-[360px] shrink-0">
+    <article className="w-[380px] shrink-0 rounded-6xl border border-border bg-white p-padding-card-lg">
       <Stars />
       <blockquote className="text-md leading-body-lg text-muted">&ldquo;{quote}&rdquo;</blockquote>
-      <footer className="flex items-center gap-3.5 mt-6">
-        <div
-          className={`w-11 h-11 rounded-full flex items-center justify-center font-display text-sm-plus font-extrabold text-white shrink-0 ${avatarColor}`}
-          aria-hidden="true"
-        >
-          {initials}
-        </div>
+      <footer className="mt-6 flex items-center gap-3.5">
+        {avatarSrc ? (
+          <img
+            src={avatarSrc}
+            alt=""
+            className="h-12 w-12 shrink-0 rounded-full object-cover ring-2 ring-border"
+          />
+        ) : (
+          <div
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-display text-sm-plus font-extrabold text-white ${avatarColor}`}
+            aria-hidden="true"
+          >
+            {initials}
+          </div>
+        )}
         <div>
-          <cite className="font-display text-md font-extrabold not-italic">{name}</cite>
-          <p className="text-sm-plus text-muted mt-0.5">{role}</p>
+          <cite className="font-display text-md font-extrabold not-italic text-ink">{name}</cite>
+          <p className="mt-0.5 text-sm font-semibold text-ink/80">{title}</p>
+          <p className="text-sm-plus text-muted">{role}</p>
         </div>
       </footer>
     </article>
@@ -44,8 +55,8 @@ function TestimonialCard({
 
 export function Testimonials() {
   return (
-    <section className="bg-paper pt-padding-testi-y pb-padding-testi-b overflow-hidden">
-      <Container className="px-nav-x mb-[52px] max-md:px-nav-x-mobile">
+    <section className="overflow-hidden bg-paper pb-padding-testi-b pt-padding-testi-y">
+      <Container className="mb-[52px] px-nav-x max-md:px-nav-x-mobile">
         <Reveal>
           <span className="section-label">Client Love</span>
           <h2 className="font-display text-section-alt font-extrabold leading-snug tracking-snug">
@@ -56,7 +67,7 @@ export function Testimonials() {
 
       <Marquee direction="left-testi" gapClass="gap-gap-testimonial">
         {TESTIMONIALS.map((t) => (
-          <TestimonialCard key={t.initials + t.quote.slice(0, 20)} {...t} />
+          <TestimonialCard key={t.name} {...t} />
         ))}
       </Marquee>
     </section>

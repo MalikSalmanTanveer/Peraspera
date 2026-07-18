@@ -2,67 +2,83 @@ import type { AppIconName } from '../components/AppIcon';
 
 export interface Testimonial {
   quote: string;
-  initials: string;
   name: string;
+  title: string;
   role: string;
-  clientType: string;
+  avatarSrc?: string;
+  initials: string;
   avatarColor: string;
 }
 
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      'They helped us turn scattered brand ideas into a clean identity and professional website.',
-    initials: 'SF',
-    name: 'Startup Founder',
-    role: 'Brand Identity Client',
-    clientType: 'Brand Identity Client',
-    avatarColor: 'bg-violet-600',
+      "It's always a pleasure working with Peraspera. They always deliver on time and provide me with exactly what I need to keep my business running.",
+    name: 'Brandon Ruetsch',
+    title: 'Sr. Solutions Engineer',
+    role: 'Customer Success Manager at Amplemarket',
+    avatarSrc: '/reviews/brandon-ruetsch.png',
+    initials: 'BR',
+    avatarColor: 'bg-slate-700',
   },
   {
     quote:
-      'The UI direction made our product easier to understand and much better for investor demos.',
-    initials: 'PT',
-    name: 'Product Team',
-    role: 'SaaS Design Client',
-    clientType: 'SaaS Design Client',
-    avatarColor: 'bg-blue-600',
+      "Excellent. It's the second time I've worked with them, and I will continue my collaboration for a long time. Professional and excellent work.",
+    name: 'Karyn Suarez',
+    title: 'International Keynote Speaker',
+    role: 'Executive Communication & Public Speaking Coach',
+    avatarSrc: '/reviews/karyn-suarez.png',
+    initials: 'KS',
+    avatarColor: 'bg-emerald-700',
   },
   {
     quote:
-      'Fast communication, polished visuals, and a clear process from brief to final delivery.',
-    initials: 'AP',
-    name: 'Agency Partner',
-    role: 'Automation Client',
-    clientType: 'Automation Client',
-    avatarColor: 'bg-emerald-600',
+      "I'm really impressed with your work. You paid attention to every detail, delivered fast, and the graphics look premium and exactly on-brand. Thank you for the effort and great communication throughout the project. I'll definitely work with you again!",
+    name: 'Kamila Glowa',
+    title: 'Medical Performance Marketing Strategist @ Meta',
+    role: 'Beauty & Cosmetics',
+    avatarSrc: '/reviews/kamila-glowa.png',
+    initials: 'KG',
+    avatarColor: 'bg-rose-700',
   },
   {
     quote:
-      'Our service page, brochure, and campaign graphics finally feel like one premium brand.',
-    initials: 'ML',
-    name: 'Marketing Lead',
-    role: 'Creative Design Client',
-    clientType: 'Creative Design Client',
-    avatarColor: 'bg-rose-600',
+      'Peraspera consistently goes above and beyond, delivering excellence on every project. He is highly attuned to client needs and dependable, whether the task is large or small. His genuine commitment to using his talent ensures high-quality results every time I work with him.',
+    name: 'Shereen Reynolds',
+    title: 'Founder, YouTriedIt.co',
+    role: 'Mental Health Advocate | Human Services Counseling',
+    avatarSrc: '/reviews/shereen-reynolds.png',
+    initials: 'SR',
+    avatarColor: 'bg-violet-700',
   },
   {
     quote:
-      'The website redesign improved trust and made our services easier for customers to scan.',
-    initials: 'BO',
-    name: 'Business Owner',
-    role: 'Website Design Client',
-    clientType: 'Website Design Client',
-    avatarColor: 'bg-amber-600',
+      'Peraspera delivered exceptional work with strategic business planning and professional execution that exceeded my expectations! Working with them was a pleasure. Their cooperation and deep understanding truly stood out.',
+    name: 'Leticia Huber',
+    title: 'Spanish Teacher',
+    role: 'Founder of PrestoBILINGUA',
+    avatarSrc: '/reviews/leticia-huber.png',
+    initials: 'LH',
+    avatarColor: 'bg-indigo-700',
   },
   {
     quote:
-      'A reliable creative partner for monthly design, web updates, and launch assets.',
-    initials: 'OT',
-    name: 'Operations Team',
-    role: 'Monthly Support Client',
-    clientType: 'Monthly Support Client',
-    avatarColor: 'bg-indigo-600',
+      'Working with Peraspera was another great experience! The professionalism, data interpretation, and presentation exceeded expectations, while their deep understanding and quick responsiveness made collaboration a breeze. HIGHLY recommend!',
+    name: 'Alexandra Isobel',
+    title: 'Writer',
+    role: 'Romantic Fusion Writer and Poet',
+    avatarSrc: '/reviews/alexandra-isobel.png',
+    initials: 'AI',
+    avatarColor: 'bg-amber-700',
+  },
+  {
+    quote:
+      'Working with Peraspera was a wonderful experience. My project was intensive and needed to align perfectly with my brand, all within a short timeframe. They delivered exactly what I needed, combining creativity, strong visual appeal, and quick responsiveness. The final result exceeded my expectations. I absolutely plan to work with them again in the future.',
+    name: 'violalaura',
+    title: 'Coordinator',
+    role: 'School Coordinator and Event Manager',
+    initials: 'VL',
+    avatarColor: 'bg-teal-700',
   },
 ];
 
@@ -75,7 +91,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: 'What does Peraspera do?',
     answer:
-      'Peraspera offers AI & automation, branding & creative, UI/UX design, web design & development, SaaS & product development, and AI creative studio services.',
+      'Peraspera offers AI & automation, branding & creative, UI/UX design, web design & development, SaaS & product development, finance, and AI creative studio services.',
   },
   {
     question: 'Do you offer monthly retainers?',

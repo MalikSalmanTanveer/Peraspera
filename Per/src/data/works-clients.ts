@@ -190,12 +190,29 @@ export const CLIENT_WORKS: ClientWork[] = [
     },
     featured: true,
   },
+  {
+    id: 'pilatessplendor',
+    title: 'Pilates Splendor',
+    url: 'https://www.instagram.com/pilatessplendor/',
+    previewSrc:
+      'https://image.thum.io/get/width/1440/crop/900/noanimate/www.instagram.com/pilatessplendor/',
+    category: 'Websites',
+    services: ['Social Media Management', 'Brand Direction', 'Content Strategy'],
+    description:
+      'Ongoing social media and brand management — content planning, visual direction, and day-to-day presence for a premium pilates studio on Instagram.',
+    testimonial: {
+      quote:
+        'Peraspera manages our Instagram end to end — content, visuals, and brand consistency — so we can focus on the studio.',
+      name: 'Pilates Splendor',
+      role: 'Fitness & Wellness Brand',
+    },
+  },
 ];
 
 export const FEATURED_CLIENT_WORKS = CLIENT_WORKS.filter((work) => work.featured);
 
 export const WORKS_PAGE_STATS = [
-  { value: '10', label: 'Live Client Projects' },
+  { value: '11', label: 'Live Client Projects' },
   { value: '6', label: 'Industries Served' },
   { value: '100%', label: 'Responsive Builds' },
   { value: '48h', label: 'Fast First Delivery' },

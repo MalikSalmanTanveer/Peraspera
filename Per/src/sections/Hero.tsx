@@ -27,15 +27,6 @@ export function Hero() {
       <Container className="relative z-[2] w-full">
         <div className="grid grid-cols-1 3xl:grid-cols-[1.06fr_0.94fr] gap-gap-xl items-end">
           <Reveal>
-            <motion.div
-              className="inline-flex gap-2 items-center text-xs font-extrabold uppercase tracking-widest text-overlay-white-48 mb-8 before:content-[''] before:w-2 before:h-2 before:bg-accent before:rounded-full before:animate-pulse"
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              {HERO_COPY.eyebrow}
-            </motion.div>
-
             <h1 className="font-display text-hero font-extrabold leading-hero tracking-tighter max-md:text-hero-mobile">
               {HERO_COPY.headline}{' '}
               <motion.em

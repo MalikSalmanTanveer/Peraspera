@@ -15,6 +15,7 @@ const SITES = [
   { id: 'viridianre', url: 'https://viridianre.net/' },
   { id: 'fiestafood', url: 'https://fiestafood.vercel.app/' },
   { id: 'niksjewel', url: 'https://niksjewel.com/' },
+  { id: 'pilatessplendor', url: 'https://www.instagram.com/pilatessplendor/' },
 ];
 
 async function waitForSiteReady(page) {

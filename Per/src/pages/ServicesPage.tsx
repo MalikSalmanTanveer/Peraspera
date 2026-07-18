@@ -185,35 +185,33 @@ export function ServicesPage() {
                     <Reveal delay={categoryIndex * 0.03}>
                       <div className="overflow-hidden rounded-8xl border border-border bg-white">
                         {image ? (
-                          <div className="relative h-[220px] overflow-hidden bg-ink md:h-[280px]">
-                            <img
-                              src={image}
-                              alt=""
-                              className="h-full w-full object-cover object-right"
-                            />
-                            <div
-                              className="pointer-events-none absolute inset-y-0 left-0 w-[min(100%,520px)] bg-gradient-to-r from-ink/85 via-ink/45 to-transparent"
-                              aria-hidden="true"
-                            />
-                            <div className="absolute bottom-0 left-0 p-6 md:p-8">
+                          <>
+                            <div className="relative h-[220px] overflow-hidden bg-[#f4f4f4] md:h-[280px]">
+                              <img
+                                src={image}
+                                alt=""
+                                className="h-full w-full object-cover object-right"
+                              />
+                            </div>
+                            <div className="border-b border-border p-6 md:p-8">
                               <div className="flex items-center gap-3">
                                 <div
                                   className={`flex h-11 w-11 items-center justify-center rounded-xl ${category.iconClass}`}
                                 >
                                   <AppIcon name={category.icon} className="h-5 w-5 text-white" />
                                 </div>
-                                <span className="text-xs font-black uppercase tracking-widest text-accent">
+                                <span className="text-xs font-black uppercase tracking-widest text-accent-gold">
                                   {category.shortCategory}
                                 </span>
                               </div>
-                              <h2 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight text-white">
+                              <h2 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight text-ink">
                                 {category.title}
                               </h2>
-                              <p className="mt-2 max-w-xl text-sm text-overlay-white-55 md:text-base">
+                              <p className="mt-2 max-w-xl text-sm text-muted md:text-base">
                                 {category.tagline}
                               </p>
                             </div>
-                          </div>
+                          </>
                         ) : (
                           <div className="border-b border-border p-6 md:p-8">
                             <div className="flex items-center gap-3">
