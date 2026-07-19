@@ -1,4 +1,4 @@
-import mapImage from '../assets/maps.jpg';
+import mapImage from '../assets/maps.png';
 import { GLOBAL_REACH_STATS } from '../data/countries';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
