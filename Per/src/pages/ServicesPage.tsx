@@ -131,7 +131,7 @@ export function ServicesPage() {
       <section className="relative z-[1] overflow-x-clip bg-ink py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
         <Container>
           <nav
-            className="mb-10 space-y-1.5 4xl:hidden"
+            className="mb-10 pb-6 4xl:hidden"
             aria-label="Service categories"
           >
             <p className="mb-4 text-2xs font-black uppercase tracking-widest text-overlay-white-46">
@@ -175,20 +175,25 @@ export function ServicesPage() {
           </nav>
 
           <div className="grid min-w-0 grid-cols-1 gap-10 4xl:grid-cols-[280px_minmax(0,1fr)] 4xl:gap-12">
-            <aside className="hidden min-w-0 4xl:block">
+            <aside className="hidden min-w-0 self-start 4xl:block">
               <nav
-                className={`sticky w-full max-w-[280px] space-y-1.5 ${navScrolled ? 'top-[156px]' : 'top-[132px]'}`}
+                className={`sticky z-10 flex w-full max-w-[280px] flex-col overflow-y-auto overscroll-contain pb-4 [-ms-overflow-style:none] [scrollbar-width:thin] ${
+                  navScrolled
+                    ? 'top-[128px] max-h-[calc(100dvh-9.5rem)]'
+                    : 'top-[108px] max-h-[calc(100dvh-8.25rem)]'
+                }`}
                 aria-label="Service categories"
               >
-                <p className="mb-4 text-2xs font-black uppercase tracking-widest text-overlay-white-46">
+                <p className="mb-3 shrink-0 text-2xs font-black uppercase tracking-widest text-overlay-white-46">
                   Categories
                 </p>
+                <div className="space-y-1.5">
                 {SERVICE_CATEGORIES.map((category, index) => (
                   <button
                     key={category.id}
                     type="button"
                     onClick={() => scrollToCategory(category.id)}
-                    className={`flex w-full max-w-full items-center gap-3 rounded-2xl border bg-white px-3 py-3 text-left transition-[border-color,box-shadow] duration-200 ${
+                    className={`flex w-full max-w-full items-center gap-3 rounded-2xl border bg-white px-3 py-2.5 text-left transition-[border-color,box-shadow] duration-200 ${
                       activeId === category.id
                         ? 'border-ink shadow-[0_8px_24px_rgba(0,0,0,0.14)]'
                         : 'border-ink/10 hover:border-ink/25 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
@@ -204,7 +209,8 @@ export function ServicesPage() {
                     </span>
                   </button>
                 ))}
-                <div className="mt-6 w-full max-w-full rounded-2xl border border-ink/10 bg-white p-4">
+                </div>
+                <div className="mt-4 shrink-0 w-full max-w-full rounded-2xl border border-ink/10 bg-white p-4">
                   <p className="text-sm font-bold text-ink">Need help choosing?</p>
                   <p className="mt-2 text-sm leading-body text-muted">
                     Tell us your goals and we&apos;ll recommend the right service mix.
