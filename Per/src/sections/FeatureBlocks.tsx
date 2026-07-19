@@ -43,15 +43,15 @@ export function FeatureBlocks() {
         </Reveal>
       </div>
 
-      <div className="mt-4 w-full overflow-hidden bg-white md:mt-6">
-        <div className="relative aspect-[1024/223] w-full">
+      <div className="mt-3 w-full overflow-hidden bg-white md:mt-4">
+        <div className="relative aspect-[1024/244] w-full">
           <img
             src={FEATURE_IMAGES.whatWeDeliver}
             alt="Peraspera — brands built to be remembered"
             loading="lazy"
             decoding="async"
             width={1024}
-            height={223}
+            height={244}
             className="absolute inset-0 h-full w-full object-cover object-center"
           />
         </div>
