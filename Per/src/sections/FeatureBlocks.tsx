@@ -23,7 +23,7 @@ export function FeatureBlocks() {
           </h2>
 
           <ul
-            className="mt-5 flex w-full max-w-full flex-nowrap items-center justify-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:mt-6 md:gap-2.5 [&::-webkit-scrollbar]:hidden"
+            className="mt-4 flex w-full max-w-full flex-nowrap items-center justify-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:mt-5 md:gap-2.5 [&::-webkit-scrollbar]:hidden"
             aria-label="Services we deliver"
           >
             {HOME_SERVICES.map((service) => (
@@ -35,7 +35,7 @@ export function FeatureBlocks() {
             ))}
           </ul>
 
-          <div className="mt-5 md:mt-6">
+          <div className="mt-4 md:mt-5">
             <Button variant="dark" href="#contact">
               Start Your Project ↗
             </Button>
@@ -43,16 +43,16 @@ export function FeatureBlocks() {
         </Reveal>
       </div>
 
-      <div className="w-full overflow-hidden bg-white">
-        <div className="relative aspect-[1024/356] w-full">
+      <div className="-mt-1 w-full overflow-hidden bg-white md:-mt-2">
+        <div className="relative aspect-[1024/223] w-full">
           <img
             src={FEATURE_IMAGES.whatWeDeliver}
             alt="Peraspera — brands built to be remembered"
             loading="lazy"
             decoding="async"
             width={1024}
-            height={356}
-            className="absolute inset-0 h-full w-full object-cover object-[center_72%]"
+            height={223}
+            className="absolute inset-0 h-full w-full object-cover object-center"
           />
         </div>
       </div>
