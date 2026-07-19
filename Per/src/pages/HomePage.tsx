@@ -1,3 +1,4 @@
+import { useCallback, useState } from 'react';
 import { Navbar } from '../sections/Navbar';
 
 import { Hero } from '../sections/Hero';
@@ -29,14 +30,28 @@ import { ContactForm } from '../sections/ContactForm';
 import { Footer } from '../sections/Footer';
 
 import { WhatsAppWidget, BackToTop } from '../sections/FloatingWidgets';
+import {
+  markOpeningAnimationSeen,
+  OpeningAnimation,
+  shouldShowOpeningAnimation,
+} from '../components/OpeningAnimation';
 
 
 
 export function HomePage() {
+  const [showIntro, setShowIntro] = useState(shouldShowOpeningAnimation);
+
+  const completeIntro = useCallback(() => {
+    markOpeningAnimationSeen();
+    setShowIntro(false);
+    document.body.style.overflow = '';
+  }, []);
 
   return (
 
     <>
+
+      {showIntro ? <OpeningAnimation onComplete={completeIntro} /> : null}
 
       <Navbar />
 
