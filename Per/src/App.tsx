@@ -9,20 +9,35 @@ import { LabsPage } from './pages/LabsPage';
 import { Navbar } from './sections/Navbar';
 import { Footer } from './sections/Footer';
 import { WhatsAppWidget, BackToTop } from './sections/FloatingWidgets';
+import { scrollToHashElement } from './utils/scrollToHash';
+import {
+  resolvePortfolioReviewScrollTarget,
+  type PortfolioReviewNavState,
+} from './utils/portfolioReviewNav';
 
 function ScrollToTop() {
-  const { pathname, hash } = useLocation();
+  const { pathname, hash, state } = useLocation();
 
   useEffect(() => {
+    const navState = state as PortfolioReviewNavState | null;
+
     if (hash) {
-      const id = hash.replace('#', '');
-      requestAnimationFrame(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+      const targetId =
+        pathname === '/portfolio'
+          ? resolvePortfolioReviewScrollTarget(hash, navState)
+          : hash.replace('#', '');
+
+      scrollToHashElement(targetId);
       return;
     }
+
+    if (pathname === '/portfolio' && navState?.focusReview) {
+      scrollToHashElement(navState.focusReview);
+      return;
+    }
+
     window.scrollTo(0, 0);
-  }, [pathname, hash]);
+  }, [pathname, hash, state]);
 
   return null;
 }

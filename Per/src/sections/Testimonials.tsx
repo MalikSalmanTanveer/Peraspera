@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
-import {
-  getPortfolioReviewUrl,
-  isHomeReviewPreview,
-  TESTIMONIALS,
-} from '../data/content-extended';
+import { isHomeReviewPreview, TESTIMONIALS } from '../data/content-extended';
+import { getPortfolioReviewLink } from '../utils/portfolioReviewNav';
 import { Marquee } from '../components/Marquee';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
@@ -33,7 +30,7 @@ function TestimonialCard({
 
   const card = (
     <article
-      className={`flex h-[400px] w-[380px] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[380px] max-md:w-[340px] ${
+      className={`relative z-10 flex h-[400px] w-[380px] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[380px] max-md:w-[340px] ${
         showReadMore
           ? 'cursor-pointer transition-all duration-card hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover'
           : ''
@@ -90,9 +87,10 @@ function TestimonialCard({
 
   return (
     <Link
-      to={getPortfolioReviewUrl(name)}
-      className="block shrink-0 no-underline text-inherit"
-      aria-label={`Read full review from ${name}`}
+      to={getPortfolioReviewLink(name)}
+      className="relative z-10 block shrink-0 pointer-events-auto no-underline text-inherit"
+      aria-label={`Read full review from ${name} on portfolio`}
+      onClick={(event) => event.stopPropagation()}
     >
       {card}
     </Link>
@@ -102,7 +100,7 @@ function TestimonialCard({
 export function Testimonials() {
   return (
     <section
-      id="client-reviews"
+      id="home-client-reviews"
       className="overflow-hidden bg-paper pb-padding-testi-b pt-padding-testi-y"
     >
       <Container className="mb-[52px] px-nav-x max-md:px-nav-x-mobile">
@@ -114,11 +112,13 @@ export function Testimonials() {
         </Reveal>
       </Container>
 
-      <Marquee direction="left-testi" gapClass="gap-gap-testimonial">
-        {TESTIMONIALS.map((t) => (
-          <TestimonialCard key={t.name} {...t} />
-        ))}
-      </Marquee>
+      <div className="relative z-[1]">
+        <Marquee direction="left-testi" gapClass="gap-gap-testimonial">
+          {TESTIMONIALS.map((t) => (
+            <TestimonialCard key={t.name} {...t} />
+          ))}
+        </Marquee>
+      </div>
     </section>
   );
 }

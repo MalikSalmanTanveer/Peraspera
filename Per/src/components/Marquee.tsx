@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from 'react';
 
 interface MarqueeProps {
   children: ReactNode;
@@ -23,15 +23,24 @@ export function Marquee({
   className = '',
   gapClass = 'gap-gap-marquee md:gap-gap-marquee-lg max-md:gap-gap-marquee-tablet max-sm:gap-gap-marquee-mobile',
 }: MarqueeProps) {
+  const items = Children.toArray(children);
+
+  const withKeys = (prefix: string) =>
+    items.map((child, index) => {
+      if (!isValidElement(child)) return child;
+
+      return cloneElement(child as ReactElement<{ key?: string | number }>, {
+        key: `${prefix}-${index}`,
+      });
+    });
+
   return (
-    <div
-      className={`group overflow-hidden w-full ${className}`}
-    >
+    <div className={`group overflow-hidden w-full ${className}`}>
       <div
-        className={`flex items-center w-max will-change-transform ${gapClass} ${animationClass[direction]} group-hover:[animation-play-state:paused]`}
+        className={`flex w-max items-center will-change-transform ${gapClass} ${animationClass[direction]} group-hover:[animation-play-state:paused]`}
       >
-        {children}
-        {children}
+        {withKeys('marquee-a')}
+        {withKeys('marquee-b')}
       </div>
     </div>
   );

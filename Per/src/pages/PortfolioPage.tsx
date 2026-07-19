@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   CLIENT_WORKS,
   FEATURED_CLIENT_WORKS,
@@ -17,6 +17,12 @@ import {
 } from '../components/FeaturedWorksCarousel';
 import { PortfolioWorksStrip } from '../components/PortfolioWorksStrip';
 import { SectionGridDark } from '../components/SectionGridDark';
+import { scrollToHashElement } from '../utils/scrollToHash';
+import {
+  PORTFOLIO_REVIEWS_SECTION_ID,
+  resolvePortfolioReviewScrollTarget,
+  type PortfolioReviewNavState,
+} from '../utils/portfolioReviewNav';
 
 function Stars() {
   return (
@@ -31,8 +37,17 @@ function Stars() {
 }
 
 export function PortfolioPage() {
+  const location = useLocation();
   const [activeFilter, setActiveFilter] = useState<WorkCategory | 'All'>('All');
   const [navScrolled, setNavScrolled] = useState(false);
+
+  useEffect(() => {
+    const navState = location.state as PortfolioReviewNavState | null;
+    if (!location.hash && !navState?.focusReview) return;
+
+    const targetId = resolvePortfolioReviewScrollTarget(location.hash, navState);
+    scrollToHashElement(targetId);
+  }, [location.hash, location.state]);
 
   useEffect(() => {
     const onScroll = () => setNavScrolled(window.scrollY > 80);
@@ -176,8 +191,8 @@ export function PortfolioPage() {
 
       {/* Client testimonials */}
       <section
-        id="client-reviews"
-        className="relative scroll-mt-[132px] overflow-hidden bg-paper py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile"
+        id={PORTFOLIO_REVIEWS_SECTION_ID}
+        className="relative scroll-mt-[148px] overflow-hidden bg-paper py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile"
       >
         <div className="hero-grid-bg pointer-events-none absolute inset-0 opacity-[0.05]" aria-hidden="true" />
         <Container className="relative z-[1]">
