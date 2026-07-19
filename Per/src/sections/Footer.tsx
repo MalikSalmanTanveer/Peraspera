@@ -1,4 +1,5 @@
 import { BRAND, SOCIAL_LINKS } from '../data/site';
+import { SocialIcon } from '../components/SocialIcon';
 
 const FOOTER_TAGLINE = [
   'AI & Automation',
@@ -62,9 +63,9 @@ export function Footer() {
                   key={social.label}
                   title="Coming soon"
                   aria-label={`${social.label} — Coming soon`}
-                  className="flex h-11 w-11 cursor-not-allowed items-center justify-center rounded-full bg-overlay-footer-border-10 text-sm text-overlay-footer-text-40"
+                  className="flex h-11 w-11 cursor-not-allowed items-center justify-center rounded-full bg-overlay-footer-border-10 text-overlay-footer-text-40"
                 >
-                  {social.icon}
+                  <SocialIcon name={social.icon} />
                 </span>
               ) : social.href ? (
                 <a
@@ -73,9 +74,9 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="flex h-11 w-11 items-center justify-center rounded-full bg-overlay-footer-border-10 text-sm text-white transition-colors duration-normal hover:bg-accent hover:text-ink"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-overlay-footer-border-10 text-white transition-colors duration-normal hover:bg-accent hover:text-ink"
                 >
-                  {social.icon}
+                  <SocialIcon name={social.icon} />
                 </a>
               ) : null,
             )}

@@ -10,8 +10,6 @@ import {
 
   WORK_CATEGORIES,
 
-  WORKS_PAGE_STATS,
-
   type WorkCategory,
 
 } from '../data/works-clients';
@@ -249,28 +247,6 @@ export function PortfolioPage() {
                   Browse Projects
 
                 </button>
-
-              </div>
-
-
-
-              <div className="mx-auto mt-12 grid max-w-[820px] grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
-
-                {WORKS_PAGE_STATS.map((stat) => (
-
-                  <div key={stat.label}>
-
-                    <div className="font-display text-3xl font-extrabold text-accent md:text-4xl">
-
-                      {stat.value}
-
-                    </div>
-
-                    <div className="mt-1 text-sm text-overlay-white-48">{stat.label}</div>
-
-                  </div>
-
-                ))}
 
               </div>
 

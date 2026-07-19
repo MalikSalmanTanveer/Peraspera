@@ -19,12 +19,12 @@ export const BRAND = {
 export const SOCIAL_LINKS = [
   {
     label: 'LinkedIn',
-    icon: 'in',
+    icon: 'linkedin',
     href: BRAND.social.linkedin,
   },
   {
     label: 'Instagram',
-    icon: 'Ig',
+    icon: 'instagram',
     href: BRAND.social.instagram,
     comingSoon: true,
   },

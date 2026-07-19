@@ -207,13 +207,6 @@ export const CLIENT_WORKS: ClientWork[] = [
 
 export const FEATURED_CLIENT_WORKS = CLIENT_WORKS.filter((work) => work.featured);
 
-export const WORKS_PAGE_STATS = [
-  { value: '11', label: 'Live Client Projects' },
-  { value: '6', label: 'Industries Served' },
-  { value: '100%', label: 'Responsive Builds' },
-  { value: '48h', label: 'Fast First Delivery' },
-] as const;
-
 /** Local screenshot in /public/works, with thum.io fallback */
 export function workScreenshotSrc(id: string): string {
   return `/works/${id}.png?v=20260719`;
