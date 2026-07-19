@@ -175,7 +175,10 @@ export function PortfolioPage() {
       </SectionGridDark>
 
       {/* Client testimonials */}
-      <section className="relative overflow-hidden bg-paper py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile">
+      <section
+        id="client-reviews"
+        className="relative scroll-mt-[132px] overflow-hidden bg-paper py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile"
+      >
         <div className="hero-grid-bg pointer-events-none absolute inset-0 opacity-[0.05]" aria-hidden="true" />
         <Container className="relative z-[1]">
           <Reveal>

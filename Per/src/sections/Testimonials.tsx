@@ -1,4 +1,9 @@
-import { TESTIMONIALS } from '../data/content-extended';
+import { Link } from 'react-router-dom';
+import {
+  isTruncatedHomeReview,
+  PORTFOLIO_REVIEWS_URL,
+  TESTIMONIALS,
+} from '../data/content-extended';
 import { Marquee } from '../components/Marquee';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
@@ -24,12 +29,27 @@ function TestimonialCard({
   initials,
   avatarColor,
 }: (typeof TESTIMONIALS)[number]) {
-  return (
-    <article className="flex h-[320px] w-[380px] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[300px] max-md:w-[340px]">
+  const isTruncated = isTruncatedHomeReview(quote);
+
+  const card = (
+    <article
+      className={`flex h-[320px] w-[380px] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[300px] max-md:w-[340px] ${
+        isTruncated
+          ? 'cursor-pointer transition-all duration-card hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover'
+          : ''
+      }`}
+    >
       <Stars />
-      <blockquote className="line-clamp-6 flex-1 text-md leading-body-lg text-muted">
-        &ldquo;{quote}&rdquo;
-      </blockquote>
+      <div className="flex min-h-0 flex-1 flex-col">
+        <blockquote className="line-clamp-6 text-md leading-body-lg text-muted">
+          &ldquo;{quote}&rdquo;
+        </blockquote>
+        {isTruncated ? (
+          <span className="mt-2 font-display text-xl font-extrabold leading-none text-accent">
+            ...
+          </span>
+        ) : null}
+      </div>
       <footer className="mt-6 flex items-center gap-3.5 border-t border-border pt-5">
         {avatarSrc ? (
           <img
@@ -55,11 +75,28 @@ function TestimonialCard({
       </footer>
     </article>
   );
+
+  if (!isTruncated) {
+    return card;
+  }
+
+  return (
+    <Link
+      to={PORTFOLIO_REVIEWS_URL}
+      className="block shrink-0 no-underline text-inherit"
+      aria-label={`Read full review from ${name}`}
+    >
+      {card}
+    </Link>
+  );
 }
 
 export function Testimonials() {
   return (
-    <section className="overflow-hidden bg-paper pb-padding-testi-b pt-padding-testi-y">
+    <section
+      id="client-reviews"
+      className="overflow-hidden bg-paper pb-padding-testi-b pt-padding-testi-y"
+    >
       <Container className="mb-[52px] px-nav-x max-md:px-nav-x-mobile">
         <Reveal>
           <span className="section-label">Client Love</span>
