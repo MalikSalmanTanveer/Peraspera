@@ -1,20 +1,18 @@
 import { BRAND_ROW_ONE, BRAND_ROW_TWO, type BrandItem } from '../data/brands';
 import { Marquee } from '../components/Marquee';
 
-function BrandTile({ brand }: { brand: BrandItem }) {
+const LOGO_SLOT =
+  'flex h-[96px] w-[210px] shrink-0 items-center justify-center rounded-2xl bg-paper px-4 transition-colors duration-medium hover:bg-white max-md:h-[80px] max-md:w-[170px]';
+
+function BrandLogo({ brand }: { brand: BrandItem }) {
   return (
-    <div className="relative flex h-[108px] w-[250px] shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-overlay-white-12 bg-overlay-white-04 px-4 max-md:h-[92px] max-md:w-[210px]">
-      <span className="absolute right-3 top-3 max-w-[58%] truncate text-right text-[10px] font-extrabold uppercase tracking-wider text-accent md:text-2xs">
-        {brand.name}
-      </span>
-      <div className="absolute bottom-3 left-3 flex h-[52px] w-[52px] items-center justify-center rounded-xl bg-white p-2 shadow-[0_8px_24px_rgba(0,0,0,0.28)] max-md:h-[46px] max-md:w-[46px]">
-        <img
-          src={brand.src}
-          alt={brand.name}
-          loading="lazy"
-          className="max-h-full max-w-full object-contain"
-        />
-      </div>
+    <div className={LOGO_SLOT}>
+      <img
+        src={brand.src}
+        alt={brand.name}
+        loading="lazy"
+        className="max-h-[68px] max-w-[170px] h-auto w-auto object-contain object-center opacity-85 transition-all duration-medium grayscale hover:grayscale-0 hover:opacity-100 max-md:max-h-[56px] max-md:max-w-[140px]"
+      />
     </div>
   );
 }
@@ -22,31 +20,29 @@ function BrandTile({ brand }: { brand: BrandItem }) {
 export function LogoMarquee() {
   return (
     <section
-      className="relative overflow-hidden border-y border-overlay-white-08 bg-ink py-10 md:py-12"
+      className="overflow-hidden bg-white py-section-y-brands pb-28 max-2xl:py-section-y-brands-tablet max-md:py-section-y-brands-mobile max-md:pb-20"
       aria-label="Trusted brands"
     >
-      <div className="hero-grid-bg pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
-
-      <div className="relative z-[1]">
-        <p className="mb-8 text-center font-display text-sm font-extrabold uppercase tracking-[0.22em] text-overlay-white-48 max-md:text-2xs">
+      <div className="mb-20 text-center max-2xl:mb-16 max-md:mb-12">
+        <span className="font-display text-lg font-extrabold uppercase tracking-marquee text-brands-title max-md:text-sm max-md:tracking-marquee-mobile">
           Trusted by Growing Brands Worldwide
-        </p>
+        </span>
+      </div>
 
-        <div className="mask-marquee max-md:mask-marquee-mobile mb-5 md:mb-6">
-          <Marquee direction="left" gapClass="gap-5 md:gap-8">
-            {BRAND_ROW_ONE.map((brand) => (
-              <BrandTile key={brand.name + brand.src} brand={brand} />
-            ))}
-          </Marquee>
-        </div>
+      <div className="mask-marquee max-md:mask-marquee-mobile mb-14 max-md:mb-10">
+        <Marquee direction="left" gapClass="gap-5 md:gap-8">
+          {BRAND_ROW_ONE.map((brand) => (
+            <BrandLogo key={`r1-${brand.name}`} brand={brand} />
+          ))}
+        </Marquee>
+      </div>
 
-        <div className="mask-marquee max-md:mask-marquee-mobile">
-          <Marquee direction="right" gapClass="gap-5 md:gap-8">
-            {BRAND_ROW_TWO.map((brand) => (
-              <BrandTile key={brand.name + brand.src} brand={brand} />
-            ))}
-          </Marquee>
-        </div>
+      <div className="mask-marquee max-md:mask-marquee-mobile">
+        <Marquee direction="right" gapClass="gap-5 md:gap-8">
+          {BRAND_ROW_TWO.map((brand) => (
+            <BrandLogo key={`r2-${brand.name}`} brand={brand} />
+          ))}
+        </Marquee>
       </div>
     </section>
   );
