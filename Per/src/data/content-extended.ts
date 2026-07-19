@@ -12,6 +12,13 @@ export interface Testimonial {
 
 export const PORTFOLIO_REVIEWS_URL = '/portfolio#client-reviews';
 
+/** Short quotes (Brandon, Karyn) fit fully; longer ones get a preview + read more link */
+export const HOMEPAGE_REVIEW_CHAR_LIMIT = 150;
+
+export function isHomeReviewPreview(quote: string): boolean {
+  return quote.length > HOMEPAGE_REVIEW_CHAR_LIMIT;
+}
+
 export function getPortfolioReviewUrl(name: string): string {
   const slug = name
     .toLowerCase()

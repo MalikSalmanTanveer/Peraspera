@@ -1,40 +1,16 @@
-import { useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getPortfolioReviewUrl, TESTIMONIALS } from '../data/content-extended';
+import {
+  getPortfolioReviewUrl,
+  isHomeReviewPreview,
+  TESTIMONIALS,
+} from '../data/content-extended';
 import { Marquee } from '../components/Marquee';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 
-function useClampedText() {
-  const ref = useRef<HTMLQuoteElement>(null);
-  const [isClamped, setIsClamped] = useState(false);
-
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const check = () => {
-      setIsClamped(el.scrollHeight > el.clientHeight + 1);
-    };
-
-    check();
-
-    const observer = new ResizeObserver(check);
-    observer.observe(el);
-    window.addEventListener('resize', check);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', check);
-    };
-  }, []);
-
-  return { ref, isClamped };
-}
-
 function Stars() {
   return (
-    <div className="mb-3.5 flex gap-[3px]" aria-label="5 out of 5 stars">
+    <div className="mb-3.5 flex shrink-0 gap-[3px]" aria-label="5 out of 5 stars">
       {Array.from({ length: 5 }).map((_, i) => (
         <span key={i} className="text-star text-md-plus">
           ★
@@ -53,31 +29,36 @@ function TestimonialCard({
   initials,
   avatarColor,
 }: (typeof TESTIMONIALS)[number]) {
-  const { ref, isClamped } = useClampedText();
+  const showReadMore = isHomeReviewPreview(quote);
 
   const card = (
     <article
-      className={`flex h-[320px] w-[380px] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[300px] max-md:w-[340px] ${
-        isClamped
+      className={`flex h-[400px] w-[380px] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[380px] max-md:w-[340px] ${
+        showReadMore
           ? 'cursor-pointer transition-all duration-card hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover'
           : ''
       }`}
     >
       <Stars />
-      <div className="flex min-h-0 flex-1 flex-col">
-        <blockquote
-          ref={ref}
-          className="line-clamp-5 text-md leading-body-lg text-muted"
-        >
+
+      <div className="relative mt-1 min-h-0 flex-1 overflow-hidden">
+        <blockquote className="line-clamp-[7] text-md leading-body-lg text-muted">
           &ldquo;{quote}&rdquo;
         </blockquote>
-        {isClamped ? (
-          <span className="mt-2 font-display text-xl font-extrabold leading-none text-accent">
-            ...
-          </span>
+        {showReadMore ? (
+          <>
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-white via-white/95 to-transparent"
+              aria-hidden="true"
+            />
+            <span className="absolute bottom-0 left-0 font-display text-2xl font-extrabold leading-none text-accent">
+              ...
+            </span>
+          </>
         ) : null}
       </div>
-      <footer className="mt-6 flex items-center gap-3.5 border-t border-border pt-5">
+
+      <footer className="mt-5 flex shrink-0 items-center gap-3.5 border-t border-border pt-5">
         {avatarSrc ? (
           <img
             src={avatarSrc}
@@ -103,7 +84,7 @@ function TestimonialCard({
     </article>
   );
 
-  if (!isClamped) {
+  if (!showReadMore) {
     return card;
   }
 
