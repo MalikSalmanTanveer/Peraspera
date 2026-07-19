@@ -1,5 +1,4 @@
 import mapImage from '../assets/maps.png';
-import { GLOBAL_REACH_STATS } from '../data/countries';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { CountryFlagsMarquee } from '../components/CountryFlagsMarquee';
@@ -27,19 +26,6 @@ export function GlobalReach() {
             className="mt-10 w-full object-contain object-center"
             loading="lazy"
           />
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="mt-10 grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
-            {GLOBAL_REACH_STATS.map((stat) => (
-              <div key={stat.label} className="text-center md:text-left">
-                <div className="font-display text-3xl font-extrabold text-accent md:text-4xl">
-                  {stat.value}
-                </div>
-                <div className="mt-1 text-sm text-overlay-white-48">{stat.label}</div>
-              </div>
-            ))}
-          </div>
         </Reveal>
 
         <CountryFlagsMarquee />
