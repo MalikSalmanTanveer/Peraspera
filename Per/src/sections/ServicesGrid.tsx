@@ -30,7 +30,7 @@ export function ServicesGrid() {
               <Reveal key={service.title} delay={i * 0.05}>
                 <a
                   href={category ? `/services#${category.id}` : '/services'}
-                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-[#e5e5e5] bg-white transition-[border-color,box-shadow] duration-300 hover:border-[#d0d0d0] hover:shadow-[0_16px_40px_rgba(0,0,0,0.16)]"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-[#e5e5e5] bg-white transition-[border-color,box-shadow] duration-200 hover:border-[#cfcfcf] hover:shadow-[0_12px_32px_rgba(0,0,0,0.18)]"
                 >
                   {image ? (
                     <div className="h-[280px] w-full shrink-0 overflow-hidden bg-[#111]">
@@ -38,7 +38,7 @@ export function ServicesGrid() {
                         src={image}
                         alt={`${service.title} preview`}
                         loading="lazy"
-                        className="h-full w-full object-cover object-right transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                        className="h-full w-full object-cover object-right"
                       />
                     </div>
                   ) : null}

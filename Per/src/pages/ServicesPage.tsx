@@ -105,7 +105,7 @@ export function ServicesPage() {
         </Container>
 
         <div
-          className={`sticky z-[100] border-t border-overlay-white-10 bg-ink/95 backdrop-blur-md ${navScrolled ? 'top-[96px]' : 'top-[72px]'}`}
+          className={`sticky z-[100] border-b border-[#e8e8e8] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] ${navScrolled ? 'top-[96px]' : 'top-[72px]'}`}
         >
           <Container className="py-3">
             <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none md:justify-center">
@@ -114,10 +114,10 @@ export function ServicesPage() {
                   key={category.id}
                   type="button"
                   onClick={() => scrollToCategory(category.id)}
-                  className={`shrink-0 rounded-pill px-4 py-2 text-sm font-semibold transition-colors ${
+                  className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition-[background-color,border-color,box-shadow,color] duration-200 ${
                     activeId === category.id
-                      ? 'bg-accent text-ink'
-                      : 'border border-overlay-white-16 bg-overlay-white-08 text-overlay-white-55 hover:border-accent hover:text-white'
+                      ? 'border-ink bg-ink text-white shadow-sm'
+                      : 'border-[#e5e5e5] bg-white text-ink hover:border-[#cfcfcf] hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]'
                   }`}
                 >
                   {category.title}
@@ -128,7 +128,7 @@ export function ServicesPage() {
         </div>
       </section>
 
-      <section className="relative z-[1] rounded-t-[2rem] bg-paper py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile md:rounded-t-[2.5rem]">
+      <section className="relative z-[1] bg-ink py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
         <Container>
           <div className="grid grid-cols-1 gap-gap-xl xl:grid-cols-[240px_1fr]">
             <aside className="hidden xl:block">
@@ -136,7 +136,7 @@ export function ServicesPage() {
                 className={`sticky space-y-1 ${navScrolled ? 'top-[156px]' : 'top-[132px]'}`}
                 aria-label="Service categories"
               >
-                <p className="mb-4 text-2xs font-black uppercase tracking-widest text-muted-light">
+                <p className="mb-4 text-2xs font-black uppercase tracking-widest text-overlay-white-46">
                   Categories
                 </p>
                 {SERVICE_CATEGORIES.map((category, index) => (
@@ -144,10 +144,10 @@ export function ServicesPage() {
                     key={category.id}
                     type="button"
                     onClick={() => scrollToCategory(category.id)}
-                    className={`flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left transition-all ${
+                    className={`flex w-full items-center gap-3 rounded-2xl border bg-white px-3 py-3 text-left transition-[border-color,box-shadow] duration-200 ${
                       activeId === category.id
-                        ? 'bg-white shadow-card-hover border border-border'
-                        : 'hover:bg-white/70'
+                        ? 'border-ink shadow-[0_8px_24px_rgba(0,0,0,0.14)]'
+                        : 'border-[#e5e5e5] hover:border-[#cfcfcf] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
                     }`}
                   >
                     <span
@@ -158,7 +158,7 @@ export function ServicesPage() {
                     <span className="text-sm font-bold leading-snug text-ink">{category.title}</span>
                   </button>
                 ))}
-                <div className="mt-6 rounded-2xl border border-border bg-white p-4">
+                <div className="mt-6 rounded-2xl border border-[#e5e5e5] bg-white p-4">
                   <p className="text-sm font-bold text-ink">Need help choosing?</p>
                   <p className="mt-2 text-sm leading-body text-muted">
                     Tell us your goals and we&apos;ll recommend the right service mix.
