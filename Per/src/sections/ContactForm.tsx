@@ -128,6 +128,12 @@ export function ContactForm() {
                 <div>
                   <p className="font-display font-extrabold text-md text-ink">{BRAND.contact.name}</p>
                   <p className="text-sm-plus text-contact-role mt-0.5">{BRAND.contact.role}</p>
+                  <a
+                    href={`mailto:${BRAND.email}`}
+                    className="mt-1 inline-block text-sm font-semibold text-ink transition-colors hover:text-accent"
+                  >
+                    {BRAND.email}
+                  </a>
                 </div>
               </div>
             </div>
@@ -221,9 +227,12 @@ export function ContactForm() {
                   </button>
 
                   <p className="text-center mt-4 text-sm-plus text-muted-light">
-                    Prefer a call?{' '}
-                    <a href="#contact" className="text-ink font-bold underline">
-                      Book A Call Directly
+                    Prefer email?{' '}
+                    <a
+                      href={`mailto:${BRAND.email}`}
+                      className="text-ink font-bold underline transition-colors hover:text-accent"
+                    >
+                      {BRAND.email}
                     </a>
                   </p>
                 </form>

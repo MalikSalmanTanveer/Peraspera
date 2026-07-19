@@ -9,8 +9,26 @@ export const BRAND = {
     name: 'Peraspera Studio',
     role: 'Partnerships & Project Lead',
   },
-  email: 'hello@peraspera.com',
+  email: 'contact.peraspera@gmail.com',
+  social: {
+    linkedin: 'https://www.linkedin.com/company/peraspera-tech',
+    instagram: null,
+  },
 } as const;
+
+export const SOCIAL_LINKS = [
+  {
+    label: 'LinkedIn',
+    icon: 'in',
+    href: BRAND.social.linkedin,
+  },
+  {
+    label: 'Instagram',
+    icon: 'Ig',
+    href: BRAND.social.instagram,
+    comingSoon: true,
+  },
+] as const;
 
 export const HERO_COPY = {
   eyebrow: 'AI · Software · Automation · Finance · Brand',

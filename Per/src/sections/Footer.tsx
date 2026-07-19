@@ -1,4 +1,4 @@
-import { BRAND } from '../data/site';
+import { BRAND, SOCIAL_LINKS } from '../data/site';
 
 const FOOTER_TAGLINE = [
   'AI & Automation',
@@ -7,14 +7,6 @@ const FOOTER_TAGLINE = [
   'Web & Development',
   'SaaS & Product',
   'Finance',
-] as const;
-
-const SOCIALS = [
-  { label: 'Facebook', icon: 'f' },
-  { label: 'LinkedIn', icon: 'in' },
-  { label: 'YouTube', icon: '▶' },
-  { label: 'X', icon: '𝕏' },
-  { label: 'Instagram', icon: 'Ig' },
 ] as const;
 
 export function Footer() {
@@ -64,16 +56,29 @@ export function Footer() {
           </a>
 
           <div className="flex gap-2">
-            {SOCIALS.map((social) => (
-              <a
-                key={social.label}
-                href="#"
-                aria-label={social.label}
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-overlay-footer-border-10 text-sm text-white transition-colors duration-normal hover:bg-accent hover:text-ink"
-              >
-                {social.icon}
-              </a>
-            ))}
+            {SOCIAL_LINKS.map((social) =>
+              'comingSoon' in social && social.comingSoon ? (
+                <span
+                  key={social.label}
+                  title="Coming soon"
+                  aria-label={`${social.label} — Coming soon`}
+                  className="flex h-11 w-11 cursor-not-allowed items-center justify-center rounded-full bg-overlay-footer-border-10 text-sm text-overlay-footer-text-40"
+                >
+                  {social.icon}
+                </span>
+              ) : social.href ? (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-overlay-footer-border-10 text-sm text-white transition-colors duration-normal hover:bg-accent hover:text-ink"
+                >
+                  {social.icon}
+                </a>
+              ) : null,
+            )}
           </div>
 
           <a
