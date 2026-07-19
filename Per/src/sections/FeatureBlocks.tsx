@@ -10,7 +10,7 @@ export function FeatureBlocks() {
   return (
     <section id="what-we-deliver" className="bg-white" aria-labelledby="what-we-deliver-heading">
       <div className="px-nav-x pb-0 pt-section-y text-center max-md:px-nav-x-mobile max-md:pt-section-y-mobile">
-        <Reveal className="mx-auto flex w-full max-w-[1120px] flex-col items-center">
+        <Reveal className="mx-auto mt-[4cm] flex w-full max-w-[1120px] flex-col items-center">
           <span className="section-label section-label-dark mb-3 antialiased md:mb-4">
             What we offer
           </span>
