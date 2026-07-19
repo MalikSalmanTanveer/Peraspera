@@ -21,14 +21,12 @@ export function GlobalReach() {
         </Reveal>
 
         <Reveal delay={0.06}>
-          <div className="relative mt-10 overflow-hidden rounded-3xl border border-white/10 bg-black">
-            <img
-              src={mapImage}
-              alt="World map showing countries where Per Aspera serves clients"
-              className="w-full object-cover object-center"
-              loading="lazy"
-            />
-          </div>
+          <img
+            src={mapImage}
+            alt="World map showing countries where Per Aspera serves clients"
+            className="mt-10 w-full object-contain object-center"
+            loading="lazy"
+          />
         </Reveal>
 
         <Reveal delay={0.1}>
