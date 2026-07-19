@@ -20,10 +20,10 @@ function BrandLogo({ brand }: { brand: BrandItem }) {
 export function LogoMarquee() {
   return (
     <section
-      className="overflow-hidden bg-white py-section-y-brands pb-28 max-2xl:py-section-y-brands-tablet max-md:py-section-y-brands-mobile max-md:pb-20"
+      className="overflow-hidden bg-white py-10 max-md:py-8"
       aria-label="Trusted brands"
     >
-      <div className="mask-marquee max-md:mask-marquee-mobile mb-14 max-md:mb-10">
+      <div className="mask-marquee max-md:mask-marquee-mobile mb-6 max-md:mb-5">
         <Marquee direction="left" gapClass="gap-5 md:gap-8">
           {BRAND_ROW_ONE.map((brand) => (
             <BrandLogo key={`r1-${brand.name}`} brand={brand} />

@@ -4,13 +4,12 @@ import { SERVICE_IMAGE_BY_TITLE } from '../data/service-images';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { SectionHeader } from '../components/SectionHeader';
-import { ServiceCategoryMeta } from '../components/ServiceCategoryMeta';
 
 export function ServicesGrid() {
   return (
     <section
       id="services"
-      className="bg-paper py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile"
+      className="bg-ink py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile"
     >
       <Container>
         <Reveal>
@@ -18,6 +17,7 @@ export function ServicesGrid() {
             label="Services"
             title="Everything your business needs to look professional and grow online."
             description="Six focused service categories across AI, branding, design, web, product, and finance."
+            light
           />
         </Reveal>
 
@@ -30,10 +30,10 @@ export function ServicesGrid() {
               <Reveal key={service.title} delay={i * 0.05}>
                 <a
                   href={category ? `/services#${category.id}` : '/services'}
-                  className="group flex h-full flex-col overflow-hidden rounded-8xl border border-border bg-white transition-all duration-card hover:-translate-y-[7px] hover:shadow-card-hover"
+                  className="group flex h-full flex-col overflow-hidden rounded-8xl border border-overlay-white-12 bg-white transition-all duration-card hover:-translate-y-[7px] hover:shadow-[0_24px_80px_rgba(0,0,0,0.35)]"
                 >
                   {image ? (
-                    <div className="h-[280px] w-full shrink-0 overflow-hidden bg-ink">
+                    <div className="h-[280px] w-full shrink-0 overflow-hidden bg-[#111]">
                       <img
                         src={image}
                         alt={`${service.title} preview`}
@@ -43,17 +43,10 @@ export function ServicesGrid() {
                     </div>
                   ) : null}
                   <div className="flex flex-1 flex-col p-padding-card">
-                    {category ? (
-                      <ServiceCategoryMeta category={category} size="sm" />
-                    ) : (
-                      <span className="inline-flex min-h-[28px] items-center self-start rounded-pill bg-ink px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-accent">
-                        {service.category}
-                      </span>
-                    )}
-                    <h3 className="my-3 font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold leading-tight text-ink">
+                    <h3 className="font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold leading-tight text-ink">
                       {service.title}
                     </h3>
-                    <p className="mb-[18px] line-clamp-4 flex-1 text-sm leading-body text-muted">
+                    <p className="mb-[18px] mt-3 line-clamp-4 flex-1 text-sm leading-body text-muted">
                       {service.description}
                     </p>
                     <strong className="text-sm-plus font-bold text-ink">{service.linkLabel} ↗</strong>

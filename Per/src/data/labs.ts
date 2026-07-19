@@ -7,7 +7,7 @@ export const LABS_HERO = {
   summary:
     'Per Aspera Labs is our research and development division, where ideas become intelligent systems. We explore emerging technologies, develop AI driven products, and experiment with new ways to solve real business problems. Every prototype, framework, and automation begins here before evolving into solutions that create measurable impact.',
   homeSummary:
-    'Our R&D arm explores AI products, automation prototypes, and experimental design systems — turning research into studio-ready solutions.',
+    'Our R&D division builds and stress-tests AI products, automation frameworks, and design systems before they ship to clients — so every Peraspera project starts from proven innovation, not guesswork.',
 } as const;
 
 export interface LabsPillar {
