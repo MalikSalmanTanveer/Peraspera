@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SERVICE_CATEGORIES, SERVICES_PAGE_STATS } from '../data/services';
 import { SERVICE_IMAGE_BY_TITLE } from '../data/service-images';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
+import { PageBreadcrumb } from '../components/PageBreadcrumb';
 import { AppIcon } from '../components/AppIcon';
 import { ServiceCategoryBannerBadge, ServiceCategoryMeta } from '../components/ServiceCategoryMeta';
 import { offeringIcon } from '../data/services';
@@ -73,13 +74,7 @@ export function ServicesPage() {
 
         <Container className="relative z-[2] py-12 md:py-16">
           <Reveal>
-            <nav className="mb-8 flex items-center gap-2 text-sm text-overlay-white-48" aria-label="Breadcrumb">
-              <Link to="/" className="transition-colors hover:text-white">
-                Home
-              </Link>
-              <span aria-hidden="true">/</span>
-              <span className="text-accent">Services</span>
-            </nav>
+            <PageBreadcrumb current="Services" />
 
             <span className="section-label section-label-light">Our Services</span>
             <h1 className="mt-4 max-w-[900px] font-display text-[clamp(2.5rem,5.5vw,4.25rem)] font-extrabold leading-[1.02] tracking-tighter">

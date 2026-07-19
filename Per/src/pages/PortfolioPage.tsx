@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import {
 
@@ -19,6 +19,8 @@ import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 
 import { Reveal } from '../components/Reveal';
+
+import { PageBreadcrumb } from '../components/PageBreadcrumb';
 
 import { AppIcon } from '../components/AppIcon';
 
@@ -164,7 +166,7 @@ export function PortfolioPage() {
 
       {/* Hero */}
 
-      <section className="relative overflow-hidden text-white pt-[72px]">
+      <section className="relative overflow-hidden text-white pt-[72px] px-nav-x max-md:px-nav-x-mobile">
 
         <div className="hero-grid-bg absolute inset-0 opacity-45" aria-hidden="true" />
 
@@ -178,33 +180,13 @@ export function PortfolioPage() {
 
 
 
-        <Container className="relative z-[2] px-nav-x py-12 md:py-16 max-md:px-nav-x-mobile">
+        <Container className="relative z-[2] py-12 md:py-16">
 
-          <div className="mx-auto max-w-[920px] text-center">
+          <Reveal>
 
-            <Reveal>
+            <PageBreadcrumb current="Portfolio" />
 
-              <nav
-
-                className="mb-6 flex items-center justify-center gap-2 text-sm text-overlay-white-48"
-
-                aria-label="Breadcrumb"
-
-              >
-
-                <Link to="/" className="transition-colors hover:text-white">
-
-                  Home
-
-                </Link>
-
-                <span aria-hidden="true">/</span>
-
-                <span className="text-accent">Portfolio</span>
-
-              </nav>
-
-
+            <div className="mx-auto max-w-[920px] text-center">
 
               <span className="section-label section-label-light">Portfolio & Testimonials</span>
 
@@ -250,9 +232,9 @@ export function PortfolioPage() {
 
               </div>
 
-            </Reveal>
+            </div>
 
-          </div>
+          </Reveal>
 
 
 

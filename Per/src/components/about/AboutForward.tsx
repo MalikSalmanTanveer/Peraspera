@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FORWARD } from '../../data/about-manifesto';
 import { Button } from '../Button';
+import { Container } from '../Container';
 import { PageBreadcrumb } from '../PageBreadcrumb';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
@@ -82,18 +83,19 @@ export function AboutForward() {
   }, [reduced]);
 
   return (
-    <section className="relative flex min-h-[90svh] items-center justify-center overflow-hidden bg-ink px-nav-x pt-[72px] py-section-y max-md:px-nav-x-mobile max-md:py-section-y-mobile">
+    <section className="relative overflow-hidden bg-ink pt-[72px] text-white px-nav-x max-md:px-nav-x-mobile">
       <canvas
         ref={canvasRef}
         className="pointer-events-none absolute inset-0 h-full w-full opacity-60"
         aria-hidden="true"
       />
 
-      <div className="absolute right-nav-x top-[calc(72px+3rem)] z-[3] max-md:right-nav-x-mobile max-md:top-[calc(72px+2rem)] [&>nav]:mb-0">
+      <Container className="relative z-[3] py-12 md:py-16">
         <PageBreadcrumb current="About" />
-      </div>
+      </Container>
 
-      <div className="relative z-[2] mx-auto max-w-[880px] text-center">
+      <div className="relative z-[2] flex min-h-[calc(90svh-10rem)] items-center justify-center pb-section-y max-md:pb-section-y-mobile">
+        <div className="mx-auto max-w-[880px] text-center">
         <motion.p
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -123,6 +125,7 @@ export function AboutForward() {
             </Button>
           </div>
         </motion.div>
+        </div>
       </div>
     </section>
   );

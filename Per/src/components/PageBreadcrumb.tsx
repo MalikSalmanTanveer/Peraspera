@@ -8,7 +8,7 @@ interface PageBreadcrumbProps {
 export function PageBreadcrumb({ current, light = false }: PageBreadcrumbProps) {
   return (
     <nav
-      className={`mb-6 flex items-center gap-2 text-sm ${light ? 'text-muted' : 'text-overlay-white-48'}`}
+      className={`mb-8 flex items-center gap-2 text-sm ${light ? 'text-muted' : 'text-overlay-white-48'}`}
       aria-label="Breadcrumb"
     >
       <Link

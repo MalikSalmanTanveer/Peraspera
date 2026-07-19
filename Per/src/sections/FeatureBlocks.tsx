@@ -23,7 +23,7 @@ export function FeatureBlocks() {
           </h2>
 
           <ul
-            className="mt-4 flex w-full max-w-full flex-nowrap items-center justify-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:mt-5 md:gap-2.5 [&::-webkit-scrollbar]:hidden"
+            className="mt-3 flex w-full max-w-full flex-nowrap items-center justify-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:mt-4 md:gap-2.5 [&::-webkit-scrollbar]:hidden"
             aria-label="Services we deliver"
           >
             {HOME_SERVICES.map((service) => (
@@ -35,7 +35,7 @@ export function FeatureBlocks() {
             ))}
           </ul>
 
-          <div className="mt-4 md:mt-5">
+          <div className="mt-3 md:mt-4">
             <Button variant="dark" href="#contact">
               Start Your Project ↗
             </Button>
@@ -43,7 +43,7 @@ export function FeatureBlocks() {
         </Reveal>
       </div>
 
-      <div className="mt-[4cm] w-full overflow-hidden bg-white">
+      <div className="mt-4 w-full overflow-hidden bg-white md:mt-5">
         <img
           src={FEATURE_IMAGES.whatWeDeliver}
           alt="Peraspera — brands built to be remembered"
