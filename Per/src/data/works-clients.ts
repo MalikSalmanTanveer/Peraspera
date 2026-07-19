@@ -101,17 +101,15 @@ export const CLIENT_WORKS: ClientWork[] = [
     id: 'rootsraices',
     title: 'Roots Raíces',
     url: 'https://rootsraices.com/',
-    previewSrc:
-      'https://image.thum.io/get/width/1440/crop/900/noanimate/rootsraices.com',
-    category: 'Real Estate',
-    services: ['Real Estate Web', 'Branding', 'Lead Capture'],
+    category: 'Education',
+    services: ['Web Design', 'Education Platform', 'UI/UX'],
     description:
-      'A real estate brand site with property positioning, lead forms, and a trustworthy visual system.',
+      'A Spanish language learning platform with a welcoming hero, clear enrollment paths, and community-focused visual storytelling.',
     testimonial: {
       quote:
-        'The website gives our brand a premium feel and helps us present listings with much more confidence.',
+        'The website gives our brand a premium feel and helps us present our course with much more confidence.',
       name: 'Roots Raíces',
-      role: 'Real Estate',
+      role: 'Education & Language',
     },
   },
   {
@@ -194,15 +192,15 @@ export const CLIENT_WORKS: ClientWork[] = [
     id: 'pilatessplendor',
     title: 'Pilates Splendor',
     url: 'https://www.instagram.com/pilatessplendor/',
-    category: 'Websites',
-    services: ['Social Media Management', 'Brand Direction', 'Content Strategy'],
+    category: 'eCommerce',
+    services: ['Brand Direction', 'Social Media', 'Content Strategy'],
     description:
-      'Ongoing social media and brand management — content planning, visual direction, and day-to-day presence for a premium pilates studio on Instagram.',
+      'A premium pilates sock brand in the health and lifestyle space — Instagram content, product storytelling, and visual direction for luxury grip socks.',
     testimonial: {
       quote:
         'Peraspera manages our Instagram end to end — content, visuals, and brand consistency — so we can focus on the studio.',
       name: 'Pilates Splendor',
-      role: 'Fitness & Wellness Brand',
+      role: 'Health & Lifestyle Brand',
     },
   },
 ];
@@ -218,7 +216,7 @@ export const WORKS_PAGE_STATS = [
 
 /** Local screenshot in /public/works, with thum.io fallback */
 export function workScreenshotSrc(id: string): string {
-  return `/works/${id}.png?v=20260718`;
+  return `/works/${id}.png?v=20260719`;
 }
 
 export function workScreenshotFallback(url: string): string {
