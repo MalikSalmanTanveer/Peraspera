@@ -43,23 +43,17 @@ export function FeatureBlocks() {
         </Reveal>
       </div>
 
-      <div className="w-full overflow-hidden">
-        <div className="relative aspect-[128/33] w-full max-md:aspect-[128/36]">
-          <picture>
-            <source
-              type="image/webp"
-              srcSet={`${FEATURE_IMAGES.whatWeDeliverWebp} 1x, ${FEATURE_IMAGES.whatWeDeliver2xWebp} 2x`}
-            />
-            <img
-              src={FEATURE_IMAGES.whatWeDeliver}
-              srcSet={`${FEATURE_IMAGES.whatWeDeliver} 1x, ${FEATURE_IMAGES.whatWeDeliver2x} 2x`}
-              sizes="100vw"
-              alt="Peraspera — brands built to be remembered"
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-center"
-            />
-          </picture>
+      <div className="w-full overflow-hidden bg-white">
+        <div className="relative aspect-[1024/356] w-full">
+          <img
+            src={FEATURE_IMAGES.whatWeDeliver}
+            alt="Peraspera — brands built to be remembered"
+            loading="lazy"
+            decoding="async"
+            width={1024}
+            height={356}
+            className="absolute inset-0 h-full w-full object-cover object-[center_72%]"
+          />
         </div>
       </div>
     </section>
