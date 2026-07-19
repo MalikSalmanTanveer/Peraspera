@@ -9,7 +9,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function AboutBeliefs() {
   const sectionRef = useRef<HTMLElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
+  const thumbRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [progress, setProgress] = useState(0);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -21,13 +24,23 @@ export function AboutBeliefs() {
         start: 'top top',
         end: `+=${MANIFESTO_BELIEFS.length * 100}%`,
         pin: true,
-        scrub: 0.5,
+        scrub: 0.35,
         onUpdate: (self) => {
+          const nextProgress = self.progress;
+          setProgress(nextProgress);
+
           const index = Math.min(
             MANIFESTO_BELIEFS.length - 1,
-            Math.floor(self.progress * MANIFESTO_BELIEFS.length),
+            Math.floor(nextProgress * MANIFESTO_BELIEFS.length),
           );
           setActive(index);
+
+          if (fillRef.current) {
+            fillRef.current.style.transform = `scaleX(${nextProgress})`;
+          }
+          if (thumbRef.current) {
+            thumbRef.current.style.left = `calc(${nextProgress * 100}% - 8px)`;
+          }
         },
       });
     }, sectionRef);
@@ -56,6 +69,8 @@ export function AboutBeliefs() {
   }
 
   const belief = MANIFESTO_BELIEFS[active];
+  const slideLabel = String(active + 1).padStart(2, '0');
+  const totalLabel = String(MANIFESTO_BELIEFS.length).padStart(2, '0');
 
   return (
     <section ref={sectionRef} className="relative bg-ink">
@@ -78,16 +93,32 @@ export function AboutBeliefs() {
               </p>
             </motion.div>
           </AnimatePresence>
-          <div className="mt-14 flex gap-2">
-            {MANIFESTO_BELIEFS.map((item, index) => (
-              <span
-                key={item.title}
-                className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
-                  index <= active ? 'bg-accent' : 'bg-white/15'
-                }`}
+
+          <div className="mt-14">
+            <div className="mb-3 flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-overlay-white-46">
+              <span>{slideLabel}</span>
+              <span>{totalLabel}</span>
+            </div>
+            <div
+              className="relative h-1.5 w-full rounded-full bg-white/12"
+              role="progressbar"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.round(progress * 100)}
+              aria-label="Belief progress"
+            >
+              <div
+                ref={fillRef}
+                className="absolute inset-0 origin-left rounded-full bg-accent will-change-transform"
+                style={{ transform: `scaleX(${progress})` }}
+              />
+              <div
+                ref={thumbRef}
+                className="absolute top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border-2 border-ink bg-accent shadow-[0_0_18px_rgba(254,163,39,0.55)] will-change-[left]"
+                style={{ left: `calc(${progress * 100}% - 8px)` }}
                 aria-hidden="true"
               />
-            ))}
+            </div>
           </div>
         </div>
       </div>
