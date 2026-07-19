@@ -35,7 +35,7 @@ export function FeatureBlocks() {
             ))}
           </ul>
 
-          <div className="mt-[4cm]">
+          <div className="mt-4 md:mt-5">
             <Button variant="dark" href="#contact">
               Start Your Project ↗
             </Button>
@@ -43,7 +43,7 @@ export function FeatureBlocks() {
         </Reveal>
       </div>
 
-      <div className="mt-[2cm] w-full overflow-hidden bg-white">
+      <div className="mt-[4cm] w-full overflow-hidden bg-white">
         <img
           src={FEATURE_IMAGES.whatWeDeliver}
           alt="Peraspera — brands built to be remembered"
