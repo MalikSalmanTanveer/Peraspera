@@ -128,12 +128,56 @@ export function ServicesPage() {
         </div>
       </section>
 
-      <section className="relative z-[1] bg-ink py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
+      <section className="relative z-[1] overflow-x-clip bg-ink py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
         <Container>
-          <div className="grid grid-cols-1 gap-gap-xl xl:grid-cols-[240px_1fr]">
-            <aside className="hidden xl:block">
+          <nav
+            className="mb-10 space-y-1.5 4xl:hidden"
+            aria-label="Service categories"
+          >
+            <p className="mb-4 text-2xs font-black uppercase tracking-widest text-overlay-white-46">
+              Categories
+            </p>
+            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
+              {SERVICE_CATEGORIES.map((category, index) => (
+                <button
+                  key={category.id}
+                  type="button"
+                  onClick={() => scrollToCategory(category.id)}
+                  className={`flex w-full min-w-0 items-center gap-3 rounded-2xl border bg-white px-3 py-3 text-left transition-[border-color,box-shadow] duration-200 ${
+                    activeId === category.id
+                      ? 'border-ink shadow-[0_8px_24px_rgba(0,0,0,0.14)]'
+                      : 'border-ink/10 hover:border-ink/25 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
+                  }`}
+                >
+                  <span
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-black text-white ${category.badgeTone.iconWrap}`}
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-ink">
+                    {category.title}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <div className="mt-4 rounded-2xl border border-ink/10 bg-white p-4 sm:max-w-md">
+              <p className="text-sm font-bold text-ink">Need help choosing?</p>
+              <p className="mt-2 text-sm leading-body text-muted">
+                Tell us your goals and we&apos;ll recommend the right service mix.
+              </p>
+              <Link
+                to="/#contact"
+                className="mt-4 inline-flex text-sm font-bold text-accent-dark hover:text-ink"
+              >
+                Get in touch →
+              </Link>
+            </div>
+          </nav>
+
+          <div className="grid min-w-0 grid-cols-1 gap-10 4xl:grid-cols-[280px_minmax(0,1fr)] 4xl:gap-12">
+            <aside className="hidden min-w-0 4xl:block">
               <nav
-                className={`sticky space-y-1 ${navScrolled ? 'top-[156px]' : 'top-[132px]'}`}
+                className={`sticky w-full max-w-[280px] space-y-1.5 ${navScrolled ? 'top-[156px]' : 'top-[132px]'}`}
                 aria-label="Service categories"
               >
                 <p className="mb-4 text-2xs font-black uppercase tracking-widest text-overlay-white-46">
@@ -144,10 +188,10 @@ export function ServicesPage() {
                     key={category.id}
                     type="button"
                     onClick={() => scrollToCategory(category.id)}
-                    className={`flex w-full items-center gap-3 rounded-2xl border bg-white px-3 py-3 text-left transition-[border-color,box-shadow] duration-200 ${
+                    className={`flex w-full max-w-full items-center gap-3 rounded-2xl border bg-white px-3 py-3 text-left transition-[border-color,box-shadow] duration-200 ${
                       activeId === category.id
                         ? 'border-ink shadow-[0_8px_24px_rgba(0,0,0,0.14)]'
-                        : 'border-[#e5e5e5] hover:border-[#cfcfcf] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
+                        : 'border-ink/10 hover:border-ink/25 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
                     }`}
                   >
                     <span
@@ -155,10 +199,12 @@ export function ServicesPage() {
                     >
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-sm font-bold leading-snug text-ink">{category.title}</span>
+                    <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-ink">
+                      {category.title}
+                    </span>
                   </button>
                 ))}
-                <div className="mt-6 rounded-2xl border border-[#e5e5e5] bg-white p-4">
+                <div className="mt-6 w-full max-w-full rounded-2xl border border-ink/10 bg-white p-4">
                   <p className="text-sm font-bold text-ink">Need help choosing?</p>
                   <p className="mt-2 text-sm leading-body text-muted">
                     Tell us your goals and we&apos;ll recommend the right service mix.
@@ -173,7 +219,7 @@ export function ServicesPage() {
               </nav>
             </aside>
 
-            <div className="space-y-20 md:space-y-28">
+            <div className="min-w-0 space-y-20 md:space-y-28">
               {SERVICE_CATEGORIES.map((category, categoryIndex) => {
                 const image = SERVICE_IMAGE_BY_TITLE[category.title];
 
