@@ -2,20 +2,11 @@ import { useState } from 'react';
 import { Marquee } from './Marquee';
 import type { StackTool } from '../data/tools-stack';
 
-function iconColorForBadge(hex?: string): string {
-  if (!hex) return 'FFFFFF';
-  const r = parseInt(hex.slice(0, 2), 16);
-  const g = parseInt(hex.slice(2, 4), 16);
-  const b = parseInt(hex.slice(4, 6), 16);
-  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-  return luminance < 90 ? 'FFFFFF' : hex;
-}
-
 function toolIconSources(tool: StackTool): string[] {
   const sources: string[] = [];
   if (tool.slug) {
-    const color = iconColorForBadge(tool.color);
-    sources.push(`https://cdn.simpleicons.org/${tool.slug}/${color}`);
+    sources.push(`https://cdn.simpleicons.org/${tool.slug}/FFFFFF`);
+    sources.push(`https://cdn.simpleicons.org/${tool.slug}`);
   }
   if (tool.devicon) {
     sources.push(
@@ -25,62 +16,39 @@ function toolIconSources(tool: StackTool): string[] {
   return sources;
 }
 
-function toolInitials(name: string): string {
-  const words = name.split(/\s+/).filter(Boolean);
-  if (words.length >= 2) {
-    return `${words[0][0]}${words[1][0]}`.toUpperCase();
-  }
-  return name.slice(0, 2).toUpperCase();
-}
-
-function ToolBadge({ tool }: { tool: StackTool }) {
-  const brandColor = tool.color ? `#${tool.color}` : '#fea327';
+function ToolLogo({ tool }: { tool: StackTool }) {
   const sources = toolIconSources(tool);
   const [sourceIndex, setSourceIndex] = useState(0);
   const iconUrl = sources[sourceIndex];
-  const showIcon = Boolean(iconUrl);
 
   const handleIconError = () => {
     if (sourceIndex < sources.length - 1) {
       setSourceIndex((current) => current + 1);
-    } else {
-      setSourceIndex(sources.length);
     }
   };
 
+  if (!iconUrl) return null;
+
   return (
     <div
-      className="group/badge relative flex h-[88px] w-[88px] shrink-0 items-center justify-center md:h-[96px] md:w-[96px]"
+      className="group/logo relative flex h-[76px] w-[76px] shrink-0 items-center justify-center md:h-[84px] md:w-[84px]"
       aria-label={tool.name}
     >
-      <div
-        className="pointer-events-none absolute inset-[22%] rounded-full opacity-0 blur-xl transition-opacity duration-normal group-hover/badge:opacity-70"
-        style={{ background: brandColor }}
-        aria-hidden="true"
-      />
-
-      {showIcon && sourceIndex < sources.length ? (
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] transition-all duration-300 ease-out group-hover/logo:-translate-y-0.5 group-hover/logo:border-white/18 group-hover/logo:bg-white/[0.1] group-hover/logo:shadow-[0_10px_28px_rgba(0,0,0,0.28)] md:h-[60px] md:w-[60px]">
         <img
           src={iconUrl}
           alt=""
-          className="relative h-12 w-12 object-contain transition-all duration-normal group-hover/badge:scale-110 group-hover/badge:[filter:drop-shadow(0_0_8px_var(--tool-glow))_drop-shadow(0_0_18px_var(--tool-glow-soft))] md:h-[52px] md:w-[52px]"
-          style={{
-            ['--tool-glow' as string]: brandColor,
-            ['--tool-glow-soft' as string]: `${brandColor}99`,
-          }}
+          className="h-7 w-7 object-contain opacity-90 transition-transform duration-300 ease-out group-hover/logo:scale-105 group-hover/logo:opacity-100 md:h-8 md:w-8"
           loading="lazy"
           decoding="async"
           onError={handleIconError}
         />
-      ) : (
-        <span
-          className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.06] font-display text-sm font-extrabold text-white transition-all duration-normal group-hover/badge:scale-110 group-hover/badge:border-white/30 md:h-[52px] md:w-[52px] md:text-base"
-        >
-          {toolInitials(tool.name)}
-        </span>
-      )}
+      </div>
 
-      <span className="pointer-events-none absolute -bottom-1 left-1/2 z-10 w-max max-w-[140px] -translate-x-1/2 translate-y-full rounded-lg border border-white/12 bg-ink/90 px-3 py-1.5 text-center text-[11px] font-bold leading-tight tracking-wide text-white opacity-0 shadow-lg backdrop-blur-sm transition-all duration-normal group-hover/badge:opacity-100 md:text-xs">
+      <span
+        role="tooltip"
+        className="pointer-events-none absolute bottom-[calc(100%+10px)] left-1/2 z-20 -translate-x-1/2 translate-y-1 rounded-lg border border-white/12 bg-[#161616]/95 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-all duration-200 ease-out group-hover/logo:translate-y-0 group-hover/logo:opacity-100 md:text-xs"
+      >
         {tool.name}
       </span>
     </div>
@@ -95,9 +63,9 @@ interface ToolsMarqueeProps {
 
 export function ToolsMarquee({ tools, direction = 'left-tools', className = '' }: ToolsMarqueeProps) {
   return (
-    <Marquee direction={direction} className={className} gapClass="gap-6 md:gap-10">
+    <Marquee direction={direction} className={className} gapClass="gap-8 md:gap-12">
       {tools.map((tool) => (
-        <ToolBadge key={`${direction}-${tool.name}`} tool={tool} />
+        <ToolLogo key={`${direction}-${tool.slug ?? tool.name}`} tool={tool} />
       ))}
     </Marquee>
   );
