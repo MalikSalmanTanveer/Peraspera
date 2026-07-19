@@ -28,7 +28,7 @@ export function FeatureBlocks() {
           >
             {HOME_SERVICES.map((service) => (
               <li key={service.title} className="shrink-0">
-                <span className="inline-flex min-h-[32px] items-center rounded-full border border-ink/10 bg-ink/[0.035] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-ink/70 antialiased backdrop-blur-sm md:px-4 md:text-2xs">
+                <span className="inline-flex min-h-[32px] items-center rounded-full bg-ink/[0.04] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-ink/70 antialiased md:px-4 md:text-2xs">
                   {service.category}
                 </span>
               </li>
@@ -57,7 +57,7 @@ export function FeatureBlocks() {
               alt="Peraspera — brands built to be remembered"
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-[center_72%]"
+              className="absolute inset-0 h-full w-full object-cover object-center"
             />
           </picture>
         </div>
