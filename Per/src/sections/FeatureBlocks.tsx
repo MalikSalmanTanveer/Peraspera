@@ -4,25 +4,23 @@ import { Button } from '../components/Button';
 import { Reveal } from '../components/Reveal';
 
 const PREMIUM_STATEMENT =
-  'Brand clarity and technical execution unified in one studio.';
+  "Creating brands that aren't made to fit in, they're built to be remembered.";
 
 export function FeatureBlocks() {
   return (
     <section id="what-we-deliver" className="bg-white" aria-labelledby="what-we-deliver-heading">
-      <div className="px-nav-x pb-4 pt-section-y text-center max-md:px-nav-x-mobile max-md:pb-3 max-md:pt-section-y-mobile">
+      <div className="px-nav-x pb-0 pt-section-y text-center max-md:px-nav-x-mobile max-md:pt-section-y-mobile">
         <Reveal className="mx-auto flex w-full max-w-[1120px] flex-col items-center">
           <span className="section-label section-label-dark mb-3 antialiased md:mb-4">
-            Stand Out Creatively
+            What we offer
           </span>
 
-          <div className="max-w-full overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <h2
-              id="what-we-deliver-heading"
-              className="whitespace-nowrap font-display text-[clamp(0.92rem,2.35vw,2.65rem)] font-extrabold leading-none tracking-tight text-ink antialiased"
-            >
-              {PREMIUM_STATEMENT}
-            </h2>
-          </div>
+          <h2
+            id="what-we-deliver-heading"
+            className="max-w-[920px] font-display text-[clamp(1.35rem,3.2vw,2.65rem)] font-extrabold leading-[1.12] tracking-tight text-ink antialiased"
+          >
+            {PREMIUM_STATEMENT}
+          </h2>
 
           <ul
             className="mt-5 flex w-full max-w-full flex-nowrap items-center justify-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:mt-6 md:gap-2.5 [&::-webkit-scrollbar]:hidden"
@@ -45,13 +43,15 @@ export function FeatureBlocks() {
         </Reveal>
       </div>
 
-      <div className="w-full">
-        <img
-          src={FEATURE_IMAGES.whatWeDeliver}
-          alt="Peraspera — creative work built to stand out in the crowd"
-          loading="lazy"
-          className="block h-auto w-full select-none"
-        />
+      <div className="w-full overflow-hidden">
+        <div className="relative aspect-[128/33] w-full max-md:aspect-[128/36]">
+          <img
+            src={FEATURE_IMAGES.whatWeDeliver}
+            alt="Peraspera — brands built to be remembered"
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover object-[center_72%]"
+          />
+        </div>
       </div>
     </section>
   );
