@@ -43,7 +43,7 @@ export function FeatureBlocks() {
         </Reveal>
       </div>
 
-      <div className="mt-3 w-full overflow-hidden bg-white md:mt-4">
+      <div className="mt-[3cm] w-full overflow-hidden bg-white">
         <div className="relative aspect-[1024/244] w-full">
           <img
             src={FEATURE_IMAGES.whatWeDeliver}
