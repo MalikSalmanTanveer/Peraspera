@@ -1,12 +1,36 @@
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  isTruncatedHomeReview,
-  PORTFOLIO_REVIEWS_URL,
-  TESTIMONIALS,
-} from '../data/content-extended';
+import { getPortfolioReviewUrl, TESTIMONIALS } from '../data/content-extended';
 import { Marquee } from '../components/Marquee';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
+
+function useClampedText() {
+  const ref = useRef<HTMLQuoteElement>(null);
+  const [isClamped, setIsClamped] = useState(false);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const check = () => {
+      setIsClamped(el.scrollHeight > el.clientHeight + 1);
+    };
+
+    check();
+
+    const observer = new ResizeObserver(check);
+    observer.observe(el);
+    window.addEventListener('resize', check);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', check);
+    };
+  }, []);
+
+  return { ref, isClamped };
+}
 
 function Stars() {
   return (
@@ -29,22 +53,25 @@ function TestimonialCard({
   initials,
   avatarColor,
 }: (typeof TESTIMONIALS)[number]) {
-  const isTruncated = isTruncatedHomeReview(quote);
+  const { ref, isClamped } = useClampedText();
 
   const card = (
     <article
       className={`flex h-[320px] w-[380px] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[300px] max-md:w-[340px] ${
-        isTruncated
+        isClamped
           ? 'cursor-pointer transition-all duration-card hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover'
           : ''
       }`}
     >
       <Stars />
       <div className="flex min-h-0 flex-1 flex-col">
-        <blockquote className="line-clamp-6 text-md leading-body-lg text-muted">
+        <blockquote
+          ref={ref}
+          className="line-clamp-5 text-md leading-body-lg text-muted"
+        >
           &ldquo;{quote}&rdquo;
         </blockquote>
-        {isTruncated ? (
+        {isClamped ? (
           <span className="mt-2 font-display text-xl font-extrabold leading-none text-accent">
             ...
           </span>
@@ -76,13 +103,13 @@ function TestimonialCard({
     </article>
   );
 
-  if (!isTruncated) {
+  if (!isClamped) {
     return card;
   }
 
   return (
     <Link
-      to={PORTFOLIO_REVIEWS_URL}
+      to={getPortfolioReviewUrl(name)}
       className="block shrink-0 no-underline text-inherit"
       aria-label={`Read full review from ${name}`}
     >

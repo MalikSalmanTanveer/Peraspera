@@ -7,7 +7,7 @@ import {
   WORKS_PAGE_STATS,
   type WorkCategory,
 } from '../data/works-clients';
-import { TESTIMONIALS } from '../data/content-extended';
+import { reviewAnchorId, TESTIMONIALS } from '../data/content-extended';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
@@ -194,9 +194,12 @@ export function PortfolioPage() {
           <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {TESTIMONIALS.map((review, index) => (
               <Reveal key={review.name} delay={index * 0.03}>
-                <article className="flex h-full min-h-[320px] flex-col rounded-6xl border border-border bg-white p-padding-card-lg">
+                <article
+                  id={reviewAnchorId(review.name)}
+                  className="scroll-mt-[148px] flex h-full flex-col rounded-6xl border border-border bg-white p-padding-card-lg"
+                >
                   <Stars />
-                  <blockquote className="line-clamp-8 flex-1 text-md leading-body-lg text-muted">
+                  <blockquote className="flex-1 text-md leading-body-lg text-muted">
                     &ldquo;{review.quote}&rdquo;
                   </blockquote>
                   <footer className="mt-6 flex items-center gap-3.5 border-t border-border pt-5">

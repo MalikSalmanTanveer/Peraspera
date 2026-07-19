@@ -10,13 +10,18 @@ export interface Testimonial {
   avatarColor: string;
 }
 
-/** Approx. visible characters in homepage marquee cards before line-clamp cuts off */
-export const HOMEPAGE_REVIEW_PREVIEW_CHARS = 260;
-
 export const PORTFOLIO_REVIEWS_URL = '/portfolio#client-reviews';
 
-export function isTruncatedHomeReview(quote: string): boolean {
-  return quote.length > HOMEPAGE_REVIEW_PREVIEW_CHARS;
+export function getPortfolioReviewUrl(name: string): string {
+  const slug = name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+  return `/portfolio#review-${slug}`;
+}
+
+export function reviewAnchorId(name: string): string {
+  return getPortfolioReviewUrl(name).split('#')[1] ?? 'client-reviews';
 }
 
 export const TESTIMONIALS: Testimonial[] = [
