@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import {
-  BUDGET_OPTIONS,
   SERVICE_OPTIONS,
 } from '../data/content-extended';
 import { BRAND } from '../data/site';
@@ -97,7 +96,6 @@ function CustomSelect({
 
 export function ContactForm() {
   const [service, setService] = useState('');
-  const [budget, setBudget] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: FormEvent) => {
@@ -195,15 +193,6 @@ export function ContactForm() {
                     options={SERVICE_OPTIONS}
                     value={service}
                     onChange={setService}
-                  />
-
-                  <CustomSelect
-                    label="Project budget"
-                    required
-                    placeholder="Select Your Range ▼"
-                    options={BUDGET_OPTIONS}
-                    value={budget}
-                    onChange={setBudget}
                   />
 
                   <div className="flex flex-col gap-2 mb-5">
