@@ -56,7 +56,7 @@ export function PerasperaLabsBanner() {
             <img
               src={labsLogo}
               alt={LABS_HERO.title}
-              className="mx-auto h-auto w-[min(100%,380px)] object-contain"
+              className="mx-auto h-auto w-[min(100%,560px)] max-w-none object-contain drop-shadow-[0_8px_32px_rgba(254,163,39,0.18)] md:w-[min(100%,640px)]"
             />
             <p className="mt-5 font-display text-[clamp(1.35rem,2.8vw,2rem)] font-extrabold leading-snug text-accent">
               {LABS_HERO.tagline}

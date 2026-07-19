@@ -27,11 +27,13 @@ export function PerasperaLabsPromo() {
         <Reveal>
           <div className="flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between md:gap-8">
             <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
-              <img
-                src={labsLogo}
-                alt={LABS_HERO.title}
-                className="h-auto w-[min(100%,168px)] shrink-0 object-contain max-md:w-[140px]"
-              />
+              <div className="shrink-0 rounded-2xl bg-ink px-4 py-3 shadow-[0_12px_40px_rgba(13,13,13,0.18)] max-md:px-3 max-md:py-2.5">
+                <img
+                  src={labsLogo}
+                  alt={LABS_HERO.title}
+                  className="h-auto w-[min(100%,240px)] object-contain max-md:w-[200px] md:w-[260px]"
+                />
+              </div>
 
               <div className="min-w-0">
                 <div className="mb-2 inline-flex items-center gap-1.5 rounded-pill border border-ink/10 bg-ink/5 px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest text-ink">
