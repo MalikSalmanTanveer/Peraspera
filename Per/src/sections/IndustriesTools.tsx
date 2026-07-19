@@ -26,7 +26,7 @@ export function ToolsGrid() {
         </Reveal>
       </Container>
 
-      <div className="relative z-[1] space-y-8 mask-marquee py-2 pb-6 md:space-y-10">
+      <div className="relative z-[1] space-y-6 mask-marquee px-2 pt-8 pb-6 md:space-y-8 md:pt-10">
         <ToolsMarquee tools={rowOne} direction="left-tools" />
         <ToolsMarquee tools={rowTwo} direction="right-tools" />
       </div>

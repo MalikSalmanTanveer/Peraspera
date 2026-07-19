@@ -31,9 +31,22 @@ function ToolLogo({ tool }: { tool: StackTool }) {
 
   return (
     <div
-      className="group/logo relative flex h-[76px] w-[76px] shrink-0 items-center justify-center md:h-[84px] md:w-[84px]"
+      className="group/logo relative flex h-[104px] w-[76px] shrink-0 flex-col items-center justify-end md:h-[112px] md:w-[84px]"
       aria-label={tool.name}
     >
+      <div
+        role="tooltip"
+        className="pointer-events-none absolute top-0 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center opacity-0 transition-all duration-200 ease-out group-hover/logo:translate-y-0 group-hover/logo:opacity-100"
+      >
+        <span className="whitespace-nowrap rounded-lg border border-white/14 bg-[#141414] px-3.5 py-2 text-[11px] font-semibold tracking-wide text-white shadow-[0_10px_28px_rgba(0,0,0,0.4)] md:text-xs">
+          {tool.name}
+        </span>
+        <span
+          className="mt-[-1px] h-0 w-0 border-x-[6px] border-t-[6px] border-x-transparent border-t-[#141414]"
+          aria-hidden="true"
+        />
+      </div>
+
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] transition-all duration-300 ease-out group-hover/logo:-translate-y-0.5 group-hover/logo:border-white/18 group-hover/logo:bg-white/[0.1] group-hover/logo:shadow-[0_10px_28px_rgba(0,0,0,0.28)] md:h-[60px] md:w-[60px]">
         <img
           src={iconUrl}
@@ -44,13 +57,6 @@ function ToolLogo({ tool }: { tool: StackTool }) {
           onError={handleIconError}
         />
       </div>
-
-      <span
-        role="tooltip"
-        className="pointer-events-none absolute bottom-[calc(100%+10px)] left-1/2 z-20 -translate-x-1/2 translate-y-1 rounded-lg border border-white/12 bg-[#161616]/95 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-all duration-200 ease-out group-hover/logo:translate-y-0 group-hover/logo:opacity-100 md:text-xs"
-      >
-        {tool.name}
-      </span>
     </div>
   );
 }
