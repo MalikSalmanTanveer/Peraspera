@@ -6,6 +6,7 @@ import { SectionHeader } from '../components/SectionHeader';
 
 const FEATURES = [
   {
+    index: '01',
     label: 'Premium Brand Design',
     title: 'Make your business look trusted before the first conversation.',
     description:
@@ -18,8 +19,10 @@ const FEATURES = [
     ],
     cta: 'Start Branding Project ↗',
     image: FEATURE_IMAGES.brandTrusted,
+    reverse: false,
   },
   {
+    index: '02',
     label: 'Web, Product & AI',
     title: 'Build websites, SaaS products, and AI systems with one team.',
     description:
@@ -32,6 +35,7 @@ const FEATURES = [
     ],
     cta: 'Explore Full Services ↗',
     image: FEATURE_IMAGES.webProductAi,
+    reverse: true,
   },
 ] as const;
 
@@ -46,47 +50,63 @@ export function FeatureBlocks() {
           />
         </Reveal>
 
-        <Reveal delay={0.05}>
-          <div className="overflow-hidden rounded-[2rem] border border-border bg-white shadow-card-hover">
-            <div className="grid grid-cols-1 xl:grid-cols-2">
-              {FEATURES.map((feature, index) => (
-                <article
-                  key={feature.title}
-                  className={`flex flex-col ${index === 0 ? 'border-b border-border xl:border-b-0 xl:border-r' : ''}`}
-                >
-                  <div className="relative h-[260px] overflow-hidden bg-ink md:h-[320px]">
+        <div className="flex flex-col gap-20 md:gap-28">
+          {FEATURES.map((feature, i) => (
+            <Reveal key={feature.title} delay={i * 0.06}>
+              <article
+                className={`grid grid-cols-1 items-center gap-10 xl:grid-cols-2 xl:gap-16 ${
+                  feature.reverse ? 'xl:[&>*:first-child]:order-2' : ''
+                }`}
+              >
+                <div className="relative">
+                  <span
+                    className="pointer-events-none absolute -left-1 -top-6 z-[1] font-display text-[clamp(4rem,8vw,6.5rem)] font-extrabold leading-none tracking-tighter text-accent/15 max-md:-top-4"
+                    aria-hidden="true"
+                  >
+                    {feature.index}
+                  </span>
+                  <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-ink shadow-[0_28px_90px_rgba(0,0,0,0.1)]">
                     <img
                       src={feature.image}
                       alt={feature.label}
                       loading="lazy"
-                      className="h-full w-full object-cover object-center"
+                      className="aspect-[5/4] w-full object-cover object-center transition-transform duration-image hover:scale-[1.02] md:aspect-[4/3]"
                     />
                   </div>
+                </div>
 
-                  <div className="flex flex-1 flex-col p-8 md:p-10">
-                    <span className="label-pill-equal self-start bg-paper text-accent-gold">
-                      {feature.label}
-                    </span>
-                    <h3 className="mt-4 font-display text-[clamp(1.5rem,2.4vw,2rem)] font-extrabold leading-snug text-ink">
+                <div className="xl:py-4">
+                  <div className="rounded-[1.5rem] border border-border bg-paper p-8 md:p-10">
+                    <div className="mb-5 flex items-center gap-3">
+                      <span className="font-display text-sm font-extrabold tracking-widest text-accent">
+                        ({feature.index})
+                      </span>
+                      <span className="h-px flex-1 bg-border" aria-hidden="true" />
+                      <span className="label-pill-equal bg-white text-accent-gold">
+                        {feature.label}
+                      </span>
+                    </div>
+
+                    <h3 className="font-display text-[clamp(1.65rem,2.8vw,2.35rem)] font-extrabold leading-snug tracking-snug text-ink">
                       {feature.title}
                     </h3>
-                    <p className="mt-4 text-muted leading-body-2xl">{feature.description}</p>
-                    <ul className="check-list mt-6 flex-1">
+                    <p className="mt-5 text-muted leading-body-2xl">{feature.description}</p>
+
+                    <ul className="check-list mt-6 mb-8">
                       {feature.items.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
-                    <div className="mt-8">
-                      <Button variant="dark" href="#contact">
-                        {feature.cta}
-                      </Button>
-                    </div>
+
+                    <Button variant="dark" href="#contact">
+                      {feature.cta}
+                    </Button>
                   </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </Container>
     </section>
   );
