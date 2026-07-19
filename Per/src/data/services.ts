@@ -11,6 +11,11 @@ export interface ServiceCategory {
   shortCategory: string;
   icon: AppIconName;
   iconClass: string;
+  badgeTone: {
+    iconWrap: string;
+    iconColor: string;
+    pill: string;
+  };
   offerings: string[];
   offeringDetails: ServiceOfferingDetail[];
   linkLabel: string;
@@ -26,6 +31,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'AI',
     icon: 'Bot',
     iconClass: 'bg-mega-icon-ai',
+    badgeTone: {
+      iconWrap: 'bg-red-600',
+      iconColor: 'text-white',
+      pill: 'bg-red-600 text-white',
+    },
     tagline: 'Intelligent systems that save time and scale operations.',
     overview:
       'We design and deploy AI-powered workflows that connect your tools, automate repetitive tasks, and keep your team focused on high-value work — from chatbots to full CRM automation.',
@@ -72,6 +82,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Branding',
     icon: 'Sparkles',
     iconClass: 'bg-mega-icon-brand',
+    badgeTone: {
+      iconWrap: 'bg-accent',
+      iconColor: 'text-ink',
+      pill: 'bg-ink text-accent',
+    },
     tagline: 'Visual identity that makes your brand impossible to ignore.',
     overview:
       'From first impression to every touchpoint, we craft cohesive brand systems — logos, guidelines, packaging, and marketing assets that communicate who you are with clarity and confidence.',
@@ -118,6 +133,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Design',
     icon: 'Hexagon',
     iconClass: 'bg-mega-icon-ux',
+    badgeTone: {
+      iconWrap: 'bg-violet-600',
+      iconColor: 'text-white',
+      pill: 'bg-violet-600 text-white',
+    },
     tagline: 'Interfaces people understand — and actually enjoy using.',
     overview:
       'We research how users think, map clear journeys, and design polished interfaces that reduce friction and increase conversion across web and mobile products.',
@@ -158,6 +178,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Web',
     icon: 'Globe',
     iconClass: 'bg-mega-icon-web',
+    badgeTone: {
+      iconWrap: 'bg-blue-600',
+      iconColor: 'text-white',
+      pill: 'bg-blue-600 text-white',
+    },
     tagline: 'Websites that look premium and perform under pressure.',
     overview:
       'We design and build fast, responsive websites — from corporate sites and landing pages to full eCommerce stores — optimized for SEO, conversion, and long-term maintainability.',
@@ -204,6 +229,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Product',
     icon: 'Rocket',
     iconClass: 'bg-mega-icon-mvp',
+    badgeTone: {
+      iconWrap: 'bg-teal-600',
+      iconColor: 'text-white',
+      pill: 'bg-teal-600 text-white',
+    },
     tagline: 'From MVP to production — products built to ship and scale.',
     overview:
       'We help founders and product teams go from idea to live software — MVPs, dashboards, admin panels, and full web applications with clear architecture and room to grow.',
@@ -250,6 +280,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Finance',
     icon: 'Landmark',
     iconClass: 'bg-mega-icon-finance',
+    badgeTone: {
+      iconWrap: 'bg-emerald-600',
+      iconColor: 'text-white',
+      pill: 'bg-emerald-600 text-white',
+    },
     tagline: 'Financial systems that keep your business organized and audit-ready.',
     overview:
       'We set up bookkeeping workflows, invoicing systems, and finance dashboards — connecting QuickBooks, Xero, and your business tools so numbers stay accurate and decisions stay clear.',
@@ -296,6 +331,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     shortCategory: 'Creative',
     icon: 'Clapperboard',
     iconClass: 'bg-mega-icon-video',
+    badgeTone: {
+      iconWrap: 'bg-fuchsia-600',
+      iconColor: 'text-white',
+      pill: 'bg-fuchsia-600 text-white',
+    },
     tagline: 'AI-powered visuals and video content at studio quality.',
     overview:
       'Our creative studio combines AI tools with human art direction to produce images, videos, motion graphics, and social content — faster than traditional production without sacrificing polish.',

@@ -4,6 +4,7 @@ import { SERVICE_IMAGE_BY_TITLE } from '../data/service-images';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { SectionHeader } from '../components/SectionHeader';
+import { ServiceCategoryMeta } from '../components/ServiceCategoryMeta';
 
 export function ServicesGrid() {
   return (
@@ -42,9 +43,13 @@ export function ServicesGrid() {
                     </div>
                   ) : null}
                   <div className="flex flex-1 flex-col p-padding-card">
-                    <span className="label-pill-equal self-start bg-accent/10 text-accent-gold">
-                      {service.category}
-                    </span>
+                    {category ? (
+                      <ServiceCategoryMeta category={category} size="sm" />
+                    ) : (
+                      <span className="inline-flex min-h-[28px] items-center self-start rounded-pill bg-ink px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-accent">
+                        {service.category}
+                      </span>
+                    )}
                     <h3 className="my-3 font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold leading-tight text-ink">
                       {service.title}
                     </h3>

@@ -7,6 +7,7 @@ import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { AppIcon } from '../components/AppIcon';
+import { ServiceCategoryMeta } from '../components/ServiceCategoryMeta';
 import { offeringIcon } from '../data/services';
 
 function scrollToCategory(id: string) {
@@ -150,7 +151,7 @@ export function ServicesPage() {
                     }`}
                   >
                     <span
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-black ${category.iconClass}`}
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-black text-white ${category.badgeTone.iconWrap}`}
                     >
                       {String(index + 1).padStart(2, '0')}
                     </span>
@@ -194,17 +195,8 @@ export function ServicesPage() {
                               />
                             </div>
                             <div className="border-b border-border p-6 md:p-8">
-                              <div className="flex items-center gap-3">
-                                <div
-                                  className={`flex h-11 w-11 items-center justify-center rounded-xl ${category.iconClass}`}
-                                >
-                                  <AppIcon name={category.icon} className="h-5 w-5 text-white" />
-                                </div>
-                                <span className="label-pill-equal bg-accent/10 text-accent-gold">
-                                  {category.shortCategory}
-                                </span>
-                              </div>
-                              <h2 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight text-ink">
+                              <ServiceCategoryMeta category={category} />
+                              <h2 className="mt-4 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight text-ink">
                                 {category.title}
                               </h2>
                               <p className="mt-2 max-w-xl text-sm text-muted md:text-base">
@@ -214,17 +206,8 @@ export function ServicesPage() {
                           </>
                         ) : (
                           <div className="border-b border-border p-6 md:p-8">
-                            <div className="flex items-center gap-3">
-                              <div
-                                className={`flex h-11 w-11 items-center justify-center rounded-xl ${category.iconClass}`}
-                              >
-                                <AppIcon name={category.icon} className="h-5 w-5 text-ink" />
-                              </div>
-                              <span className="label-pill-equal bg-accent/10 text-accent-gold">
-                                {category.shortCategory}
-                              </span>
-                            </div>
-                            <h2 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight">
+                            <ServiceCategoryMeta category={category} />
+                            <h2 className="mt-4 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight">
                               {category.title}
                             </h2>
                             <p className="mt-2 max-w-xl text-muted">{category.tagline}</p>
@@ -260,7 +243,9 @@ export function ServicesPage() {
                                           <h4 className="font-display text-lg font-extrabold text-ink md:text-xl">
                                             {offering}
                                           </h4>
-                                          <span className="rounded-md bg-white px-2 py-0.5 text-2xs font-bold uppercase tracking-wide text-muted-light border border-border">
+                                          <span
+                                            className={`rounded-pill px-2.5 py-1 text-2xs font-extrabold uppercase tracking-wide ${category.badgeTone.pill}`}
+                                          >
                                             {category.shortCategory} · {String(offeringIndex + 1).padStart(2, '0')}
                                           </span>
                                         </div>
