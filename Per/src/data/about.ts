@@ -1,52 +1,62 @@
 export const ABOUT_MISSION = {
-  title: 'Built for teams who need design, product, and systems in one place.',
+  title: 'Design and development should live in the same room.',
   paragraphs: [
-    'Peraspera is a design and product studio helping founders, agencies, and growing businesses ship premium brands, websites, SaaS products, and AI-powered workflows — without juggling five different vendors.',
-    'We combine creative direction with technical execution so your marketing, product, and operations stay aligned from the first brief through launch and beyond.',
+    'Most teams we meet have the same headache: one vendor for the brand, another for the site, someone else for the product build. Timelines slip because nothing was planned together.',
+    'Peraspera exists to cut that friction. We handle brand, UI/UX, websites, SaaS, and AI automation as one studio — so what you launch actually matches what you sold.',
   ],
 } as const;
+
+export const ABOUT_WHO_WE_WORK_WITH = [
+  'Founders shipping a new product or full rebrand',
+  'Agencies that need a dependable design + dev partner',
+  'Operations teams replacing manual work with automation',
+  'Marketing leads who need sites and assets turned around quickly',
+] as const;
 
 export const ABOUT_APPROACH = [
   {
     step: '01',
-    title: 'Discover',
+    title: 'Listen first',
     description:
-      'We map your goals, audience, brand position, and technical scope before any design or build begins.',
+      'We start with your goals, audience, and constraints — not a template deck. Scope and priorities get clear before pixels or code.',
   },
   {
     step: '02',
-    title: 'Direct',
+    title: 'Set direction',
     description:
-      'We define structure, visual language, deliverables, and milestones so every phase stays clear and accountable.',
+      'Structure, visual language, and milestones are agreed upfront. Everyone knows what ships when.',
   },
   {
     step: '03',
-    title: 'Design & Build',
+    title: 'Design & build',
     description:
-      'Our team executes across branding, UI/UX, web, product, automation, and content — with fast feedback loops.',
+      'Brand, UI, web, product, and automation move in parallel where it makes sense. Feedback loops stay short.',
   },
   {
     step: '04',
-    title: 'Deliver & Support',
+    title: 'Hand off clean',
     description:
-      'You receive polished assets, live builds, source files, and ongoing support when your business needs to keep moving.',
+      'You get live builds, export-ready files, and documentation. Support stays available when you need to iterate.',
   },
 ] as const;
 
-export const ABOUT_VALUES = [
+export const ABOUT_BELIEFS = [
   {
-    title: 'Clarity over complexity',
+    title: 'One thread, not five vendors',
     description:
-      'Every project gets a structured process, transparent communication, and deliverables you can actually use.',
+      'When brand, product, and ops work share the same team, decisions are faster and the output stays coherent.',
   },
   {
-    title: 'Premium by default',
+    title: 'You own the files',
     description:
-      'From typography and layout to automation logic, we treat every touchpoint like it represents your brand on its best day.',
+      'Source files, editable assets, and deployment access are part of the deal — not held behind a retainer wall.',
   },
   {
-    title: 'Speed with substance',
+    title: 'Fast, but not sloppy',
     description:
-      'Fast turnarounds matter — but never at the cost of strategy, polish, or long-term scalability.',
+      'We move quickly on first delivery because scope is tight and communication is direct — not because corners get cut.',
   },
 ] as const;
+
+/** @deprecated Use ABOUT_BELIEFS */
+export const ABOUT_VALUES = ABOUT_BELIEFS;

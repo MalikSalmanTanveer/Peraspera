@@ -7,7 +7,7 @@ import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { AppIcon } from '../components/AppIcon';
-import { ServiceCategoryMeta } from '../components/ServiceCategoryMeta';
+import { ServiceCategoryBannerBadge, ServiceCategoryMeta } from '../components/ServiceCategoryMeta';
 import { offeringIcon } from '../data/services';
 
 function scrollToCategory(id: string) {
@@ -193,10 +193,14 @@ export function ServicesPage() {
                                 alt=""
                                 className="h-full w-full object-cover object-right"
                               />
+                              <div
+                                className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/45 to-transparent"
+                                aria-hidden="true"
+                              />
+                              <ServiceCategoryBannerBadge category={category} />
                             </div>
                             <div className="border-b border-border p-6 md:p-8">
-                              <ServiceCategoryMeta category={category} />
-                              <h2 className="mt-4 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight text-ink">
+                              <h2 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight text-ink">
                                 {category.title}
                               </h2>
                               <p className="mt-2 max-w-xl text-sm text-muted md:text-base">
