@@ -1,39 +1,55 @@
+import { HOME_SERVICES } from '../data/content';
 import { FEATURE_IMAGES } from '../data/feature-images';
 import { Button } from '../components/Button';
 import { Reveal } from '../components/Reveal';
 
+const PREMIUM_STATEMENT =
+  'Brand clarity and technical execution — unified in one studio.';
+
 export function FeatureBlocks() {
   return (
-    <section
-      id="what-we-deliver"
-      className="relative w-full overflow-hidden bg-white"
-      aria-labelledby="what-we-deliver-heading"
-    >
-      <img
-        src={FEATURE_IMAGES.whatWeDeliver}
-        alt=""
-        loading="lazy"
-        className="block h-auto w-full select-none"
-        aria-hidden="true"
-      />
-
-      <div className="absolute inset-x-0 top-0 flex h-[44%] min-h-[148px] flex-col items-center justify-center px-nav-x text-center max-md:h-[40%] max-md:min-h-[128px] max-md:px-nav-x-mobile">
-        <Reveal className="mx-auto flex max-w-[820px] flex-col items-center">
-          <span className="section-label section-label-dark mb-3 antialiased md:mb-4">
+    <section id="what-we-deliver" className="bg-white" aria-labelledby="what-we-deliver-heading">
+      <div className="px-nav-x pb-10 pt-section-y text-center max-md:px-nav-x-mobile max-md:pb-8 max-md:pt-section-y-mobile">
+        <Reveal className="mx-auto flex max-w-[880px] flex-col items-center">
+          <span className="section-label section-label-dark mb-4 antialiased md:mb-5">
             What We Deliver
           </span>
+
           <h2
             id="what-we-deliver-heading"
-            className="font-display text-[clamp(1.45rem,3.6vw,2.65rem)] font-extrabold leading-[1.08] tracking-tight text-ink antialiased"
+            className="font-display text-[clamp(1.55rem,3.8vw,2.75rem)] font-extrabold leading-[1.08] tracking-tight text-ink antialiased"
           >
-            Brand clarity and technical execution — unified in one studio.
+            {PREMIUM_STATEMENT}
           </h2>
-          <div className="mt-5 md:mt-7">
+
+          <ul
+            className="mt-8 flex flex-wrap items-center justify-center gap-2 md:mt-9 md:gap-2.5"
+            aria-label="Services we deliver"
+          >
+            {HOME_SERVICES.map((service) => (
+              <li key={service.title}>
+                <span className="inline-flex min-h-[34px] items-center rounded-full border border-ink/10 bg-ink/[0.035] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-ink/70 antialiased backdrop-blur-sm md:px-5 md:text-2xs">
+                  {service.title}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-8 md:mt-10">
             <Button variant="dark" href="#contact">
               Start Your Project ↗
             </Button>
           </div>
         </Reveal>
+      </div>
+
+      <div className="w-full">
+        <img
+          src={FEATURE_IMAGES.whatWeDeliver}
+          alt="Peraspera studio — standing out with clarity and precision"
+          loading="lazy"
+          className="block h-auto w-full select-none"
+        />
       </div>
     </section>
   );
