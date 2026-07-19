@@ -1,4 +1,7 @@
 import mapImage from '../assets/maps.png';
+import mapImage2x from '../assets/maps-2x.png';
+import mapImageWebp from '../assets/maps.webp';
+import mapImage2xWebp from '../assets/maps-2x.webp';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { CountryFlagsMarquee } from '../components/CountryFlagsMarquee';
@@ -20,12 +23,21 @@ export function GlobalReach() {
         </Reveal>
 
         <Reveal delay={0.06}>
-          <img
-            src={mapImage}
-            alt="World map showing countries where Per Aspera serves clients"
-            className="mt-10 w-full object-contain object-center"
-            loading="lazy"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={`${mapImageWebp} 1x, ${mapImage2xWebp} 2x`}
+            />
+            <img
+              src={mapImage}
+              srcSet={`${mapImage} 1x, ${mapImage2x} 2x`}
+              sizes="(min-width: 1280px) 1120px, 100vw"
+              alt="World map showing countries where Per Aspera serves clients"
+              className="mt-10 w-full object-contain object-center"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </Reveal>
 
         <CountryFlagsMarquee />
