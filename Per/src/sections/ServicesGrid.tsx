@@ -30,7 +30,7 @@ export function ServicesGrid() {
               <Reveal key={service.title} delay={i * 0.05}>
                 <a
                   href={category ? `/services#${category.id}` : '/services'}
-                  className="group flex h-full flex-col overflow-hidden rounded-8xl border border-overlay-white-12 bg-white transition-all duration-card hover:-translate-y-[7px] hover:shadow-[0_24px_80px_rgba(0,0,0,0.35)]"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-[#e5e5e5] bg-white transition-[border-color,box-shadow] duration-300 hover:border-[#d0d0d0] hover:shadow-[0_16px_40px_rgba(0,0,0,0.16)]"
                 >
                   {image ? (
                     <div className="h-[280px] w-full shrink-0 overflow-hidden bg-[#111]">
@@ -38,18 +38,18 @@ export function ServicesGrid() {
                         src={image}
                         alt={`${service.title} preview`}
                         loading="lazy"
-                        className="h-full w-full object-cover object-right transition-transform duration-image group-hover:scale-[1.04]"
+                        className="h-full w-full object-cover object-right transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                       />
                     </div>
                   ) : null}
                   <div className="flex flex-1 flex-col p-padding-card">
-                    <h3 className="font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold leading-tight text-ink">
+                    <h3 className="font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold leading-tight tracking-tight text-ink antialiased">
                       {service.title}
                     </h3>
-                    <p className="mb-[18px] mt-3 line-clamp-4 flex-1 text-sm leading-body text-muted">
+                    <p className="mb-[18px] mt-3 line-clamp-4 flex-1 text-sm leading-body text-muted antialiased">
                       {service.description}
                     </p>
-                    <strong className="text-sm-plus font-bold text-ink">{service.linkLabel} ↗</strong>
+                    <span className="text-sm-plus font-bold text-ink antialiased">{service.linkLabel} ↗</span>
                   </div>
                 </a>
               </Reveal>

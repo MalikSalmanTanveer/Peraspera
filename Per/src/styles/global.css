@@ -150,7 +150,7 @@
 
   .section-label::before {
     content: '';
-    @apply w-[22px] h-0.5 bg-accent block;
+    @apply block h-px w-[22px] bg-accent;
   }
 
   .section-label-light {

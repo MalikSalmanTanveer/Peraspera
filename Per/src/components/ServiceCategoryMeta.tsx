@@ -11,7 +11,7 @@ export function ServiceCategoryMeta({ category, size = 'md' }: ServiceCategoryMe
   const iconBoxClass =
     size === 'sm'
       ? 'h-9 w-9 rounded-lg'
-      : 'h-11 w-11 rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.12)]';
+      : 'h-11 w-11 rounded-xl';
   const iconClass = size === 'sm' ? 'h-4 w-4' : 'h-5 w-5';
   const pillClass =
     size === 'sm'
@@ -26,7 +26,7 @@ export function ServiceCategoryMeta({ category, size = 'md' }: ServiceCategoryMe
         <AppIcon name={category.icon} className={`${iconClass} ${badgeTone.iconColor}`} />
       </div>
       <span
-        className={`inline-flex items-center rounded-pill font-extrabold uppercase shadow-sm ${pillClass} ${badgeTone.pill}`}
+        className={`inline-flex items-center rounded-md border border-black/10 font-extrabold uppercase ${pillClass} ${badgeTone.pill}`}
       >
         {category.shortCategory}
       </span>
@@ -40,12 +40,12 @@ export function ServiceCategoryBannerBadge({ category }: { category: ServiceCate
   return (
     <div className="absolute bottom-5 left-5 z-10 flex items-center gap-2.5 md:bottom-6 md:left-6">
       <div
-        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.28)] md:h-11 md:w-11 ${badgeTone.iconWrap}`}
+        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg md:h-11 md:w-11 ${badgeTone.iconWrap}`}
       >
         <AppIcon name={category.icon} className={`h-4 w-4 md:h-5 md:w-5 ${badgeTone.iconColor}`} />
       </div>
       <span
-        className={`inline-flex min-h-[32px] items-center rounded-pill px-3.5 py-1.5 text-2xs font-extrabold uppercase tracking-wide shadow-[0_8px_24px_rgba(0,0,0,0.22)] md:px-4 ${badgeTone.pill}`}
+        className={`inline-flex min-h-[32px] items-center rounded-md border border-black/10 px-3.5 py-1.5 text-2xs font-extrabold uppercase tracking-wide md:px-4 ${badgeTone.pill}`}
       >
         {category.shortCategory}
       </span>
