@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import labsLogo from '../assets/logos/PERASPERALAB.png';
+import labsLogoHome from '../assets/logos/PERASPERALAB-home.png';
 import { BRAND } from '../data/site';
 import { LABS_HERO } from '../data/labs';
 import { Button } from '../components/Button';
@@ -28,7 +28,7 @@ export function PerasperaLabsPromo() {
           <div className="flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between md:gap-8">
             <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
               <img
-                src={labsLogo}
+                src={labsLogoHome}
                 alt={LABS_HERO.title}
                 className="h-auto w-[min(100%,240px)] shrink-0 object-contain max-md:w-[200px] md:w-[260px]"
               />
