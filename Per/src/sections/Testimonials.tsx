@@ -2,7 +2,6 @@ import { TESTIMONIALS } from '../data/content-extended';
 import { Marquee } from '../components/Marquee';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
-import { SectionGridDark } from '../components/SectionGridDark';
 
 function Stars() {
   return (
@@ -60,15 +59,13 @@ function TestimonialCard({
 
 export function Testimonials() {
   return (
-    <SectionGridDark className="overflow-hidden pb-padding-testi-b pt-padding-testi-y">
+    <section className="overflow-hidden bg-paper pb-padding-testi-b pt-padding-testi-y">
       <Container className="mb-[52px] px-nav-x max-md:px-nav-x-mobile">
         <Reveal>
-          <div className="mx-auto max-w-[820px] text-center">
-            <span className="section-label section-label-light">Client Love</span>
-            <h2 className="mt-4 font-display text-section-alt font-extrabold leading-snug tracking-snug text-white">
-              Trusted by founders and teams who need premium design fast.
-            </h2>
-          </div>
+          <span className="section-label">Client Love</span>
+          <h2 className="font-display text-section-alt font-extrabold leading-snug tracking-snug">
+            Trusted by founders and teams who need premium design fast.
+          </h2>
         </Reveal>
       </Container>
 
@@ -77,6 +74,6 @@ export function Testimonials() {
           <TestimonialCard key={t.name} {...t} />
         ))}
       </Marquee>
-    </SectionGridDark>
+    </section>
   );
 }

@@ -2,7 +2,7 @@ import { FEATURE_IMAGES } from '../data/feature-images';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
-import { SectionGridDark } from '../components/SectionGridDark';
+import { SectionHeader } from '../components/SectionHeader';
 
 const FEATURES = [
   {
@@ -37,19 +37,17 @@ const FEATURES = [
 
 export function FeatureBlocks() {
   return (
-    <SectionGridDark className="py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
+    <section className="bg-white py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
       <Container>
         <Reveal>
-          <div className="mx-auto mb-12 max-w-[760px] text-center md:mb-14">
-            <span className="section-label section-label-light">What We Deliver</span>
-            <h2 className="mt-4 font-display text-section font-extrabold leading-snug tracking-snug text-white">
-              Brand clarity and technical execution — unified in one studio.
-            </h2>
-          </div>
+          <SectionHeader
+            label="What We Deliver"
+            title="Brand clarity and technical execution — unified in one studio."
+          />
         </Reveal>
 
         <Reveal delay={0.05}>
-          <div className="overflow-hidden rounded-[2rem] border border-overlay-white-12 bg-white shadow-[0_40px_120px_rgba(0,0,0,0.35)]">
+          <div className="overflow-hidden rounded-[2rem] border border-border bg-white shadow-card-hover">
             <div className="grid grid-cols-1 xl:grid-cols-2">
               {FEATURES.map((feature, index) => (
                 <article
@@ -90,6 +88,6 @@ export function FeatureBlocks() {
           </div>
         </Reveal>
       </Container>
-    </SectionGridDark>
+    </section>
   );
 }

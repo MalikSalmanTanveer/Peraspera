@@ -3,22 +3,21 @@ import { SERVICE_CATEGORIES } from '../data/services';
 import { SERVICE_IMAGE_BY_TITLE } from '../data/service-images';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
-import { SectionGridDark } from '../components/SectionGridDark';
+import { SectionHeader } from '../components/SectionHeader';
 
 export function ServicesGrid() {
   return (
-    <SectionGridDark id="services" className="py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
+    <section
+      id="services"
+      className="bg-paper py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile"
+    >
       <Container>
         <Reveal>
-          <div className="mx-auto mb-14 max-w-[820px] text-center md:mb-16">
-            <span className="section-label section-label-light">Services</span>
-            <h2 className="mt-4 font-display text-section font-extrabold leading-snug tracking-snug text-white">
-              Everything your business needs to look professional and grow online.
-            </h2>
-            <p className="mx-auto mt-5 max-w-[640px] text-md-plus leading-body-lg text-overlay-white-55">
-              Six focused service categories across AI, branding, design, web, product, and finance.
-            </p>
-          </div>
+          <SectionHeader
+            label="Services"
+            title="Everything your business needs to look professional and grow online."
+            description="Six focused service categories across AI, branding, design, web, product, and finance."
+          />
         </Reveal>
 
         <div className="grid grid-cols-1 gap-gap-service md:grid-cols-2 3xl:grid-cols-3">
@@ -30,7 +29,7 @@ export function ServicesGrid() {
               <Reveal key={service.title} delay={i * 0.05}>
                 <a
                   href={category ? `/services#${category.id}` : '/services'}
-                  className="group flex h-full flex-col overflow-hidden rounded-8xl border border-overlay-white-10 bg-white transition-all duration-card hover:-translate-y-[7px] hover:shadow-card-hover"
+                  className="group flex h-full flex-col overflow-hidden rounded-8xl border border-border bg-white transition-all duration-card hover:-translate-y-[7px] hover:shadow-card-hover"
                 >
                   {image ? (
                     <div className="h-[280px] w-full shrink-0 overflow-hidden bg-ink">
@@ -60,6 +59,6 @@ export function ServicesGrid() {
           })}
         </div>
       </Container>
-    </SectionGridDark>
+    </section>
   );
 }

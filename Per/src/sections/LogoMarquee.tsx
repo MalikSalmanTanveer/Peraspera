@@ -23,12 +23,6 @@ export function LogoMarquee() {
       className="overflow-hidden bg-white py-section-y-brands pb-28 max-2xl:py-section-y-brands-tablet max-md:py-section-y-brands-mobile max-md:pb-20"
       aria-label="Trusted brands"
     >
-      <div className="mb-20 text-center max-2xl:mb-16 max-md:mb-12">
-        <span className="font-display text-lg font-extrabold uppercase tracking-marquee text-brands-title max-md:text-sm max-md:tracking-marquee-mobile">
-          Trusted by Growing Brands Worldwide
-        </span>
-      </div>
-
       <div className="mask-marquee max-md:mask-marquee-mobile mb-14 max-md:mb-10">
         <Marquee direction="left" gapClass="gap-5 md:gap-8">
           {BRAND_ROW_ONE.map((brand) => (
