@@ -39,20 +39,7 @@ export const MeasuredImpactCard = forwardRef<MeasuredImpactCardHandle, MeasuredI
         }}
         className="group relative rounded-[20px] border border-white/10 bg-[#111111] p-6 transition-[transform,background-color,border-color,box-shadow] duration-300 ease-out hover:-translate-y-2 hover:border-[#FFA94D]/35 hover:bg-[#161616] hover:shadow-[0_0_36px_rgba(255,169,77,0.12)] md:rounded-[22px] md:p-8"
       >
-        <div className="relative mb-6 md:mb-7">
-          <div
-            className="pointer-events-none absolute -inset-3 rounded-full bg-[radial-gradient(circle,rgba(255,169,77,0.18),transparent_72%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            aria-hidden="true"
-          />
-          <span
-            className="relative inline-block text-[1.65rem] leading-none transition-transform duration-300 group-hover:rotate-[3deg] md:text-[1.85rem]"
-            aria-hidden="true"
-          >
-            {stat.icon}
-          </span>
-        </div>
-
-        <div className="counter-wrap font-display text-[clamp(2rem,3.6vw,2.65rem)] font-extrabold leading-none tracking-tight text-white transition-transform duration-300 group-hover:scale-105">
+        <div className="counter-wrap font-display text-[clamp(2rem,3.6vw,2.75rem)] font-extrabold leading-none tracking-tight text-white transition-transform duration-300 group-hover:scale-105">
           <span ref={counterRef}>{reducedMotion ? finalDisplay : stat.type === 'rating' ? '0.0' : '0'}</span>
           {stat.type === 'rating' ? (
             <>

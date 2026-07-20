@@ -112,7 +112,7 @@ export function AboutMeasuredImpact() {
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
+        <div className="mx-auto grid max-w-[1040px] grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6">
           {MEASURED_IMPACT_STATS.map((stat, index) => (
             <MeasuredImpactCard
               key={stat.id}
