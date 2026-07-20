@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import primaryLogo from '../../assets/logos/Primary.png';
+import aboutConnectedLogo from '../../assets/logos/About-connected-logo.png';
 import { CONNECTED_NODES } from '../../data/about-manifesto';
 
 export function AboutConnectedModel() {
@@ -71,8 +71,12 @@ export function AboutConnectedModel() {
           ))}
         </svg>
 
-        <div className="absolute left-1/2 top-1/2 z-10 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-accent/30 bg-ink shadow-[0_0_40px_rgba(254,163,39,0.15)] md:h-28 md:w-28">
-          <img src={primaryLogo} alt="Per Aspera" className="h-14 w-auto object-contain md:h-16" />
+        <div className="absolute left-1/2 top-1/2 z-10 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-full border border-accent/30 bg-black shadow-[0_0_40px_rgba(254,163,39,0.15)] md:h-32 md:w-32">
+          <img
+            src={aboutConnectedLogo}
+            alt="Per Aspera"
+            className="h-[82%] w-[82%] object-contain"
+          />
         </div>
 
         {nodes.map((node) => (
