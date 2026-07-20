@@ -14,18 +14,18 @@ function PortfolioBrandLogoCard({ work }: { work: ClientWork }) {
   const [logoFailed, setLogoFailed] = useState(false);
 
   return (
-    <div className="flex h-full w-full items-center justify-center rounded-xl bg-white p-5 shadow-[0_20px_50px_rgba(0,0,0,0.12)] ring-1 ring-ink/8 md:p-6">
+    <div className="animate-portfolio-logo-morph group/logo flex h-full w-full items-center justify-center rounded-xl border border-ink/12 bg-white p-3.5 shadow-[0_10px_28px_rgba(0,0,0,0.07)] transition-[border-color,box-shadow] duration-normal hover:border-accent/35 hover:shadow-[0_14px_36px_rgba(254,163,39,0.12)] md:p-4">
       {!logoFailed ? (
         <img
           src={workLogoSrc(work.id)}
           alt={`${work.title} logo`}
           loading="lazy"
           decoding="async"
-          className="max-h-full max-w-full object-contain"
+          className="max-h-full max-w-full object-contain transition-transform duration-normal group-hover/logo:scale-[1.04]"
           onError={() => setLogoFailed(true)}
         />
       ) : (
-        <span className="text-center font-display text-lg font-extrabold leading-tight text-ink">
+        <span className="text-center font-display text-base font-extrabold leading-tight text-ink md:text-lg">
           {work.title}
         </span>
       )}
@@ -54,7 +54,7 @@ export function PortfolioWorkShowcase({ work, index, priority = false }: Portfol
             />
           </div>
           <div
-            className={`absolute -bottom-5 hidden aspect-square w-[38%] max-w-[220px] md:block ${
+            className={`absolute -bottom-4 hidden aspect-square w-[28%] max-w-[160px] md:block ${
               reversed ? 'left-0' : 'right-0'
             }`}
           >

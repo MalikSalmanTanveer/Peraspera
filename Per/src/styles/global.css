@@ -86,6 +86,22 @@
     animation: comingSoonScroll 28s linear infinite;
   }
 
+  @keyframes portfolioLogoMorph {
+    0%,
+    100% {
+      border-radius: 12px;
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      border-radius: 18px;
+      transform: translateY(-3px) scale(1.015);
+    }
+  }
+
+  .animate-portfolio-logo-morph {
+    animation: portfolioLogoMorph 5.5s ease-in-out infinite;
+  }
+
   @keyframes comingSoonPulse {
     0%,
     100% {
@@ -195,7 +211,8 @@
   .animate-scroll-left-tools,
   .animate-scroll-right-tools,
   .animate-orbit-slow,
-  .animate-orbit-reverse-slow {
+  .animate-orbit-reverse-slow,
+  .animate-portfolio-logo-morph {
     animation: none !important;
   }
 }
