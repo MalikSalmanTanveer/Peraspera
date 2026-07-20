@@ -1,36 +1,10 @@
-import { useState } from 'react';
-
 import type { ClientWork } from '../data/works-clients';
-import { workLogoSrc } from '../data/works-clients';
 import { WorkScreenshot } from './WorkScreenshot';
 
 interface PortfolioWorkShowcaseProps {
   work: ClientWork;
   index: number;
   priority?: boolean;
-}
-
-function PortfolioBrandLogo({ work }: { work: ClientWork }) {
-  const [logoFailed, setLogoFailed] = useState(false);
-
-  return (
-    <div className="flex min-h-[56px] items-center justify-center border-b border-ink/8 bg-white px-5 py-3.5 md:min-h-[64px] md:px-6 md:py-4">
-      {!logoFailed ? (
-        <img
-          src={workLogoSrc(work.id)}
-          alt={`${work.title} logo`}
-          loading="lazy"
-          decoding="async"
-          className="max-h-9 w-auto max-w-[min(100%,180px)] object-contain md:max-h-10 md:max-w-[220px]"
-          onError={() => setLogoFailed(true)}
-        />
-      ) : (
-        <span className="text-center font-display text-sm font-extrabold leading-tight text-ink md:text-base">
-          {work.title}
-        </span>
-      )}
-    </div>
-  );
 }
 
 export function PortfolioWorkShowcase({ work, index, priority = false }: PortfolioWorkShowcaseProps) {
@@ -43,17 +17,14 @@ export function PortfolioWorkShowcase({ work, index, priority = false }: Portfol
           reversed ? 'lg:[&>*:first-child]:order-2' : ''
         }`}
       >
-        <div className="overflow-hidden rounded-2xl border border-overlay-white-10 bg-[#111] lg:col-span-7">
-          <PortfolioBrandLogo work={work} />
-          <div className="aspect-[16/10]">
-            <WorkScreenshot
-              id={work.id}
-              url={work.url}
-              title={work.title}
-              previewSrc={work.previewSrc}
-              priority={priority}
-            />
-          </div>
+        <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-overlay-white-10 bg-[#111] lg:col-span-7">
+          <WorkScreenshot
+            id={work.id}
+            url={work.url}
+            title={work.title}
+            previewSrc={work.previewSrc}
+            priority={priority}
+          />
         </div>
 
         <div className={`flex flex-col lg:col-span-5 ${reversed ? 'lg:items-end lg:text-right' : ''}`}>
