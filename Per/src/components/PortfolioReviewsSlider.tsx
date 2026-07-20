@@ -16,12 +16,12 @@ function Stars() {
 
 function PortfolioReviewCard({ review }: { review: (typeof TESTIMONIALS)[number] }) {
   return (
-    <article className="relative z-10 flex h-[400px] w-[min(420px,85vw)] shrink-0 flex-col rounded-6xl border border-border bg-white p-padding-card-lg max-md:h-[380px] md:w-[440px]">
+    <article className="relative z-10 flex h-[400px] w-[min(420px,85vw)] shrink-0 flex-col rounded-6xl border border-ink bg-white p-padding-card-lg max-md:h-[380px] md:w-[440px]">
       <Stars />
       <blockquote className="flex-1 overflow-hidden text-md leading-body-lg text-muted">
         &ldquo;{review.quote}&rdquo;
       </blockquote>
-      <footer className="mt-6 flex shrink-0 items-center gap-3.5 border-t border-border pt-5">
+      <footer className="mt-6 flex shrink-0 items-center gap-3.5 border-t border-ink pt-5">
         {review.avatarSrc ? (
           <img
             src={review.avatarSrc}
