@@ -12,7 +12,7 @@ export const BRAND = {
   email: 'contact.peraspera@gmail.com',
   social: {
     linkedin: 'https://www.linkedin.com/company/peraspera-tech',
-    instagram: null,
+    instagram: 'https://www.instagram.com/peraspera.official/',
   },
 } as const;
 
@@ -26,7 +26,6 @@ export const SOCIAL_LINKS = [
     label: 'Instagram',
     icon: 'instagram',
     href: BRAND.social.instagram,
-    comingSoon: true,
   },
 ] as const;
 
