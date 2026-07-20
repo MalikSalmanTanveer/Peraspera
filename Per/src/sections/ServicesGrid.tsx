@@ -30,7 +30,7 @@ export function ServicesGrid() {
               <Reveal key={service.title} delay={i * 0.05}>
                 <a
                   href={category ? `/services#${category.id}` : '/services'}
-                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-ink/10 bg-white transition-[border-color,box-shadow] duration-200 hover:border-ink/25 hover:shadow-[0_12px_32px_rgba(0,0,0,0.18)]"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-black bg-white transition-[box-shadow] duration-200 hover:shadow-[0_12px_32px_rgba(0,0,0,0.18)]"
                 >
                   {image ? (
                     <div className="h-[280px] w-full shrink-0 overflow-hidden bg-[#111]">
