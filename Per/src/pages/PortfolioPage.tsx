@@ -61,8 +61,7 @@ export function PortfolioPage() {
           <Reveal>
             <PageBreadcrumb current="Portfolio" />
             <div className="mx-auto max-w-[820px] text-center">
-              <span className="section-label section-label-light">Portfolio</span>
-              <h1 className="mt-4 font-display text-[clamp(2.25rem,5vw,3.75rem)] font-extrabold leading-[1.06] tracking-tighter">
+              <h1 className="font-display text-[clamp(2.25rem,5vw,3.75rem)] font-extrabold leading-[1.06] tracking-tighter">
                 Live work across tourism, real estate, education, and{' '}
                 <em className="not-italic text-accent">eCommerce.</em>
               </h1>

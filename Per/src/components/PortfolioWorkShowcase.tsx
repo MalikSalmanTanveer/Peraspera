@@ -10,22 +10,22 @@ interface PortfolioWorkShowcaseProps {
   priority?: boolean;
 }
 
-function PortfolioBrandLogoCard({ work }: { work: ClientWork }) {
+function PortfolioBrandLogo({ work }: { work: ClientWork }) {
   const [logoFailed, setLogoFailed] = useState(false);
 
   return (
-    <div className="animate-portfolio-logo-morph group/logo flex h-full w-full items-center justify-center rounded-xl border border-ink/12 bg-white p-3.5 shadow-[0_10px_28px_rgba(0,0,0,0.07)] transition-[border-color,box-shadow] duration-normal hover:border-accent/35 hover:shadow-[0_14px_36px_rgba(254,163,39,0.12)] md:p-4">
+    <div className="flex min-h-[56px] items-center justify-center border-b border-ink/8 bg-white px-5 py-3.5 md:min-h-[64px] md:px-6 md:py-4">
       {!logoFailed ? (
         <img
           src={workLogoSrc(work.id)}
           alt={`${work.title} logo`}
           loading="lazy"
           decoding="async"
-          className="max-h-full max-w-full object-contain transition-transform duration-normal group-hover/logo:scale-[1.04]"
+          className="max-h-9 w-auto max-w-[min(100%,180px)] object-contain md:max-h-10 md:max-w-[220px]"
           onError={() => setLogoFailed(true)}
         />
       ) : (
-        <span className="text-center font-display text-base font-extrabold leading-tight text-ink md:text-lg">
+        <span className="text-center font-display text-sm font-extrabold leading-tight text-ink md:text-base">
           {work.title}
         </span>
       )}
@@ -43,8 +43,9 @@ export function PortfolioWorkShowcase({ work, index, priority = false }: Portfol
           reversed ? 'lg:[&>*:first-child]:order-2' : ''
         }`}
       >
-        <div className="relative lg:col-span-7">
-          <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-[#111]">
+        <div className="overflow-hidden rounded-2xl border border-overlay-white-10 bg-[#111] lg:col-span-7">
+          <PortfolioBrandLogo work={work} />
+          <div className="aspect-[16/10]">
             <WorkScreenshot
               id={work.id}
               url={work.url}
@@ -52,13 +53,6 @@ export function PortfolioWorkShowcase({ work, index, priority = false }: Portfol
               previewSrc={work.previewSrc}
               priority={priority}
             />
-          </div>
-          <div
-            className={`absolute -bottom-4 hidden aspect-square w-[28%] max-w-[160px] md:block ${
-              reversed ? 'left-0' : 'right-0'
-            }`}
-          >
-            <PortfolioBrandLogoCard work={work} />
           </div>
         </div>
 
