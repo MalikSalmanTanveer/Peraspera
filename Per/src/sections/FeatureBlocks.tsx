@@ -1,5 +1,6 @@
 import { HOME_SERVICES } from '../data/content';
 import { FEATURE_IMAGES } from '../data/feature-images';
+import { SERVICE_CATEGORIES } from '../data/services';
 import { Button } from '../components/Button';
 import { Reveal } from '../components/Reveal';
 
@@ -26,13 +27,20 @@ export function FeatureBlocks() {
             className="mt-3 flex w-full max-w-full flex-nowrap items-center justify-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:mt-4 md:gap-2.5 [&::-webkit-scrollbar]:hidden"
             aria-label="Services we deliver"
           >
-            {HOME_SERVICES.map((service) => (
-              <li key={service.title} className="shrink-0">
-                <span className="inline-flex min-h-[32px] items-center rounded-full bg-ink/[0.04] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-ink/70 antialiased md:px-4 md:text-2xs">
-                  {service.category}
-                </span>
-              </li>
-            ))}
+            {HOME_SERVICES.map((service) => {
+              const category = SERVICE_CATEGORIES.find((item) => item.title === service.title);
+
+              return (
+                <li key={service.title} className="shrink-0">
+                  <a
+                    href={category ? `/services#${category.id}` : '/services'}
+                    className="inline-flex min-h-[32px] items-center rounded-full bg-ink/[0.04] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-ink/70 antialiased transition-colors duration-200 hover:bg-ink hover:text-white md:px-4 md:text-2xs"
+                  >
+                    {service.category}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="mt-3 md:mt-4">
