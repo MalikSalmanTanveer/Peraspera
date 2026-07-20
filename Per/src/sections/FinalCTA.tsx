@@ -46,14 +46,12 @@ export function PerasperaLabsBanner() {
   return (
     <section
       id="peraspera-labs"
-      className="relative overflow-hidden border-t border-border bg-paper py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile md:py-24"
+      className="relative overflow-hidden pb-section-y px-nav-x pt-0 max-md:px-nav-x-mobile max-md:pb-section-y-mobile md:pb-24"
     >
-      <div className="hero-grid-bg pointer-events-none absolute inset-0 opacity-[0.05]" aria-hidden="true" />
-
       <Container className="relative z-[1] max-w-container">
         <Reveal>
           <div className="mx-auto max-w-[860px] text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-pill border border-border bg-accent/10 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-accent">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-pill border border-overlay-white-12 bg-overlay-white-08 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-accent">
               <AppIcon name="FlaskConical" className="h-4 w-4" />
               {LABS_HERO.eyebrow}
             </div>
@@ -65,7 +63,7 @@ export function PerasperaLabsBanner() {
             <p className="mt-5 font-display text-[clamp(1.35rem,2.8vw,2rem)] font-extrabold leading-snug text-accent">
               {LABS_HERO.tagline}
             </p>
-            <p className="mx-auto mt-6 max-w-[720px] text-md leading-body-xl text-muted md:text-lg">
+            <p className="mx-auto mt-6 max-w-[720px] text-md leading-body-xl text-overlay-white-55 md:text-lg">
               {LABS_HERO.summary}
             </p>
           </div>
