@@ -9,6 +9,7 @@ import { Reveal } from '../components/Reveal';
 import { PageBreadcrumb } from '../components/PageBreadcrumb';
 import { AppIcon } from '../components/AppIcon';
 import { ServiceCategoryBannerBadge, ServiceCategoryMeta } from '../components/ServiceCategoryMeta';
+import { InkParticleBackground } from '../components/InkParticleBackground';
 import { offeringIcon } from '../data/services';
 
 function scrollToCategory(id: string) {
@@ -124,7 +125,9 @@ export function ServicesPage() {
       </section>
 
       <section className="relative z-[1] overflow-x-clip bg-ink py-section-y px-nav-x max-md:py-section-y-mobile max-md:px-nav-x-mobile">
-        <Container>
+        <InkParticleBackground />
+
+        <Container className="relative z-[2]">
           <nav
             className="mb-10 space-y-1.5 4xl:hidden"
             aria-label="Service categories"
