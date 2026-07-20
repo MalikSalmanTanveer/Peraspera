@@ -43,7 +43,7 @@ export function FeatureBlocks() {
         </Reveal>
       </div>
 
-      <div className="relative z-0 mt-4 w-full overflow-hidden bg-white md:mt-5">
+      <div className="relative z-0 -mt-[3cm] w-full overflow-hidden bg-white max-md:-mt-[2cm]">
         <img
           src={FEATURE_IMAGES.whatWeDeliver}
           alt="Peraspera — brands built to be remembered"
