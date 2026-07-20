@@ -62,7 +62,6 @@ export function BlogPage() {
         <Container className="relative z-[1] py-12 md:py-16">
           <Reveal>
             <PageBreadcrumb current="Blogs" />
-            <span className="section-label section-label-light">Blog</span>
             <h1 className="mx-auto mt-4 max-w-[820px] text-center font-display text-[clamp(2.5rem,5.5vw,4.25rem)] font-extrabold leading-[1.04] tracking-tighter">
               Insights, updates, and{' '}
               <em className="not-italic text-accent">studio notes.</em>

@@ -2,11 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useLocation } from 'react-router-dom';
 
-import {
-  CLIENT_WORKS,
-  WORK_CATEGORIES,
-  type WorkCategory,
-} from '../data/works-clients';
+import { CLIENT_WORKS } from '../data/works-clients';
 
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
@@ -29,7 +25,6 @@ const LOAD_MORE_STEP = 3;
 
 export function PortfolioPage() {
   const location = useLocation();
-  const [activeFilter, setActiveFilter] = useState<WorkCategory | 'All'>('All');
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
 
   useEffect(() => {
@@ -40,22 +35,11 @@ export function PortfolioPage() {
     scrollToHashElement(targetId);
   }, [location.hash, location.state]);
 
-  useEffect(() => {
-    setVisibleCount(INITIAL_VISIBLE);
-  }, [activeFilter]);
-
   const filteredWorks = useMemo(() => {
-    const works =
-      activeFilter === 'All'
-        ? [...CLIENT_WORKS]
-        : CLIENT_WORKS.filter((work) => work.category === activeFilter);
-
-    if (activeFilter === 'All') {
-      works.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
-    }
-
+    const works = [...CLIENT_WORKS];
+    works.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
     return works;
-  }, [activeFilter]);
+  }, []);
 
   const visibleWorks = filteredWorks.slice(0, visibleCount);
   const hasMore = visibleCount < filteredWorks.length;
@@ -110,35 +94,6 @@ export function PortfolioPage() {
         <InkParticleBackground />
 
         <Container className="relative z-[2]">
-          <Reveal>
-            <div className="mx-auto mb-10 max-w-[640px] text-center md:mb-14">
-              <span className="section-label section-label-light">Featured Work</span>
-              <h2 className="section-heading text-white">Where design clarity meets live performance.</h2>
-              <p className="mt-[18px] text-md-plus leading-body-lg text-overlay-white-55">
-                Real websites and brands we&apos;ve shipped — with testimonials for every build below.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.04}>
-            <div className="mb-12 flex flex-wrap justify-center gap-x-1 gap-y-2 border-b border-overlay-white-10 pb-4">
-              {WORK_CATEGORIES.map((category) => (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => setActiveFilter(category)}
-                  className={`rounded-pill px-4 py-2 text-sm font-semibold transition-colors ${
-                    activeFilter === category
-                      ? 'bg-accent text-ink'
-                      : 'text-overlay-white-55 hover:bg-overlay-white-08 hover:text-white'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </Reveal>
-
           <div>
             {visibleWorks.map((work, index) => (
               <Reveal key={work.id} delay={index * 0.05}>
