@@ -5,7 +5,6 @@ import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { AppIcon } from '../components/AppIcon';
 import { Reveal } from '../components/Reveal';
-import { SectionGridDark } from '../components/SectionGridDark';
 
 export function FinalCTA() {
   return (
@@ -45,23 +44,28 @@ export function FinalCTA() {
 
 export function PerasperaLabsBanner() {
   return (
-    <SectionGridDark id="peraspera-labs" className="py-20 px-nav-x max-md:px-nav-x-mobile md:py-24">
-      <Container className="max-w-container">
+    <section
+      id="peraspera-labs"
+      className="relative overflow-hidden border-t border-border bg-paper py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile md:py-24"
+    >
+      <div className="hero-grid-bg pointer-events-none absolute inset-0 opacity-[0.05]" aria-hidden="true" />
+
+      <Container className="relative z-[1] max-w-container">
         <Reveal>
           <div className="mx-auto max-w-[860px] text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-pill border border-overlay-accent-border-42 bg-accent/10 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-accent">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-pill border border-border bg-accent/10 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-accent">
               <AppIcon name="FlaskConical" className="h-4 w-4" />
               {LABS_HERO.eyebrow}
             </div>
             <img
               src={labsLogo}
               alt={LABS_HERO.title}
-              className="mx-auto h-auto w-[min(100%,560px)] max-w-none object-contain drop-shadow-[0_8px_32px_rgba(254,163,39,0.18)] md:w-[min(100%,640px)]"
+              className="mx-auto h-auto w-[min(100%,560px)] max-w-none object-contain md:w-[min(100%,640px)]"
             />
             <p className="mt-5 font-display text-[clamp(1.35rem,2.8vw,2rem)] font-extrabold leading-snug text-accent">
               {LABS_HERO.tagline}
             </p>
-            <p className="mx-auto mt-6 max-w-[720px] text-md leading-body-xl text-overlay-white-55 md:text-lg">
+            <p className="mx-auto mt-6 max-w-[720px] text-md leading-body-xl text-muted md:text-lg">
               {LABS_HERO.summary}
             </p>
           </div>
@@ -70,14 +74,14 @@ export function PerasperaLabsBanner() {
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {LABS_PILLARS.map((pillar, index) => (
             <Reveal key={pillar.title} delay={index * 0.05}>
-              <article className="flex h-full flex-col rounded-3xl border border-overlay-white-12 bg-overlay-white-08 p-6">
+              <article className="flex h-full flex-col rounded-3xl border border-border bg-white p-6 transition-shadow duration-card hover:shadow-card">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/15">
                   <AppIcon name={pillar.icon} className="h-5 w-5 text-accent" />
                 </div>
-                <h3 className="font-display text-lg font-extrabold leading-snug text-white md:text-xl">
+                <h3 className="font-display text-lg font-extrabold leading-snug text-ink md:text-xl">
                   {pillar.title}
                 </h3>
-                <p className="mt-3 flex-1 text-sm leading-body text-overlay-white-55 md:text-md">
+                <p className="mt-3 flex-1 text-sm leading-body text-muted md:text-md">
                   {pillar.description}
                 </p>
               </article>
@@ -88,21 +92,24 @@ export function PerasperaLabsBanner() {
         <div className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {LABS_PROJECTS.map((project, index) => (
             <Reveal key={project.title} delay={index * 0.06}>
-              <article className="flex h-full flex-col rounded-3xl border border-overlay-white-12 bg-overlay-white-08 p-6 md:p-8">
+              <article className="flex h-full flex-col rounded-3xl border border-border bg-white p-6 transition-shadow duration-card hover:shadow-card md:p-8">
                 <div className="mb-4 flex items-start gap-3">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/15">
                     <AppIcon name="Brain" className="h-5 w-5 text-accent" />
                   </div>
-                  <h3 className="font-display text-xl font-extrabold leading-snug text-white md:text-2xl">
+                  <h3 className="font-display text-xl font-extrabold leading-snug text-ink md:text-2xl">
                     {project.title}
                   </h3>
                 </div>
-                <p className="flex-1 text-sm leading-body text-overlay-white-55 md:text-md">
+                <p className="flex-1 text-sm leading-body text-muted md:text-md">
                   {project.description}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="label-pill-equal border border-overlay-white-12 bg-black/30 text-accent">
+                    <span
+                      key={tag}
+                      className="label-pill-equal border border-border bg-paper text-accent-dark"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -113,7 +120,7 @@ export function PerasperaLabsBanner() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 font-display text-sm-plus font-extrabold text-accent transition-colors hover:text-white"
+                      className="inline-flex items-center gap-2 font-display text-sm-plus font-extrabold text-accent transition-colors hover:text-ink"
                     >
                       Live Demo
                       <AppIcon name="ArrowUpRight" className="h-4 w-4" strokeWidth={2.25} />
@@ -123,7 +130,7 @@ export function PerasperaLabsBanner() {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-display text-sm-plus font-extrabold text-white transition-colors hover:text-accent"
+                    className="inline-flex items-center gap-2 font-display text-sm-plus font-extrabold text-ink transition-colors hover:text-accent"
                   >
                     View on GitHub
                     <AppIcon name="ArrowUpRight" className="h-4 w-4" strokeWidth={2.25} />
@@ -134,6 +141,6 @@ export function PerasperaLabsBanner() {
           ))}
         </div>
       </Container>
-    </SectionGridDark>
+    </section>
   );
 }

@@ -115,7 +115,7 @@ export function Testimonials() {
         </Reveal>
       </Container>
 
-      <div className="relative z-[1]">
+      <div className="relative z-[1] mask-marquee">
         <Marquee direction="left-testi" gapClass="gap-gap-testimonial">
           {TESTIMONIALS.map((t) => (
             <TestimonialCard key={t.name} {...t} />
