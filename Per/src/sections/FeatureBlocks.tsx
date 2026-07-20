@@ -9,7 +9,7 @@ const PREMIUM_STATEMENT =
 export function FeatureBlocks() {
   return (
     <section id="what-we-deliver" className="bg-white" aria-labelledby="what-we-deliver-heading">
-      <div className="relative z-10 px-nav-x pb-0 pt-0 text-center max-md:px-nav-x-mobile">
+      <div className="relative z-10 px-nav-x pb-0 pt-12 text-center max-md:px-nav-x-mobile max-md:pt-10 md:pt-16">
         <Reveal className="mx-auto flex w-full max-w-[1120px] flex-col items-center">
           <span className="section-label section-label-dark mb-3 antialiased md:mb-4">
             What we offer
