@@ -21,11 +21,17 @@ export function ProcessSteps() {
             {PROCESS_STEPS.map((step, i) => (
               <div
                 key={step.number}
-                className={`p-[34px_24px] min-h-[255px] bg-dark-elevated border-overlay-step-border ${i < PROCESS_STEPS.length - 1 ? '3xl:border-r sm:border-b 3xl:border-b-0' : ''} ${i % 2 === 0 ? 'sm:border-r 3xl:border-r' : 'sm:border-r-0'} border-b last:border-b-0 3xl:last:border-r-0`}
+                className={`group relative p-[34px_24px] min-h-[255px] bg-dark-elevated border-overlay-step-border transition-[background-color,box-shadow] duration-300 ease-out hover:bg-[#141414] hover:shadow-[inset_0_0_36px_rgba(254,163,39,0.09),0_0_22px_rgba(254,163,39,0.06)] ${i < PROCESS_STEPS.length - 1 ? '3xl:border-r sm:border-b 3xl:border-b-0' : ''} ${i % 2 === 0 ? 'sm:border-r 3xl:border-r' : 'sm:border-r-0'} border-b last:border-b-0 3xl:last:border-r-0`}
               >
-                <b className="font-display text-sm-plus text-accent">{step.number}</b>
-                <h3 className="font-display text-2xl font-extrabold mt-[34px] mb-2.5">{step.title}</h3>
-                <p className="text-sm-plus text-overlay-white-46 leading-body">{step.description}</p>
+                <b className="font-display text-sm-plus text-accent transition-[color,filter] duration-300 group-hover:brightness-110">
+                  {step.number}
+                </b>
+                <h3 className="font-display text-2xl font-extrabold mt-[34px] mb-2.5 transition-colors duration-300 group-hover:text-white">
+                  {step.title}
+                </h3>
+                <p className="text-sm-plus text-overlay-white-46 leading-body transition-colors duration-300 group-hover:text-overlay-white-55">
+                  {step.description}
+                </p>
               </div>
             ))}
           </div>

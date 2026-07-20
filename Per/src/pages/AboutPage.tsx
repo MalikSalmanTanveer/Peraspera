@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { AboutConnectedModel } from '../components/about/AboutConnectedModel';
 import { AboutObservatory } from '../components/about/AboutObservatory';
 import { AboutForward } from '../components/about/AboutForward';
+import { AboutMeasuredImpact } from '../components/about/AboutMeasuredImpact';
 import { ContactForm } from '../sections/ContactForm';
 
 export function AboutPage() {
   return (
     <div className="bg-ink text-white">
       <AboutForward />
+      <AboutMeasuredImpact />
       <AboutConnectedModel />
       <AboutObservatory />
       <ContactForm />
