@@ -36,18 +36,18 @@ export const WORK_CATEGORIES: Array<WorkCategory | 'All'> = [
 
 export const CLIENT_WORKS: ClientWork[] = [
   {
-    id: 'ajl-tours',
-    title: 'AJL Tours',
-    url: 'https://ajl-tours-frontend.vercel.app/',
-    category: 'Tourism',
-    services: ['Web Design', 'UI/UX', 'Booking Flow'],
+    id: 'opal-properties',
+    title: 'Opal Properties',
+    url: 'https://opal-properties.com/',
+    category: 'Real Estate',
+    services: ['Real Estate Web', 'Brand Design', 'Development'],
     description:
-      'A modern tourism platform with destination showcases, tour packages, and a streamlined booking experience.',
+      'A refined real estate website with strong typography, listing presentation, and contact flows.',
     testimonial: {
       quote:
-        'Peraspera delivered a polished travel website that makes our packages easy to browse and book online.',
-      name: 'AJL Tours Team',
-      role: 'Tourism & Travel',
+        'Peraspera understood our market and built a site that feels established and easy for buyers to use.',
+      name: 'Opal Properties',
+      role: 'Real Estate',
     },
     featured: true,
   },
@@ -128,18 +128,18 @@ export const CLIENT_WORKS: ClientWork[] = [
     },
   },
   {
-    id: 'opal-properties',
-    title: 'Opal Properties',
-    url: 'https://opal-properties.com/',
-    category: 'Real Estate',
-    services: ['Real Estate Web', 'Brand Design', 'Development'],
+    id: 'ajl-tours',
+    title: 'AJL Tours',
+    url: 'https://ajl-tours-frontend.vercel.app/',
+    category: 'Tourism',
+    services: ['Web Design', 'UI/UX', 'Booking Flow'],
     description:
-      'A refined real estate website with strong typography, listing presentation, and contact flows.',
+      'A modern tourism platform with destination showcases, tour packages, and a streamlined booking experience.',
     testimonial: {
       quote:
-        'Peraspera understood our market and built a site that feels established and easy for buyers to use.',
-      name: 'Opal Properties',
-      role: 'Real Estate',
+        'Peraspera delivered a polished travel website that makes our packages easy to browse and book online.',
+      name: 'AJL Tours Team',
+      role: 'Tourism & Travel',
     },
   },
   {
@@ -215,4 +215,9 @@ export function workScreenshotSrc(id: string): string {
 export function workScreenshotFallback(url: string): string {
   const clean = url.replace(/^https?:\/\//, '');
   return `https://image.thum.io/get/width/960/crop/720/noanimate/${clean}`;
+}
+
+/** Square brand logo in /public/works/logos */
+export function workLogoSrc(id: string): string {
+  return `/works/logos/${id}.png?v=20260720`;
 }

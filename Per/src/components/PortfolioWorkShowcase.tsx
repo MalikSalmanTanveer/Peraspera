@@ -1,10 +1,36 @@
+import { useState } from 'react';
+
 import type { ClientWork } from '../data/works-clients';
+import { workLogoSrc } from '../data/works-clients';
 import { WorkScreenshot } from './WorkScreenshot';
 
 interface PortfolioWorkShowcaseProps {
   work: ClientWork;
   index: number;
   priority?: boolean;
+}
+
+function PortfolioBrandLogoCard({ work }: { work: ClientWork }) {
+  const [logoFailed, setLogoFailed] = useState(false);
+
+  return (
+    <div className="flex h-full w-full items-center justify-center rounded-xl bg-white p-5 shadow-[0_20px_50px_rgba(0,0,0,0.12)] ring-1 ring-ink/8 md:p-6">
+      {!logoFailed ? (
+        <img
+          src={workLogoSrc(work.id)}
+          alt={`${work.title} logo`}
+          loading="lazy"
+          decoding="async"
+          className="max-h-full max-w-full object-contain"
+          onError={() => setLogoFailed(true)}
+        />
+      ) : (
+        <span className="text-center font-display text-lg font-extrabold leading-tight text-ink">
+          {work.title}
+        </span>
+      )}
+    </div>
+  );
 }
 
 export function PortfolioWorkShowcase({ work, index, priority = false }: PortfolioWorkShowcaseProps) {
@@ -28,19 +54,11 @@ export function PortfolioWorkShowcase({ work, index, priority = false }: Portfol
             />
           </div>
           <div
-            className={`absolute -bottom-5 hidden w-[38%] max-w-[220px] overflow-hidden rounded-xl bg-[#111] shadow-[0_20px_50px_rgba(0,0,0,0.12)] ring-1 ring-ink/8 md:block ${
+            className={`absolute -bottom-5 hidden aspect-square w-[38%] max-w-[220px] md:block ${
               reversed ? 'left-0' : 'right-0'
             }`}
           >
-            <div className="aspect-[4/5]">
-              <WorkScreenshot
-                id={work.id}
-                url={work.url}
-                title={`${work.title} detail view`}
-                previewSrc={work.previewSrc}
-                className="[&_img]:object-[center_35%] [&_img]:scale-110"
-              />
-            </div>
+            <PortfolioBrandLogoCard work={work} />
           </div>
         </div>
 
