@@ -14,6 +14,7 @@ import { Reveal } from '../components/Reveal';
 import { PageBreadcrumb } from '../components/PageBreadcrumb';
 import { PortfolioWorkShowcase } from '../components/PortfolioWorkShowcase';
 import { PortfolioReviewsSlider } from '../components/PortfolioReviewsSlider';
+import { InkParticleBackground } from '../components/InkParticleBackground';
 
 import { scrollToHashElement } from '../utils/scrollToHash';
 
@@ -104,21 +105,23 @@ export function PortfolioPage() {
 
       <section
         id="portfolio-grid"
-        className="scroll-mt-[72px] bg-paper py-section-y px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile"
+        className="relative scroll-mt-[72px] overflow-hidden bg-ink py-section-y text-white px-nav-x max-md:px-nav-x-mobile max-md:py-section-y-mobile"
       >
-        <Container>
+        <InkParticleBackground />
+
+        <Container className="relative z-[2]">
           <Reveal>
             <div className="mx-auto mb-10 max-w-[640px] text-center md:mb-14">
-              <span className="section-label">Featured Work</span>
-              <h2 className="section-heading">Where design clarity meets live performance.</h2>
-              <p className="mt-[18px] text-md-plus leading-body-lg text-muted">
+              <span className="section-label section-label-light">Featured Work</span>
+              <h2 className="section-heading text-white">Where design clarity meets live performance.</h2>
+              <p className="mt-[18px] text-md-plus leading-body-lg text-overlay-white-55">
                 Real websites and brands we&apos;ve shipped — with testimonials for every build below.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={0.04}>
-            <div className="mb-12 flex flex-wrap justify-center gap-x-1 gap-y-2 border-b border-border pb-4">
+            <div className="mb-12 flex flex-wrap justify-center gap-x-1 gap-y-2 border-b border-overlay-white-10 pb-4">
               {WORK_CATEGORIES.map((category) => (
                 <button
                   key={category}
@@ -126,8 +129,8 @@ export function PortfolioPage() {
                   onClick={() => setActiveFilter(category)}
                   className={`rounded-pill px-4 py-2 text-sm font-semibold transition-colors ${
                     activeFilter === category
-                      ? 'bg-ink text-white'
-                      : 'text-muted hover:bg-paper hover:text-ink'
+                      ? 'bg-accent text-ink'
+                      : 'text-overlay-white-55 hover:bg-overlay-white-08 hover:text-white'
                   }`}
                 >
                   {category}
@@ -145,7 +148,7 @@ export function PortfolioPage() {
           </div>
 
           {filteredWorks.length === 0 ? (
-            <p className="py-16 text-center text-muted">No projects in this category yet.</p>
+            <p className="py-16 text-center text-overlay-white-55">No projects in this category yet.</p>
           ) : null}
 
           {hasMore ? (
@@ -153,7 +156,7 @@ export function PortfolioPage() {
               <button
                 type="button"
                 onClick={() => setVisibleCount((count) => count + LOAD_MORE_STEP)}
-                className="inline-flex items-center gap-2 rounded-pill border border-ink/15 bg-white px-8 py-3.5 text-sm font-bold text-ink transition-all duration-normal hover:border-accent hover:text-accent"
+                className="inline-flex items-center gap-2 rounded-pill border border-overlay-white-16 bg-overlay-white-08 px-8 py-3.5 text-sm font-bold text-white transition-all duration-normal hover:border-accent hover:text-accent"
               >
                 Load More Projects
                 <span aria-hidden="true">→</span>

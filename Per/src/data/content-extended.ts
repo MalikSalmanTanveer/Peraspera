@@ -8,6 +8,8 @@ export interface Testimonial {
   avatarSrc?: string;
   initials: string;
   avatarColor: string;
+  avatarFit?: 'cover' | 'contain';
+  avatarShape?: 'circle' | 'square';
 }
 
 export const PORTFOLIO_REVIEWS_URL = '/portfolio#client-reviews';
@@ -48,9 +50,23 @@ export const TESTIMONIALS: Testimonial[] = [
     name: 'Karyn Suarez',
     title: 'International Keynote Speaker',
     role: 'Executive Communication & Public Speaking Coach',
-    avatarSrc: '/reviews/karyn-suarez.png',
+    avatarSrc: '/reviews/karyn-suarez.png?v=20260720',
     initials: 'KS',
     avatarColor: 'bg-emerald-700',
+    avatarFit: 'contain',
+    avatarShape: 'square',
+  },
+  {
+    quote:
+      'The site showcases our apparel beautifully — shoppers can browse shirts, jeans, and promotions with ease.',
+    name: 'Manchester Clothing',
+    title: 'Fashion & Apparel Brand',
+    role: 'Est. 1939',
+    avatarSrc: '/reviews/manchester-clothing.png?v=20260720',
+    initials: 'MC',
+    avatarColor: 'bg-slate-700',
+    avatarFit: 'contain',
+    avatarShape: 'square',
   },
   {
     quote:

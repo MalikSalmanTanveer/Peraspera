@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { reviewAnchorId, TESTIMONIALS } from '../data/content-extended';
+import { testimonialAvatarClassName } from '../utils/testimonialAvatar';
 
 function Stars() {
   return (
@@ -77,7 +78,7 @@ export function PortfolioReviewsSlider() {
                 <img
                   src={review.avatarSrc}
                   alt=""
-                  className="h-11 w-11 shrink-0 rounded-full object-cover object-top ring-2 ring-border"
+                  className={testimonialAvatarClassName(review, 'sm')}
                 />
               ) : (
                 <div

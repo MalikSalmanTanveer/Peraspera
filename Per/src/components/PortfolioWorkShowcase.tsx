@@ -37,7 +37,7 @@ export function PortfolioWorkShowcase({ work, index, priority = false }: Portfol
   const reversed = index % 2 === 1;
 
   return (
-    <article className="border-b border-border py-14 last:border-b-0 md:py-20">
+    <article className="border-b border-overlay-white-10 py-14 last:border-b-0 md:py-20">
       <div
         className={`grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12 ${
           reversed ? 'lg:[&>*:first-child]:order-2' : ''
@@ -67,22 +67,22 @@ export function PortfolioWorkShowcase({ work, index, priority = false }: Portfol
             <span className="text-2xs font-black uppercase tracking-[0.2em] text-accent">Featured</span>
           ) : null}
           <span
-            className={`text-2xs font-black uppercase tracking-[0.2em] text-muted ${work.featured ? 'mt-2' : ''}`}
+            className={`text-2xs font-black uppercase tracking-[0.2em] text-overlay-white-55 ${work.featured ? 'mt-2' : ''}`}
           >
             {work.category}
           </span>
-          <h3 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight tracking-tight text-ink">
+          <h3 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-tight tracking-tight text-white">
             {work.title}
           </h3>
-          <p className="mt-4 text-md leading-body-lg text-muted">{work.description}</p>
-          <p className="mt-4 text-2xs font-semibold uppercase tracking-[0.14em] text-muted/80">
+          <p className="mt-4 text-md leading-body-lg text-overlay-white-55">{work.description}</p>
+          <p className="mt-4 text-2xs font-semibold uppercase tracking-[0.14em] text-overlay-white-40">
             {work.services.join(' · ')}
           </p>
           <a
             href={work.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`group mt-8 inline-flex items-center gap-2 text-sm font-bold text-ink transition-colors hover:text-accent ${
+            className={`group mt-8 inline-flex items-center gap-2 text-sm font-bold text-white transition-colors hover:text-accent ${
               reversed ? 'flex-row-reverse' : ''
             }`}
           >

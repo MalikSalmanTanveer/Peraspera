@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { isHomeReviewPreview, TESTIMONIALS } from '../data/content-extended';
 import { getPortfolioReviewLink } from '../utils/portfolioReviewNav';
+import { testimonialAvatarClassName } from '../utils/testimonialAvatar';
 import { Marquee } from '../components/Marquee';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
@@ -25,6 +26,8 @@ function TestimonialCard({
   avatarSrc,
   initials,
   avatarColor,
+  avatarFit,
+  avatarShape,
 }: (typeof TESTIMONIALS)[number]) {
   const showReadMore = isHomeReviewPreview(quote);
 
@@ -60,7 +63,7 @@ function TestimonialCard({
           <img
             src={avatarSrc}
             alt=""
-            className="h-12 w-12 shrink-0 rounded-full object-cover object-top ring-2 ring-border"
+            className={testimonialAvatarClassName({ avatarFit, avatarShape }, 'md')}
           />
         ) : (
           <div

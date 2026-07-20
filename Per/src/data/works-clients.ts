@@ -219,5 +219,5 @@ export function workScreenshotFallback(url: string): string {
 
 /** Square brand logo in /public/works/logos */
 export function workLogoSrc(id: string): string {
-  return `/works/logos/${id}.png?v=20260720`;
+  return `/works/logos/${id}.png?v=20260720b`;
 }
