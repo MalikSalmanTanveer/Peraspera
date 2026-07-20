@@ -17,7 +17,7 @@ export function PortfolioWorkShowcase({ work, index, priority = false }: Portfol
           reversed ? 'lg:[&>*:first-child]:order-2' : ''
         }`}
       >
-        <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-overlay-white-10 bg-[#111] lg:col-span-7">
+        <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-ink bg-[#111] lg:col-span-7">
           <WorkScreenshot
             id={work.id}
             url={work.url}
