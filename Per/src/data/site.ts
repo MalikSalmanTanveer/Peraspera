@@ -47,22 +47,11 @@ export const HERO_COPY = {
 
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services', hasMega: true },
+  { label: 'Services', href: '/services', showChevron: true },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Blogs', href: '/blog' },
   { label: 'About', href: '/about' },
-  { label: 'Labs', href: '/labs', isLabs: true },
-] as const;
-
-export const NAV_CTA = [
-  { label: 'Book a meeting', href: '/#contact', variant: 'outline' as const },
-  {
-    label: 'Live call agent',
-    href: `${BRAND.whatsapp.href}?text=${encodeURIComponent('Hi Peraspera — I would like to speak with your team.')}`,
-    variant: 'ghost' as const,
-    external: true,
-  },
-  { label: 'Chat with AI bot', href: '/#contact', variant: 'primary' as const },
+  { label: 'Labs', href: '/labs' },
 ] as const;
 
 export const HERO_STATS = [
