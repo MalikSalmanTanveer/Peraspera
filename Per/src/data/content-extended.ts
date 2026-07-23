@@ -138,11 +138,19 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
+import { BRAND } from './site';
+
+const WHATSAPP_PREFILL = encodeURIComponent(
+  'Hi Peraspera — I would like to discuss a project with your team.',
+);
+
+const whatsappLink = `${BRAND.whatsapp.href}?text=${WHATSAPP_PREFILL}`;
+
 export const WHATSAPP_REGIONS = [
-  { country: 'Pakistan', flag: '🇵🇰' },
-  { country: 'United Kingdom', flag: '🇬🇧' },
-  { country: 'USA', flag: '🇺🇸' },
-  { country: 'Dubai', flag: '🇦🇪' },
+  { country: 'Pakistan', flag: '🇵🇰', href: whatsappLink },
+  { country: 'United Kingdom', flag: '🇬🇧', href: whatsappLink },
+  { country: 'USA', flag: '🇺🇸', href: whatsappLink },
+  { country: 'Dubai', flag: '🇦🇪', href: whatsappLink },
 ] as const;
 
 export const SERVICE_OPTIONS: { icon: AppIconName; label: string }[] = [

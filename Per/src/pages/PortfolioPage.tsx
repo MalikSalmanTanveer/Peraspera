@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useLocation } from 'react-router-dom';
 
-import { CLIENT_WORKS } from '../data/works-clients';
+import { CLIENT_WORKS, WORK_CATEGORIES, type WorkCategory } from '../data/works-clients';
 
+import { AccentTicker } from '../components/AccentTicker';
 import { Button } from '../components/Button';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
@@ -22,6 +23,10 @@ import {
 
 const INITIAL_VISIBLE = 3;
 const LOAD_MORE_STEP = 3;
+
+const PORTFOLIO_INDUSTRY_TICKER = WORK_CATEGORIES.filter(
+  (category): category is WorkCategory => category !== 'All',
+);
 
 export function PortfolioPage() {
   const location = useLocation();
@@ -84,6 +89,10 @@ export function PortfolioPage() {
             </div>
           </Reveal>
         </Container>
+
+        <div className="relative z-[2] mt-10 md:mt-12">
+          <AccentTicker items={PORTFOLIO_INDUSTRY_TICKER} />
+        </div>
       </section>
 
       <section

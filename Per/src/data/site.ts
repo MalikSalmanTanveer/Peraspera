@@ -10,8 +10,13 @@ export const BRAND = {
     role: 'Partnerships & Project Lead',
   },
   email: 'contact.peraspera@gmail.com',
+  whatsapp: {
+    phoneE164: '+923191413128',
+    display: '+92 319 1413128',
+    href: 'https://wa.me/923191413128',
+  },
   social: {
-    linkedin: 'https://www.linkedin.com/company/peraspera-tech',
+    linkedin: 'https://www.linkedin.com/company/peraspera.solutions/',
     instagram: 'https://www.instagram.com/peraspera.official/',
   },
 } as const;

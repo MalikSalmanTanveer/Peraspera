@@ -49,7 +49,9 @@ export function WhatsAppWidget() {
           {WHATSAPP_REGIONS.map((region) => (
             <a
               key={region.country}
-              href="#contact"
+              href={region.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-3 p-3 rounded-wa-link bg-overlay-white-08 border border-overlay-white-08 text-white transition-all duration-medium hover:-translate-y-0.5 hover:border-overlay-accent-border-42 hover:bg-accent/10 pointer-events-auto"
               onClick={() => setOpen(false)}
             >

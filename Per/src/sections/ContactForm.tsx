@@ -3,6 +3,7 @@ import {
   SERVICE_OPTIONS,
 } from '../data/content-extended';
 import { BRAND } from '../data/site';
+import { submitQuoteInquiry } from '../lib/supabase';
 import type { AppIconName } from '../components/AppIcon';
 import { AppIcon } from '../components/AppIcon';
 import { Container } from '../components/Container';
@@ -95,11 +96,41 @@ function CustomSelect({
 }
 
 export function ContactForm() {
+  const [fullName, setFullName] = useState('');
+  const [company, setCompany] = useState('');
+  const [email, setEmail] = useState('');
   const [service, setService] = useState('');
+  const [details, setDetails] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setError(null);
+
+    if (!service) {
+      setError('Please select a service.');
+      return;
+    }
+
+    setSubmitting(true);
+
+    const { error: submitError } = await submitQuoteInquiry({
+      full_name: fullName.trim() || null,
+      company: company.trim() || null,
+      email: email.trim(),
+      service,
+      details: details.trim(),
+    });
+
+    setSubmitting(false);
+
+    if (submitError) {
+      setError(submitError);
+      return;
+    }
+
     setSubmitted(true);
   };
 
@@ -155,7 +186,10 @@ export function ContactForm() {
                         name="fullName"
                         type="text"
                         autoComplete="name"
-                        className="border-0 border-b-[1.5px] border-border py-2.5 font-body text-md text-ink bg-transparent outline-none transition-colors duration-normal w-full focus:border-ink placeholder:text-placeholder"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        disabled={submitting}
+                        className="border-0 border-b-[1.5px] border-border py-2.5 font-body text-md text-ink bg-transparent outline-none transition-colors duration-normal w-full focus:border-ink placeholder:text-placeholder disabled:opacity-60"
                       />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -167,7 +201,10 @@ export function ContactForm() {
                         name="company"
                         type="text"
                         autoComplete="organization"
-                        className="border-0 border-b-[1.5px] border-border py-2.5 font-body text-md text-ink bg-transparent outline-none transition-colors duration-normal w-full focus:border-ink placeholder:text-placeholder"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        disabled={submitting}
+                        className="border-0 border-b-[1.5px] border-border py-2.5 font-body text-md text-ink bg-transparent outline-none transition-colors duration-normal w-full focus:border-ink placeholder:text-placeholder disabled:opacity-60"
                       />
                     </div>
                   </div>
@@ -182,7 +219,10 @@ export function ContactForm() {
                       type="email"
                       required
                       autoComplete="email"
-                      className="border-0 border-b-[1.5px] border-border py-2.5 font-body text-md text-ink bg-transparent outline-none transition-colors duration-normal w-full focus:border-ink placeholder:text-placeholder"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={submitting}
+                      className="border-0 border-b-[1.5px] border-border py-2.5 font-body text-md text-ink bg-transparent outline-none transition-colors duration-normal w-full focus:border-ink placeholder:text-placeholder disabled:opacity-60"
                     />
                   </div>
 
@@ -204,15 +244,25 @@ export function ContactForm() {
                       name="details"
                       required
                       rows={4}
-                      className="border-0 border-b-[1.5px] border-border py-2.5 font-body text-md text-ink bg-transparent outline-none transition-colors duration-normal w-full focus:border-ink placeholder:text-placeholder resize-y min-h-[90px]"
+                      value={details}
+                      onChange={(e) => setDetails(e.target.value)}
+                      disabled={submitting}
+                      className="border-0 border-b-[1.5px] border-border py-2.5 font-body text-md text-ink bg-transparent outline-none transition-colors duration-normal w-full focus:border-ink placeholder:text-placeholder resize-y min-h-[90px] disabled:opacity-60"
                     />
                   </div>
 
+                  {error && (
+                    <p className="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+                      {error}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
-                    className="block w-full py-[18px] rounded-pill bg-ink text-white font-display text-md-plus font-extrabold border-0 cursor-pointer transition-all duration-medium mt-2 hover:bg-accent hover:text-ink"
+                    disabled={submitting}
+                    className="block w-full py-[18px] rounded-pill bg-ink text-white font-display text-md-plus font-extrabold border-0 cursor-pointer transition-all duration-medium mt-2 hover:bg-accent hover:text-ink disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    Send Inquiry
+                    {submitting ? 'Sending…' : 'Send Inquiry'}
                   </button>
 
                   <p className="text-center mt-4 text-sm-plus text-muted-light">
