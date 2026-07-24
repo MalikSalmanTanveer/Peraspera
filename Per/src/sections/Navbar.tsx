@@ -6,11 +6,22 @@ import { Logo } from '../components/Logo';
 
 const WHATSAPP_LINK = `${BRAND.whatsapp.href}?text=${encodeURIComponent('Hi Peraspera — I would like to speak with your team.')}`;
 
+const pillShell =
+  'pointer-events-auto mx-auto overflow-hidden rounded-[28px] border border-white/10 bg-ink/78 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all duration-card ease-smooth md:rounded-[34px]';
+
 export function Navbar() {
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (href: string) => location.pathname === href.split('#')[0];
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -25,10 +36,18 @@ export function Navbar() {
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-x-0 top-6 z-[800] px-4 md:px-6">
-        <header className="pointer-events-auto mx-auto w-full max-w-screen-2xl overflow-visible rounded-[24px] border border-white/10 bg-ink/78 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-2xl md:rounded-[30px]">
+      <div className="pointer-events-none fixed inset-x-0 top-5 z-[800] px-4 md:top-6 md:px-6">
+        <header
+          className={`${pillShell} ${
+            scrolled
+              ? 'w-full max-w-container-nav-float'
+              : 'w-[calc(100%-8px)] max-w-[min(100%,1420px)] md:w-[calc(100%-16px)]'
+          }`}
+        >
           <nav
-            className="relative flex h-20 items-center justify-between px-6 lg:px-12"
+            className={`relative flex items-center justify-between transition-all duration-card ease-smooth ${
+              scrolled ? 'h-[72px] px-5 lg:px-8' : 'h-[88px] px-6 md:h-[92px] lg:px-10'
+            }`}
             aria-label="Main navigation"
           >
             <Link
@@ -36,30 +55,48 @@ export function Navbar() {
               className="z-10 inline-flex shrink-0 transition-transform duration-normal hover:scale-105"
               aria-label={`${BRAND.name} home`}
             >
-              <span className="relative flex h-10 w-[min(42vw,160px)] items-center overflow-hidden md:h-12 md:w-[190px]">
+              <span
+                className={`relative flex items-center overflow-hidden transition-all duration-card ease-smooth ${
+                  scrolled
+                    ? 'h-10 w-[min(42vw,160px)] md:h-11 md:w-[180px]'
+                    : 'h-14 w-[min(48vw,200px)] md:h-16 md:w-[240px]'
+                }`}
+              >
                 <Logo
                   variant="primary"
                   inverted
-                  className="absolute left-0 top-1/2 h-[120px] w-auto max-w-none -translate-y-1/2"
+                  className={`absolute left-0 top-1/2 w-auto max-w-none -translate-y-1/2 transition-all duration-card ease-smooth ${
+                    scrolled ? 'h-[120px]' : 'h-[180px] md:h-[200px]'
+                  }`}
                 />
               </span>
             </Link>
 
-            <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex lg:gap-10">
+            <div
+              className={`absolute left-1/2 hidden -translate-x-1/2 items-center transition-all duration-card ease-smooth md:flex ${
+                scrolled ? 'gap-6 lg:gap-7' : 'gap-8 lg:gap-10'
+              }`}
+            >
               {NAV_LINKS.map((link) => (
-                <div key={link.label} className="relative py-6">
+                <div key={link.label} className={`relative transition-all duration-card ${scrolled ? 'py-3' : 'py-5'}`}>
                   <div className="flex items-center gap-1.5">
                     <Link
                       to={link.href}
-                      className={`font-body text-[15px] font-medium uppercase tracking-[0.14em] transition-colors duration-normal ${
-                        isActive(link.href) ? 'text-white' : 'text-accent hover:text-white'
-                      }`}
+                      className={`font-body font-medium uppercase transition-all duration-card ease-smooth ${
+                        scrolled
+                          ? 'text-[13px] tracking-[0.12em]'
+                          : 'text-[15px] tracking-[0.14em] md:text-base'
+                      } ${isActive(link.href) ? 'text-white' : 'text-accent hover:text-white'}`}
                       aria-current={isActive(link.href) ? 'page' : undefined}
                     >
                       {link.label}
                     </Link>
                     {'showChevron' in link && link.showChevron ? (
-                      <AppIcon name="ChevronDown" className="h-3.5 w-3.5 text-accent/70" strokeWidth={2.25} />
+                      <AppIcon
+                        name="ChevronDown"
+                        className={`text-accent/70 transition-all duration-card ${scrolled ? 'h-3 w-3' : 'h-3.5 w-3.5'}`}
+                        strokeWidth={2.25}
+                      />
                     ) : null}
                   </div>
                 </div>
@@ -72,10 +109,16 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Call Peraspera on WhatsApp"
-                className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-accent text-ink shadow-[0_0_20px_rgba(254,163,39,0.4)] transition-transform duration-normal hover:scale-110"
+                className={`group relative flex items-center justify-center rounded-full bg-accent text-ink shadow-[0_0_20px_rgba(254,163,39,0.4)] transition-all duration-card ease-smooth hover:scale-110 ${
+                  scrolled ? 'h-11 w-11' : 'h-14 w-14 md:h-[58px] md:w-[58px]'
+                }`}
               >
                 <span className="absolute inset-0 rounded-full bg-accent/30" aria-hidden="true" />
-                <AppIcon name="Phone" className="relative z-[1] h-[22px] w-[22px]" strokeWidth={2.25} />
+                <AppIcon
+                  name="Phone"
+                  className={`relative z-[1] transition-all duration-card ${scrolled ? 'h-5 w-5' : 'h-[22px] w-[22px]'}`}
+                  strokeWidth={2.25}
+                />
               </a>
             </div>
 
@@ -104,7 +147,7 @@ export function Navbar() {
 
       {mobileOpen ? (
         <div
-          className="fixed inset-0 z-[850] overflow-y-auto bg-ink px-nav-x-mobile pb-10 pt-[7.5rem] md:hidden"
+          className="fixed inset-0 z-[850] overflow-y-auto bg-ink px-nav-x-mobile pb-10 pt-[8.5rem] md:hidden"
           role="dialog"
           aria-label="Mobile navigation"
         >
