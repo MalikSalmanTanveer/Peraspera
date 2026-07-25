@@ -2,5 +2,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
-  "rewrites": [{ "source": "/((?!assets/).*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/((?!assets/|favicon|apple-touch-icon|android-chrome|robots\\.txt|site\\.webmanifest|sitemap).*)",
+      "destination": "/index.html"
+    }
+  ]
 }
