@@ -79,26 +79,59 @@ export function Navbar() {
             >
               {NAV_LINKS.map((link) => (
                 <div key={link.label} className={`relative transition-all duration-card ${scrolled ? 'py-3' : 'py-5'}`}>
-                  <div className="flex items-center gap-1.5">
+                  {'isLabs' in link && link.isLabs ? (
                     <Link
                       to={link.href}
-                      className={`font-body font-medium uppercase transition-all duration-card ease-smooth ${
+                      className={`group/labs relative inline-flex items-center gap-1.5 overflow-hidden rounded-pill border border-dashed font-semibold uppercase transition-all duration-card ease-smooth ${
                         scrolled
-                          ? 'text-[13px] tracking-[0.12em]'
-                          : 'text-[15px] tracking-[0.14em] md:text-base'
-                      } ${isActive(link.href) ? 'text-white' : 'text-accent hover:text-white'}`}
+                          ? 'px-3 py-1.5 text-[12px] tracking-[0.1em]'
+                          : 'px-3.5 py-2 text-[13px] tracking-[0.12em] md:text-sm'
+                      } ${
+                        isActive(link.href)
+                          ? 'border-accent bg-accent/20 text-white shadow-[0_0_28px_rgba(254,163,39,0.35)]'
+                          : 'border-accent/55 bg-accent/10 text-accent shadow-[0_0_18px_rgba(254,163,39,0.18)] hover:border-accent hover:bg-accent/18 hover:text-white hover:shadow-[0_0_26px_rgba(254,163,39,0.32)]'
+                      }`}
                       aria-current={isActive(link.href) ? 'page' : undefined}
                     >
-                      {link.label}
-                    </Link>
-                    {'showChevron' in link && link.showChevron ? (
-                      <AppIcon
-                        name="ChevronDown"
-                        className={`text-accent/70 transition-all duration-card ${scrolled ? 'h-3 w-3' : 'h-3.5 w-3.5'}`}
-                        strokeWidth={2.25}
+                      <span
+                        className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_35%,rgba(255,255,255,0.16)_50%,transparent_65%)] opacity-0 transition-opacity duration-normal group-hover/labs:opacity-100"
+                        aria-hidden="true"
                       />
-                    ) : null}
-                  </div>
+                      <span className="relative flex h-5 w-5 items-center justify-center rounded-full bg-accent/15 ring-1 ring-accent/30">
+                        <AppIcon
+                          name="FlaskConical"
+                          className={`text-accent transition-colors duration-normal group-hover/labs:text-white ${scrolled ? 'h-3 w-3' : 'h-3.5 w-3.5'}`}
+                          strokeWidth={2.25}
+                        />
+                      </span>
+                      <span className="relative">{link.label}</span>
+                      <span
+                        className="relative ml-0.5 h-1.5 w-1.5 rounded-full bg-accent animate-pulse shadow-[0_0_8px_rgba(254,163,39,0.9)]"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  ) : (
+                    <div className="flex items-center gap-1.5">
+                      <Link
+                        to={link.href}
+                        className={`font-body font-medium uppercase transition-all duration-card ease-smooth ${
+                          scrolled
+                            ? 'text-[13px] tracking-[0.12em]'
+                            : 'text-[15px] tracking-[0.14em] md:text-base'
+                        } ${isActive(link.href) ? 'text-white' : 'text-accent hover:text-white'}`}
+                        aria-current={isActive(link.href) ? 'page' : undefined}
+                      >
+                        {link.label}
+                      </Link>
+                      {'showChevron' in link && link.showChevron ? (
+                        <AppIcon
+                          name="ChevronDown"
+                          className={`text-accent/70 transition-all duration-card ${scrolled ? 'h-3 w-3' : 'h-3.5 w-3.5'}`}
+                          strokeWidth={2.25}
+                        />
+                      ) : null}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -155,12 +188,31 @@ export function Navbar() {
             <Link
               key={link.label}
               to={link.href}
-              className={`font-display block border-b border-white/10 py-4 text-3xl font-bold uppercase tracking-wide ${
-                isActive(link.href) ? 'text-white' : 'text-accent'
+              className={`block border-b border-white/10 py-4 ${
+                'isLabs' in link && link.isLabs
+                  ? 'flex items-center gap-3'
+                  : ''
               }`}
               onClick={() => setMobileOpen(false)}
             >
-              {link.label}
+              {'isLabs' in link && link.isLabs ? (
+                <>
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dashed border-accent/60 bg-accent/10">
+                    <AppIcon name="FlaskConical" className="h-5 w-5 text-accent" />
+                  </span>
+                  <span className="font-display text-3xl font-bold uppercase tracking-wide text-accent">
+                    {link.label}
+                  </span>
+                </>
+              ) : (
+                <span
+                  className={`font-display text-3xl font-bold uppercase tracking-wide ${
+                    isActive(link.href) ? 'text-white' : 'text-accent'
+                  }`}
+                >
+                  {link.label}
+                </span>
+              )}
             </Link>
           ))}
 

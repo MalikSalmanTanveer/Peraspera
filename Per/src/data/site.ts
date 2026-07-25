@@ -51,7 +51,7 @@ export const NAV_LINKS = [
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Blogs', href: '/blog' },
   { label: 'About', href: '/about' },
-  { label: 'Labs', href: '/labs' },
+  { label: 'Labs', href: '/labs', isLabs: true },
 ] as const;
 
 export const HERO_STATS = [
