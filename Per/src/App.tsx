@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { ServicesPage } from './pages/ServicesPage';
@@ -15,10 +15,6 @@ import {
   type PortfolioReviewNavState,
 } from './utils/portfolioReviewNav';
 import { IntroGates, introGatesAllowSite } from './components/IntroGates';
-import {
-  OpeningAnimation,
-  shouldShowOpeningAnimation,
-} from './components/OpeningAnimation';
 
 function ScrollToTop() {
   const { pathname, hash, state } = useLocation();
@@ -60,12 +56,7 @@ function PageShell({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  const [introPending, setIntroPending] = useState(() => shouldShowOpeningAnimation());
   const gatesAllowSite = introGatesAllowSite();
-
-  const handleIntroComplete = () => {
-    setIntroPending(false);
-  };
 
   return (
     <>
@@ -76,8 +67,7 @@ export default function App() {
       >
         Skip to main content
       </a>
-      {gatesAllowSite && introPending ? <OpeningAnimation onComplete={handleIntroComplete} /> : null}
-      {gatesAllowSite && !introPending ? (
+      {gatesAllowSite ? (
         <>
           <ScrollToTop />
           <Routes>
