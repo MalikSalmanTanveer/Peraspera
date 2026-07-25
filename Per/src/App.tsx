@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { ServicesPage } from './pages/ServicesPage';
@@ -14,6 +14,11 @@ import {
   resolvePortfolioReviewScrollTarget,
   type PortfolioReviewNavState,
 } from './utils/portfolioReviewNav';
+import { IntroGates, introGatesAllowSite } from './components/IntroGates';
+import {
+  OpeningAnimation,
+  shouldShowOpeningAnimation,
+} from './components/OpeningAnimation';
 
 function ScrollToTop() {
   const { pathname, hash, state } = useLocation();
@@ -55,59 +60,72 @@ function PageShell({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
+  const [introPending, setIntroPending] = useState(() => shouldShowOpeningAnimation());
+  const gatesAllowSite = introGatesAllowSite();
+
+  const handleIntroComplete = () => {
+    setIntroPending(false);
+  };
+
   return (
     <>
+      <IntroGates />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[10000] focus:bg-accent focus:text-ink focus:px-4 focus:py-2 focus:rounded-pill"
       >
         Skip to main content
       </a>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/services"
-          element={
-            <PageShell>
-              <ServicesPage />
-            </PageShell>
-          }
-        />
-        <Route
-          path="/portfolio"
-          element={
-            <PageShell>
-              <PortfolioPage />
-            </PageShell>
-          }
-        />
-        <Route path="/works" element={<Navigate to="/portfolio" replace />} />
-        <Route
-          path="/blog"
-          element={
-            <PageShell>
-              <BlogPage />
-            </PageShell>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <PageShell>
-              <AboutPage />
-            </PageShell>
-          }
-        />
-        <Route
-          path="/labs"
-          element={
-            <PageShell>
-              <LabsPage />
-            </PageShell>
-          }
-        />
-      </Routes>
+      {gatesAllowSite && introPending ? <OpeningAnimation onComplete={handleIntroComplete} /> : null}
+      {gatesAllowSite && !introPending ? (
+        <>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/services"
+              element={
+                <PageShell>
+                  <ServicesPage />
+                </PageShell>
+              }
+            />
+            <Route
+              path="/portfolio"
+              element={
+                <PageShell>
+                  <PortfolioPage />
+                </PageShell>
+              }
+            />
+            <Route path="/works" element={<Navigate to="/portfolio" replace />} />
+            <Route
+              path="/blog"
+              element={
+                <PageShell>
+                  <BlogPage />
+                </PageShell>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <PageShell>
+                  <AboutPage />
+                </PageShell>
+              }
+            />
+            <Route
+              path="/labs"
+              element={
+                <PageShell>
+                  <LabsPage />
+                </PageShell>
+              }
+            />
+          </Routes>
+        </>
+      ) : null}
     </>
   );
 }

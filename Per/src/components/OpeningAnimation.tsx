@@ -1,310 +1,247 @@
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { PRELOADER_STICKER_IMAGES } from '../data/preloader-stickers';
 import {
-  OPENING_CARDS,
-  OPENING_MARKETS,
-  OPENING_METRICS,
-  OPENING_PROCESS_STEPS,
-  OPENING_SERVICE_LINES,
-  OPENING_VISION_LINES,
-  type OpeningAnimationCard,
-  type OpeningCardVariant,
-} from '../data/opening-animation';
+  animateMobilePreloaderStickers,
+  destroyPreloaderStickers,
+  usePreloaderStickerTrail,
+} from '../hooks/usePreloaderStickerTrail';
 
 interface OpeningAnimationProps {
   onComplete: () => void;
 }
 
-const CARD_LAYOUT = [
-  { y: -136, x: 18, rotateX: 10, rotateY: -14, rotateZ: -5, scale: 0.92, z: -240 },
-  { y: -68, x: 10, rotateX: 11, rotateY: -11, rotateZ: -2.5, scale: 0.94, z: -180 },
-  { y: 0, x: 0, rotateX: 12, rotateY: -8, rotateZ: 0, scale: 0.96, z: -120 },
-  { y: 68, x: -10, rotateX: 13, rotateY: -5, rotateZ: 2.5, scale: 0.98, z: -60 },
-  { y: 136, x: -18, rotateX: 14, rotateY: -2, rotateZ: 5, scale: 1, z: 0 },
-] as const;
+const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] as const;
 
-const variantStyles: Record<
-  OpeningCardVariant,
-  { shell: string; label: string; heading: string; body: string; line: string }
-> = {
-  ink: {
-    shell: 'bg-ink text-white border border-white/10',
-    label: 'text-white/45',
-    heading: 'text-white',
-    body: 'text-white/55',
-    line: 'border-white/12',
-  },
-  paper: {
-    shell: 'bg-white text-ink border border-border',
-    label: 'text-muted-light',
-    heading: 'text-ink',
-    body: 'text-muted',
-    line: 'border-border',
-  },
-  accent: {
-    shell: 'bg-accent text-ink border border-accent-emphasis',
-    label: 'text-ink/55',
-    heading: 'text-ink',
-    body: 'text-ink/70',
-    line: 'border-ink/10',
-  },
-};
+/** Confirmed in befreaky bundle: timelineDuration = 5 */
+const TIMELINE_DURATION = 5;
 
-function CardChrome({
-  card,
-  variant,
-}: {
-  card: OpeningAnimationCard;
-  variant: OpeningCardVariant;
-}) {
-  const styles = variantStyles[variant];
+/** Confirmed CustomEase: Hn.create("bezier","0.94, 0, 0.06, 1") */
+const TE_EASE = 'power4.inOut';
+
+const BANNER_TEXT = 'AVAILABLE FROM 18.05.2026';
+
+function PreloaderBanner() {
+  const items = Array.from({ length: 8 }, (_, index) => index);
 
   return (
-    <div className={`flex items-center justify-between border-b px-4 py-2.5 ${styles.line}`}>
-      <div className="flex items-center gap-2">
-        <span className={`font-display text-[10px] font-extrabold tracking-[0.18em] ${styles.label}`}>
-          {card.section}
-        </span>
-        <span className={`font-display text-[10px] font-extrabold uppercase tracking-[0.22em] ${styles.label}`}>
-          {card.title}
-        </span>
-      </div>
-      <div className="flex gap-1.5">
-        <span className={`h-1.5 w-1.5 rounded-full ${variant === 'ink' ? 'bg-white/25' : 'bg-ink/15'}`} />
-        <span className={`h-1.5 w-1.5 rounded-full ${variant === 'ink' ? 'bg-white/25' : 'bg-ink/15'}`} />
-        <span className={`h-1.5 w-1.5 rounded-full ${variant === 'accent' ? 'bg-ink/25' : 'bg-accent'}`} />
-      </div>
-    </div>
-  );
-}
-
-function ProcessCardBody({ variant }: { variant: OpeningCardVariant }) {
-  const styles = variantStyles[variant];
-
-  return (
-    <div className="flex flex-1 flex-col px-4 py-5">
-      {OPENING_PROCESS_STEPS.map((step, index) => (
-        <div key={step.label} className={`${index > 0 ? `border-t pt-4 mt-4 ${styles.line}` : ''}`}>
-          <div className="flex items-end gap-3">
-            <span className={`font-display text-sm font-extrabold ${styles.label}`}>{step.number}</span>
-            <span className={`font-display text-[clamp(1.35rem,4vw,1.85rem)] font-extrabold leading-none tracking-tight ${styles.heading}`}>
-              {step.label}
-            </span>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ServicesCardBody({ variant }: { variant: OpeningCardVariant }) {
-  const styles = variantStyles[variant];
-
-  return (
-    <div className="grid flex-1 grid-cols-[1fr_0.9fr] gap-3 px-4 py-5">
-      <div>
-        {OPENING_SERVICE_LINES.map((line, index) => (
-          <div key={line.detail} className={`${index > 0 ? `border-t pt-3 mt-3 ${styles.line}` : ''}`}>
-            <p className={`text-[10px] font-black uppercase tracking-[0.18em] ${styles.label}`}>{line.label}</p>
-            <p className={`mt-1 font-display text-sm font-extrabold leading-snug ${styles.heading}`}>{line.detail}</p>
-          </div>
-        ))}
-      </div>
-      <div className={`relative overflow-hidden rounded-2xl ${variant === 'paper' ? 'bg-paper' : 'bg-white/8'}`}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(254,163,39,0.35),transparent_55%)]" />
-        <div className="absolute bottom-5 left-5 right-5 top-auto h-16 rounded-xl bg-accent/80" />
-        <div className="absolute bottom-8 left-8 h-24 w-10 rounded-md bg-white/90 shadow-lg" />
-      </div>
-    </div>
-  );
-}
-
-function MetricsCardBody({ variant }: { variant: OpeningCardVariant }) {
-  const styles = variantStyles[variant];
-
-  return (
-    <div className="flex flex-1 flex-col gap-4 px-4 py-5">
-      <div className="grid grid-cols-2 gap-3">
-        {OPENING_METRICS.map((metric) => (
-          <div key={metric.label}>
-            <p className={`font-display text-[clamp(1.5rem,4vw,2rem)] font-extrabold leading-none ${styles.heading}`}>
-              {metric.value}
-            </p>
-            <p className={`mt-1 text-[10px] font-bold uppercase tracking-[0.16em] ${styles.label}`}>{metric.label}</p>
-          </div>
-        ))}
-      </div>
-      <div className={`border-t pt-4 ${styles.line}`}>
-        {OPENING_MARKETS.map((market) => (
-          <div key={market.name} className={`flex items-center justify-between py-1.5 ${styles.body}`}>
-            <span className="text-[10px] font-bold uppercase tracking-[0.14em]">{market.name}</span>
-            <span className="font-display text-sm font-extrabold">{market.share}</span>
+    <div className="preloader-banner" aria-hidden="true">
+      <div className="preloader-banner__track">
+        {[...items, ...items].map((item, index) => (
+          <div key={`${item}-${index}`} className="preloader-banner__item">
+            <span className="preloader-banner__text">{BANNER_TEXT}</span>
+            <svg className="preloader-banner__circle" width="8" height="8" viewBox="0 0 8 8" fill="none">
+              <path
+                d="M3.98906 7.91875C3.58437 7.91875 3.31094 7.53594 3.31094 7.04375C3.31094 6.77031 3.40937 6.35469 3.60625 5.79687C3.80312 5.22812 3.90156 4.68125 3.90156 4.1125C3.42031 4.40781 3.05938 4.71406 2.78594 5.02031C2.23906 5.63281 1.70313 6.23438 1.13437 6.23438C0.784375 6.23438 0.5 5.96094 0.5 5.63281C0.5 5.27187 0.795312 4.91094 1.44063 4.40781C2.09766 3.90469 2.66304 3.41304 3.98913 3.41304C5.33696 3.41304 5.94565 4.02174 5.94565 4.76087C5.94565 5.51087 5.33696 6.1087 4.6087 6.1087C4.33696 6.1087 4.09766 6.02174 3.90156 5.88043C3.70547 5.73913 3.54297 5.54348 3.42383 5.31522C3.30469 5.08696 3.23906 4.83696 3.23906 4.58696C3.23906 4.09766 3.42383 3.65217 3.77109 3.29348C4.11835 2.93478 4.58696 2.73913 5.09766 2.73913C5.6087 2.73913 6.06522 2.92391 6.40217 3.27109C6.73913 3.61835 6.92391 4.07609 6.92391 4.58696C6.92391 5.09766 6.72826 5.56522 6.36957 5.9125C6.01087 6.25977 5.56522 6.44453 5.07609 6.44453C4.58696 6.44453 4.1413 6.25977 3.78261 5.9125C3.42391 5.56522 3.23913 5.09766 3.23913 4.58696H3.98913C3.98913 5.5 4.58696 6.1087 5.31522 6.1087C6.04348 6.1087 6.6413 5.5 6.6413 4.76087C6.6413 4.03261 6.04348 3.41304 5.31522 3.41304C4.58696 3.41304 3.98913 4.03261 3.98913 4.76087C3.98913 5.5 4.58696 6.1087 5.31522 6.1087Z"
+                fill="currentColor"
+              />
+            </svg>
           </div>
         ))}
       </div>
     </div>
   );
-}
-
-function BrandCardBody({ variant }: { variant: OpeningCardVariant }) {
-  const styles = variantStyles[variant];
-
-  return (
-    <div className="flex flex-1 items-end px-4 pb-5 pt-8">
-      <p className={`font-display text-[clamp(2.4rem,8vw,3.4rem)] font-extrabold leading-[0.92] tracking-tighter ${styles.heading}`}>
-        peraspera<span className="text-white">.</span>
-      </p>
-    </div>
-  );
-}
-
-function VisionCardBody({ variant }: { variant: OpeningCardVariant }) {
-  const styles = variantStyles[variant];
-
-  return (
-    <div className="flex flex-1 flex-col justify-center px-4 py-5">
-      {OPENING_VISION_LINES.map((line) => (
-        <p
-          key={line}
-          className={`font-display text-[clamp(1.15rem,3.6vw,1.65rem)] font-extrabold leading-[1.02] tracking-tight ${styles.heading}`}
-        >
-          {line}
-        </p>
-      ))}
-      <p className={`mt-4 max-w-[18rem] text-xs leading-relaxed ${styles.body}`}>
-        AI, software, automation, finance, and brand — connected as one intelligent system.
-      </p>
-    </div>
-  );
-}
-
-function OpeningCardContent({ card }: { card: OpeningAnimationCard }) {
-  switch (card.id) {
-    case 'process':
-      return <ProcessCardBody variant={card.variant} />;
-    case 'services':
-      return <ServicesCardBody variant={card.variant} />;
-    case 'metrics':
-      return <MetricsCardBody variant={card.variant} />;
-    case 'brand':
-      return <BrandCardBody variant={card.variant} />;
-    case 'vision':
-      return <VisionCardBody variant={card.variant} />;
-    default:
-      return null;
-  }
 }
 
 export function OpeningAnimation({ onComplete }: OpeningAnimationProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const [phase, setPhase] = useState<'enter' | 'hold' | 'exit'>('enter');
+  const rootRef = useRef<HTMLDivElement>(null);
+  const stickerContentRef = useRef<HTMLDivElement>(null);
+  const insideRef = useRef<HTMLDivElement>(null);
+  const outsideRef = useRef<HTMLDivElement>(null);
+  const squareContainerRef = useRef<HTMLDivElement>(null);
+  const squareLeftRef = useRef<HTMLDivElement>(null);
+  const squareRightRef = useRef<HTMLDivElement>(null);
+  const numberLeftRef = useRef<HTMLSpanElement[]>([]);
+  const numberRightRef = useRef<HTMLSpanElement[]>([]);
+  const stickerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [trailEnabled, setTrailEnabled] = useState(true);
+
+  usePreloaderStickerTrail({
+    stickerRefs,
+    enabled: trailEnabled,
+  });
 
   useEffect(() => {
-    if (prefersReducedMotion) {
+    const root = rootRef.current;
+    const inside = insideRef.current;
+    const outside = outsideRef.current;
+    const squareContainer = squareContainerRef.current;
+    const squareLeft = squareLeftRef.current;
+    const squareRight = squareRightRef.current;
+    const stickers = stickerRefs.current.filter(Boolean) as HTMLDivElement[];
+
+    if (!root || !inside || !outside || !squareContainer || !squareLeft || !squareRight) {
+      onComplete();
+      return;
+    }
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
       onComplete();
       return;
     }
 
     document.body.style.overflow = 'hidden';
 
-    const holdTimer = window.setTimeout(() => setPhase('hold'), 2200);
-    const exitTimer = window.setTimeout(() => setPhase('exit'), 3600);
-    const completeTimer = window.setTimeout(onComplete, 4700);
+    const counter = { perc: 0 };
+    const isDesktop = window.innerWidth > 768;
+    const digitCount = numberLeftRef.current.length || 10;
+    const cleanupMobileStickers = animateMobilePreloaderStickers(stickers, TIMELINE_DURATION);
+
+    const onLoadingUpdate = () => {
+      const value = Math.ceil(counter.perc);
+      const tens = Math.floor(value / 10);
+      const ones = value % 10;
+      const angle = -45 * (tens / 9);
+      const yPercentTens = -(tens * 100) / digitCount;
+      const yPercentOnes = -(ones * 100) / digitCount;
+
+      if (value > 2) {
+        gsap.set([...numberLeftRef.current, ...numberRightRef.current], { opacity: 1 });
+      }
+
+      if (value === 98) {
+        gsap.set([inside, outside], { yPercent: '-100%', autoAlpha: 0, duration: 0.2, ease: TE_EASE });
+      }
+
+      gsap.set(inside, {
+        xPercent: isDesktop ? -50 : 30,
+        yPercent: yPercentTens,
+        autoAlpha: 1,
+        top: isDesktop ? `${angle}%` : `${angle - 10}%`,
+        left: isDesktop ? '50%' : '70%',
+      });
+
+      gsap.set(outside, {
+        yPercent: yPercentOnes,
+        autoAlpha: 1,
+        top: isDesktop ? `${angle - 65}%` : `${angle - 45}%`,
+      });
+    };
+
+    const runExit = () => {
+      setTrailEnabled(false);
+      destroyPreloaderStickers(stickers);
+
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          document.body.style.overflow = '';
+          onComplete();
+        },
+      });
+
+      if (isDesktop) {
+        timeline
+          .to([inside, outside], { yPercent: '-100%', autoAlpha: 0, duration: 0.2, ease: TE_EASE }, 0)
+          .to(squareRight, { width: 0, duration: 0.5, ease: TE_EASE }, '>')
+          .to(
+            squareLeft,
+            {
+              position: 'fixed',
+              borderRadius: '50%',
+              width: '1rem',
+              height: '1rem',
+              top: '50%',
+              left: '50%',
+              x: '-50%',
+              y: '-50%',
+              duration: 0.3,
+              ease: 'power2.out',
+            },
+            '<',
+          )
+          .to(
+            squareContainer,
+            { width: '1rem', height: '1rem', duration: 0.3, ease: 'power2.out', zIndex: 120 },
+            '<',
+          )
+          .to(squareContainer, { borderRadius: '50%', duration: 0.5, ease: TE_EASE, zIndex: 120 }, '<')
+          .to(root, { autoAlpha: 0, duration: 0.5, ease: TE_EASE }, '<');
+      } else {
+        timeline
+          .to([inside, outside], { yPercent: '-100%', autoAlpha: 0, duration: 0.2, ease: TE_EASE }, 0)
+          .to(stickers, { scale: 0, duration: 0.2, ease: TE_EASE, stagger: 0.05 }, 0)
+          .to(squareRight, { width: 0, duration: 0.6, ease: TE_EASE }, '>')
+          .to(squareContainer, { zIndex: 0, opacity: 0, duration: 0.6, ease: TE_EASE }, '<')
+          .to(root, { autoAlpha: 0, duration: 0.6, ease: TE_EASE }, '>');
+      }
+    };
+
+    const tween = gsap.to(counter, {
+      perc: 99,
+      duration: TIMELINE_DURATION,
+      ease: 'linear',
+      onUpdate: onLoadingUpdate,
+      onComplete: runExit,
+    });
 
     return () => {
+      tween.kill();
+      cleanupMobileStickers?.();
+      destroyPreloaderStickers(stickers);
       document.body.style.overflow = '';
-      window.clearTimeout(holdTimer);
-      window.clearTimeout(exitTimer);
-      window.clearTimeout(completeTimer);
     };
-  }, [onComplete, prefersReducedMotion]);
-
-  if (prefersReducedMotion) {
-    return null;
-  }
+  }, [onComplete]);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 z-[100000] flex items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#f3f3f3_0%,#ececec_100%)]"
-        initial={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.7, ease: 'easeInOut' }}
-      >
-        <button
-          type="button"
-          onClick={onComplete}
-          className="absolute right-5 top-5 z-[100001] rounded-pill border border-ink/10 bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-wider text-ink backdrop-blur-sm transition-colors hover:bg-white"
-        >
-          Skip
-        </button>
+    <div ref={rootRef} className="preloader" role="status" aria-live="polite" aria-label="Loading">
+      <div ref={stickerContentRef} className="preloader__stickers__container" aria-hidden="true">
+        {PRELOADER_STICKER_IMAGES.map((image, index) => (
+          <div
+            key={image}
+            ref={(node) => {
+              stickerRefs.current[index] = node;
+            }}
+            className="preloader__stickers"
+          >
+            <div
+              className="preloader__stickers__inner"
+              style={{ backgroundImage: `url(${image})` }}
+            />
+          </div>
+        ))}
+      </div>
 
-        <div className="relative h-[min(720px,92vh)] w-full max-w-[420px] [perspective:1400px] max-md:max-w-[340px]">
-          {OPENING_CARDS.map((card, index) => {
-            const layout = CARD_LAYOUT[index];
-            const isExit = phase === 'exit';
-
-            return (
-              <motion.article
-                key={card.id}
-                className={`absolute left-1/2 top-1/2 flex h-[min(420px,58vh)] w-[min(320px,86vw)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[1.35rem] shadow-[0_30px_90px_rgba(0,0,0,0.18)] ${variantStyles[card.variant].shell}`}
-                initial={{
-                  opacity: 0,
-                  y: layout.y - 260,
-                  x: layout.x,
-                  rotateX: 34,
-                  rotateY: -24,
-                  rotateZ: layout.rotateZ - 8,
-                  scale: 0.84,
-                  z: layout.z - 180,
+      <div ref={squareContainerRef} className="preloader__square__container">
+        <div ref={squareLeftRef} className="preloader__square__left__wrapper">
+          <div ref={insideRef} className="preloader__number__left">
+            {DIGITS.map((digit, index) => (
+              <span
+                key={digit}
+                ref={(node) => {
+                  if (node) numberLeftRef.current[index] = node;
                 }}
-                animate={
-                  isExit
-                    ? {
-                        opacity: 0,
-                        y: layout.y - 320,
-                        x: layout.x,
-                        rotateX: 24,
-                        rotateY: -18,
-                        rotateZ: layout.rotateZ,
-                        scale: 0.88,
-                        z: layout.z + 120,
-                      }
-                    : {
-                        opacity: 1,
-                        y: layout.y,
-                        x: layout.x,
-                        rotateX: layout.rotateX,
-                        rotateY: layout.rotateY,
-                        rotateZ: layout.rotateZ,
-                        scale: layout.scale,
-                        z: layout.z,
-                      }
-                }
-                transition={{
-                  delay: index * 0.11,
-                  duration: isExit ? 0.75 : 0.95,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                style={{ transformStyle: 'preserve-3d' }}
+                className="preloader__number__left__text"
               >
-                <CardChrome card={card} variant={card.variant} />
-                <OpeningCardContent card={card} />
-              </motion.article>
-            );
-          })}
+                {digit}
+              </span>
+            ))}
+          </div>
         </div>
-      </motion.div>
-    </AnimatePresence>
+        <div ref={squareRightRef} className="preloader__square__right__wrapper">
+          <div ref={outsideRef} className="preloader__number__right">
+            {DIGITS.map((digit, index) => (
+              <span
+                key={digit}
+                ref={(node) => {
+                  if (node) numberRightRef.current[index] = node;
+                }}
+                className="preloader__number__right__text"
+              >
+                {digit}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <PreloaderBanner />
+    </div>
   );
 }
 
 export function shouldShowOpeningAnimation(): boolean {
   if (typeof window === 'undefined') return false;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  return sessionStorage.getItem('peraspera-intro-seen') !== '1';
-}
-
-export function markOpeningAnimationSeen(): void {
-  sessionStorage.setItem('peraspera-intro-seen', '1');
+  return true;
 }
