@@ -69,7 +69,7 @@ export function Navbar() {
           >
             <Link
               to="/"
-              className="z-10 inline-flex shrink-0 transition-transform duration-normal hover:scale-105"
+              className="relative z-10 inline-flex shrink-0 transition-transform duration-normal hover:scale-105"
               aria-label={`${BRAND.name} home`}
             >
               <span
@@ -82,17 +82,19 @@ export function Navbar() {
                 <Logo
                   variant="primary"
                   inverted
-                  className={`absolute left-0 top-1/2 w-auto max-w-none -translate-y-1/2 transition-all duration-card ease-smooth ${
-                    scrolled ? 'h-[120px]' : 'h-[180px] md:h-[200px]'
+                  className={`relative left-0 h-full w-auto max-w-full object-contain object-left transition-all duration-card ease-smooth ${
+                    scrolled ? 'max-h-10 md:max-h-11' : 'max-h-14 md:max-h-16'
                   }`}
                 />
               </span>
             </Link>
 
+            {!showMobileNav ? (
+            <>
             <div
-              className={`absolute left-1/2 -translate-x-1/2 items-center transition-all duration-card ease-smooth ${
-                showMobileNav ? 'hidden' : 'hidden md:flex'
-              } ${scrolled ? 'gap-6 lg:gap-7' : 'gap-8 lg:gap-10'}`}
+              className={`absolute left-1/2 hidden -translate-x-1/2 items-center transition-all duration-card ease-smooth md:flex ${
+                scrolled ? 'gap-6 lg:gap-7' : 'gap-8 lg:gap-10'
+              }`}
             >
               {NAV_LINKS.map((link) => (
                 <div key={link.label} className={`relative transition-all duration-card ${scrolled ? 'py-3' : 'py-5'}`}>
@@ -153,7 +155,7 @@ export function Navbar() {
               ))}
             </div>
 
-            <div className={`z-10 items-center ${showMobileNav ? 'hidden' : 'hidden md:flex'}`}>
+            <div className="z-10 hidden items-center md:flex">
               <a
                 href={WHATSAPP_LINK}
                 target="_blank"
@@ -171,11 +173,13 @@ export function Navbar() {
                 />
               </a>
             </div>
+            </>
+            ) : null}
 
             {showMobileNav ? (
             <button
               type="button"
-              className="rounded-xl bg-white/5 p-3 text-white transition-transform duration-normal active:scale-90"
+              className="relative z-10 rounded-xl bg-white/5 p-3 text-white transition-transform duration-normal active:scale-90"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((value) => !value)}

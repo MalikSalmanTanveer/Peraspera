@@ -18,11 +18,11 @@ export function WhatsAppWidget() {
     <div
       className="fixed right-floating-offset bottom-floating-offset z-[9999] flex flex-col items-end gap-3 max-md:right-floating-offset-mobile max-md:bottom-floating-offset-mobile pointer-events-none font-body"
     >
+      {open ? (
       <div
-        className={`wa-panel-gradient absolute right-0 bottom-[calc(100%+12px)] w-[380px] max-w-[calc(100vw-34px)] border border-overlay-accent-border-42 rounded-wa-panel shadow-wa-panel overflow-hidden transition-all duration-slow pointer-events-none ${open ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 translate-y-[18px] scale-[0.96]'}`}
+        className="wa-panel-gradient absolute right-0 bottom-[calc(100%+12px)] w-[380px] max-w-[calc(100vw-34px)] border border-overlay-accent-border-42 rounded-wa-panel shadow-wa-panel overflow-hidden opacity-100 translate-y-0 scale-100 pointer-events-auto"
         role="dialog"
         aria-label="Chat support"
-        aria-hidden={!open}
       >
         <div className="relative px-[22px] pt-[22px] pb-[18px] text-white bg-[radial-gradient(180px_110px_at_90%_0%,rgba(254,163,39,0.22),transparent_65%)]">
           <button
@@ -52,7 +52,7 @@ export function WhatsAppWidget() {
               href={region.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 rounded-wa-link bg-overlay-white-08 border border-overlay-white-08 text-white transition-all duration-medium hover:-translate-y-0.5 hover:border-overlay-accent-border-42 hover:bg-accent/10 pointer-events-auto"
+              className="flex items-center gap-3 p-3 rounded-wa-link bg-overlay-white-08 border border-overlay-white-08 text-white transition-all duration-medium hover:-translate-y-0.5 hover:border-overlay-accent-border-42 hover:bg-accent/10"
               onClick={() => setOpen(false)}
             >
               <span className="w-[42px] h-[42px] rounded-wa-flag bg-white text-ink grid place-items-center shrink-0 text-2xl">
@@ -70,6 +70,7 @@ export function WhatsAppWidget() {
           Fast response from the Peraspera team for design, development, and product support.
         </p>
       </div>
+      ) : null}
 
       <button
         type="button"
