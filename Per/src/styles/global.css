@@ -252,15 +252,6 @@
   background: rgba(64, 65, 68, 0.5);
 }
 
-.intro-gate--orientation {
-  justify-content: center;
-  align-items: center;
-  background-color: #eff3f3;
-  color: #404144;
-  text-align: center;
-  transition: opacity 0.3s ease;
-}
-
 .intro-gate__wrapper {
   position: relative;
   z-index: 1;

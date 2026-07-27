@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { BRAND, NAV_LINKS } from '../data/site';
 import { AppIcon } from '../components/AppIcon';
 import { Logo } from '../components/Logo';
+import { isAndroidDevice } from '../utils/isAndroidDevice';
 
 const WHATSAPP_LINK = `${BRAND.whatsapp.href}?text=${encodeURIComponent('Hi Peraspera — I would like to speak with your team.')}`;
 
@@ -13,6 +14,22 @@ export function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isAndroid] = useState(() => isAndroidDevice());
+  const [isNarrowViewport, setIsNarrowViewport] = useState(() =>
+    typeof window !== 'undefined' ? !window.matchMedia('(min-width: 768px)').matches : false,
+  );
+
+  useEffect(() => {
+    if (isAndroid) return;
+
+    const media = window.matchMedia('(min-width: 768px)');
+    const onChange = () => setIsNarrowViewport(!media.matches);
+    onChange();
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
+  }, [isAndroid]);
+
+  const showMobileNav = isAndroid || isNarrowViewport;
 
   const isActive = (href: string) => location.pathname === href.split('#')[0];
 
@@ -73,9 +90,9 @@ export function Navbar() {
             </Link>
 
             <div
-              className={`absolute left-1/2 hidden -translate-x-1/2 items-center transition-all duration-card ease-smooth md:flex ${
-                scrolled ? 'gap-6 lg:gap-7' : 'gap-8 lg:gap-10'
-              }`}
+              className={`absolute left-1/2 -translate-x-1/2 items-center transition-all duration-card ease-smooth ${
+                showMobileNav ? 'hidden' : 'hidden md:flex'
+              } ${scrolled ? 'gap-6 lg:gap-7' : 'gap-8 lg:gap-10'}`}
             >
               {NAV_LINKS.map((link) => (
                 <div key={link.label} className={`relative transition-all duration-card ${scrolled ? 'py-3' : 'py-5'}`}>
@@ -136,7 +153,7 @@ export function Navbar() {
               ))}
             </div>
 
-            <div className="z-10 hidden items-center md:flex">
+            <div className={`z-10 items-center ${showMobileNav ? 'hidden' : 'hidden md:flex'}`}>
               <a
                 href={WHATSAPP_LINK}
                 target="_blank"
@@ -155,9 +172,10 @@ export function Navbar() {
               </a>
             </div>
 
+            {showMobileNav ? (
             <button
               type="button"
-              className="rounded-xl bg-white/5 p-3 text-white transition-transform duration-normal active:scale-90 md:hidden"
+              className="rounded-xl bg-white/5 p-3 text-white transition-transform duration-normal active:scale-90"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((value) => !value)}
@@ -174,13 +192,14 @@ export function Navbar() {
                 />
               </span>
             </button>
+            ) : null}
           </nav>
         </header>
       </div>
 
-      {mobileOpen ? (
+      {mobileOpen && showMobileNav ? (
         <div
-          className="fixed inset-0 z-[850] overflow-y-auto bg-ink px-nav-x-mobile pb-10 pt-[8.5rem] md:hidden"
+          className="fixed inset-0 z-[850] overflow-y-auto bg-ink px-nav-x-mobile pb-10 pt-[8.5rem]"
           role="dialog"
           aria-label="Mobile navigation"
         >
