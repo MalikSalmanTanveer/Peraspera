@@ -8,7 +8,7 @@ import { isAndroidDevice } from '../utils/isAndroidDevice';
 const WHATSAPP_LINK = `${BRAND.whatsapp.href}?text=${encodeURIComponent('Hi Peraspera — I would like to speak with your team.')}`;
 
 const pillShell =
-  'pointer-events-auto mx-auto overflow-hidden rounded-[28px] border border-white/10 bg-ink/78 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all duration-card ease-smooth md:rounded-[34px]';
+  'pointer-events-auto mx-auto overflow-visible rounded-[28px] border border-white/10 bg-ink/78 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all duration-card ease-smooth md:rounded-[34px]';
 
 export function Navbar() {
   const location = useLocation();
@@ -73,17 +73,17 @@ export function Navbar() {
               aria-label={`${BRAND.name} home`}
             >
               <span
-                className={`relative flex items-center overflow-hidden transition-all duration-card ease-smooth ${
+                className={`relative flex items-center overflow-visible transition-all duration-card ease-smooth ${
                   scrolled
-                    ? 'h-10 w-[min(42vw,160px)] md:h-11 md:w-[180px]'
-                    : 'h-14 w-[min(48vw,200px)] md:h-16 md:w-[240px]'
+                    ? 'h-14 w-[min(56vw,240px)] md:h-16 md:w-[280px]'
+                    : 'h-[6.5rem] w-[min(70vw,320px)] md:h-[8rem] md:w-[420px]'
                 }`}
               >
                 <Logo
                   variant="primary"
                   inverted
                   className={`relative left-0 h-full w-auto max-w-full object-contain object-left transition-all duration-card ease-smooth ${
-                    scrolled ? 'max-h-10 md:max-h-11' : 'max-h-14 md:max-h-16'
+                    scrolled ? 'max-h-14 md:max-h-16' : 'max-h-[6.5rem] md:max-h-[8rem]'
                   }`}
                 />
               </span>
