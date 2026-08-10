@@ -1,11 +1,15 @@
 import { useEffect, type ReactNode } from 'react';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { ServicesPage } from './pages/ServicesPage';
 import { PortfolioPage } from './pages/PortfolioPage';
 import { BlogPage } from './pages/BlogPage';
+import { BlogPostPage } from './pages/BlogPostPage';
 import { AboutPage } from './pages/AboutPage';
 import { LabsPage } from './pages/LabsPage';
+import { CareersPage } from './pages/CareersPage';
+import { CareerJobPage } from './pages/CareerJobPage';
+import { AdminApp } from './pages/admin/AdminApp';
 import { Navbar } from './sections/Navbar';
 import { Footer } from './sections/Footer';
 import { WhatsAppWidget, BackToTop } from './sections/FloatingWidgets';
@@ -15,6 +19,35 @@ import {
   type PortfolioReviewNavState,
 } from './utils/portfolioReviewNav';
 import { IntroGates, introGatesAllowSite } from './components/IntroGates';
+
+/** If Site URL lands auth tokens on the marketing site, send them to admin password pages. */
+function AuthCallbackRedirect() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname.startsWith('/admin')) return;
+
+    const hash = window.location.hash || '';
+    const search = window.location.search || '';
+    const blob = `${search}${hash}`.toLowerCase();
+    const isAuth =
+      blob.includes('access_token') ||
+      blob.includes('refresh_token') ||
+      blob.includes('type=recovery') ||
+      blob.includes('type=invite') ||
+      blob.includes('type=signup') ||
+      /[?&#]code=/.test(blob);
+
+    if (!isAuth) return;
+
+    const path =
+      blob.includes('type=recovery') ? '/admin/reset-password' : '/admin/set-password';
+    navigate(`${path}${search}${hash}`, { replace: true });
+  }, [location.pathname, location.search, location.hash, navigate]);
+
+  return null;
+}
 
 function ScrollToTop() {
   const { pathname, hash, state } = useLocation();
@@ -56,10 +89,25 @@ function PageShell({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
   const gatesAllowSite = introGatesAllowSite();
+
+  if (isAdminRoute) {
+    return (
+      <>
+        <AuthCallbackRedirect />
+        <ScrollToTop />
+        <Routes>
+          <Route path="/admin/*" element={<AdminApp />} />
+        </Routes>
+      </>
+    );
+  }
 
   return (
     <>
+      <AuthCallbackRedirect />
       <IntroGates />
       <a
         href="#main"
@@ -98,6 +146,14 @@ export default function App() {
               }
             />
             <Route
+              path="/blog/:slug"
+              element={
+                <PageShell>
+                  <BlogPostPage />
+                </PageShell>
+              }
+            />
+            <Route
               path="/about"
               element={
                 <PageShell>
@@ -110,6 +166,22 @@ export default function App() {
               element={
                 <PageShell>
                   <LabsPage />
+                </PageShell>
+              }
+            />
+            <Route
+              path="/careers"
+              element={
+                <PageShell>
+                  <CareersPage />
+                </PageShell>
+              }
+            />
+            <Route
+              path="/careers/:slug"
+              element={
+                <PageShell>
+                  <CareerJobPage />
                 </PageShell>
               }
             />

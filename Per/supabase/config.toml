@@ -1,0 +1,26 @@
+# Auth redirect targets for Per admin (local). Pushed with `supabase config push`.
+# Site URL must be Per (not Studio) so invite/reset emails land on the admin app.
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = [
+  "http://localhost:5173/admin/set-password",
+  "http://localhost:5173/admin/reset-password",
+  "http://127.0.0.1:5173/admin/set-password",
+  "http://127.0.0.1:5173/admin/reset-password",
+  "https://studio-rho-cyan.vercel.app/**",
+  "https://studio-rho-cyan.vercel.app/login",
+  "https://studio-rho-cyan.vercel.app/invite",
+]
+
+# Keep free-tier defaults — do not enable vector (paid).
+[storage.vector]
+enabled = false
+
+# Edge Function JWT verification
+# admin-api uses custom session tokens (not Supabase JWTs)
+[functions.admin-api]
+verify_jwt = false
+
+[functions.career-apply]
+verify_jwt = false

@@ -27,7 +27,10 @@ That installs a database trigger: every new form submission sends you an email v
 
 With `onboarding@resend.dev`, emails only go to the address you used to sign up for Resend. If that's not `contact.peraspera@gmail.com`, either sign up Resend with that email or verify your domain in Resend for production.
 
-## Optional: CLI deploy (Edge Function alternative)
+## Careers CMS
+
+For the careers board + `/admin` dashboard, see **[CAREERS_SETUP.md](./CAREERS_SETUP.md)**.
+
 
 If you prefer Edge Functions over the SQL trigger, log into the **same Supabase account** as your project:
 

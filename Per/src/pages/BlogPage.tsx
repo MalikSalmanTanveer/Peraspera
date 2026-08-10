@@ -1,56 +1,38 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { PageBreadcrumb } from '../components/PageBreadcrumb';
-import { Button } from '../components/Button';
+import { fetchPublishedBlogPosts } from '../lib/blogPublic';
+import type { PublicBlogPostCard } from '../lib/blog';
 
-const PLACEHOLDER_POSTS = [
-  {
-    title: 'How AI automation fits into a modern design studio',
-    category: 'AI & Automation',
-    date: 'Coming soon',
-  },
-  {
-    title: 'Building SaaS products with design systems from day one',
-    category: 'Product',
-    date: 'Coming soon',
-  },
-  {
-    title: 'What makes a high-converting service website in 2026',
-    category: 'Web Design',
-    date: 'Coming soon',
-  },
-] as const;
-
-const TICKER_ITEMS = [
-  'Coming Soon',
-  'Studio Notes Loading',
-  'New Articles In Progress',
-  'Insights Publishing Shortly',
-  'Blog Launching Soon',
-];
-
-function ComingSoonTicker() {
-  const sequence = [...TICKER_ITEMS, ...TICKER_ITEMS];
-
-  return (
-    <div className="relative overflow-hidden border-y border-overlay-white-10 bg-accent/10 py-3">
-      <div className="coming-soon-track flex w-max items-center gap-10">
-        {sequence.map((item, index) => (
-          <span
-            key={`${item}-${index}`}
-            className="inline-flex items-center gap-3 whitespace-nowrap text-sm font-extrabold uppercase tracking-[0.28em] text-accent md:text-base"
-          >
-            <span className="h-2 w-2 rounded-full bg-accent animate-pulse" aria-hidden="true" />
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
+function formatDate(value: string | null) {
+  if (!value) return '';
+  return new Date(value).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
 }
 
 export function BlogPage() {
+  const [posts, setPosts] = useState<PublicBlogPostCard[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    void (async () => {
+      setLoading(true);
+      const result = await fetchPublishedBlogPosts();
+      setLoading(false);
+      if (result.error) {
+        setError(result.error);
+        return;
+      }
+      setPosts(result.data);
+    })();
+  }, []);
+
   return (
     <div className="bg-ink text-white">
       <section className="relative overflow-hidden pt-[72px] px-nav-x max-md:px-nav-x-mobile">
@@ -72,51 +54,59 @@ export function BlogPage() {
             </p>
           </Reveal>
         </Container>
-        <ComingSoonTicker />
       </section>
 
       <section className="relative rounded-t-[2rem] bg-paper py-section-y px-nav-x text-ink max-md:px-nav-x-mobile max-md:py-section-y-mobile md:rounded-t-[2.5rem]">
         <div className="hero-grid-bg pointer-events-none absolute inset-0 opacity-[0.04]" aria-hidden="true" />
         <Container className="relative z-[1]">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {PLACEHOLDER_POSTS.map((post, index) => (
-              <Reveal key={post.title} delay={index * 0.05}>
-                <article className="group flex h-full min-h-[280px] flex-col rounded-6xl border border-border bg-white p-8 transition-transform duration-card hover:-translate-y-1 hover:shadow-card-hover">
-                  <span className="label-pill-equal self-start bg-accent/10 text-accent-dark">
-                    {post.category}
-                  </span>
-                  <h2 className="mt-4 flex-1 font-display text-2xl font-extrabold leading-snug">
-                    {post.title}
-                  </h2>
-                  <p className="mt-4 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-muted">
-                    <span className="coming-soon-dot h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
-                    {post.date}
-                  </p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={0.15}>
-            <div className="mx-auto mt-14 max-w-[620px] rounded-6xl border border-border bg-white p-10 text-center">
-              <h2 className="font-display text-2xl font-extrabold">More articles on the way</h2>
-              <p className="mt-4 text-md leading-body-lg text-muted">
-                We&apos;re preparing studio insights on AI workflows, product design, and client
-                project learnings.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Button variant="dark" href="/#contact">
-                  Get Notified ↗
-                </Button>
-                <Link
-                  to="/services"
-                  className="font-body text-sm-plus font-semibold text-muted transition-colors hover:text-ink"
-                >
-                  Explore Services →
-                </Link>
+          {loading ? (
+            <p className="text-center text-sm text-muted">Loading posts…</p>
+          ) : error ? (
+            <p className="text-center text-sm text-red-700">{error}</p>
+          ) : posts.length === 0 ? (
+            <Reveal>
+              <div className="mx-auto max-w-[560px] rounded-6xl border border-border bg-white px-8 py-14 text-center">
+                <h2 className="font-display text-3xl font-extrabold text-ink">No posts yet</h2>
+                <p className="mt-4 text-md leading-body-lg text-muted">
+                  Check back soon for studio insights and updates.
+                </p>
               </div>
+            </Reveal>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {posts.map((post, index) => (
+                <Reveal key={post.id} delay={index * 0.05}>
+                  <Link to={`/blog/${post.slug}`} className="block h-full">
+                    <article className="group flex h-full min-h-[280px] flex-col overflow-hidden rounded-6xl border border-border bg-white transition-transform duration-card hover:-translate-y-1 hover:shadow-card-hover">
+                      {post.cover_image_url ? (
+                        <img
+                          src={post.cover_image_url}
+                          alt=""
+                          className="aspect-[16/10] w-full object-cover"
+                        />
+                      ) : null}
+                      <div className="flex flex-1 flex-col p-8">
+                        <span className="label-pill-equal self-start bg-accent/10 text-accent-dark">
+                          {formatDate(post.published_at) || 'Article'}
+                        </span>
+                        <h2 className="mt-4 flex-1 font-display text-2xl font-extrabold leading-snug text-ink">
+                          {post.title}
+                        </h2>
+                        {post.excerpt ? (
+                          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">
+                            {post.excerpt}
+                          </p>
+                        ) : null}
+                        <p className="mt-4 text-sm font-semibold text-ink group-hover:text-accent-dark">
+                          Read article →
+                        </p>
+                      </div>
+                    </article>
+                  </Link>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
+          )}
         </Container>
       </section>
     </div>

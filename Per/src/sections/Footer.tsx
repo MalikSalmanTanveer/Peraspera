@@ -82,12 +82,20 @@ export function Footer() {
             )}
           </div>
 
-          <a
-            href="/#contact"
-            className="font-body text-sm font-semibold text-overlay-footer-text-35 transition-colors duration-normal hover:text-white"
-          >
-            Get in touch →
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-4 md:justify-end">
+            <a
+              href="/careers"
+              className="font-body text-sm font-semibold text-overlay-footer-text-35 transition-colors duration-normal hover:text-white"
+            >
+              Careers
+            </a>
+            <a
+              href="/#contact"
+              className="font-body text-sm font-semibold text-overlay-footer-text-35 transition-colors duration-normal hover:text-white"
+            >
+              Get in touch →
+            </a>
+          </div>
         </div>
       </div>
     </footer>
