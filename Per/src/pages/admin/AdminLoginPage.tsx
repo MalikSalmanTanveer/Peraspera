@@ -1,12 +1,13 @@
 import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { AdminBrandMark } from '../../components/admin/AdminBrandMark';
 import { defaultHomeForRole } from '../../lib/adminRoles';
 import { useAdminAuth } from './AdminAuthContext';
 
 export function AdminLoginPage() {
   const navigate = useNavigate();
-  const { isAuthenticated, profile, loading: authLoading, signIn } = useAdminAuth();
+  const { isAuthenticated, profile, phase, loading: authLoading, signIn } = useAdminAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +16,9 @@ export function AdminLoginPage() {
 
   if (!authLoading && isAuthenticated && profile) {
     return <Navigate to={defaultHomeForRole(profile.role)} replace />;
+  }
+  if (!authLoading && phase === 'needs_mfa') {
+    return <Navigate to="/admin/mfa" replace />;
   }
 
   const onSubmit = async (event: FormEvent) => {
@@ -39,6 +43,10 @@ export function AdminLoginPage() {
       }
       return;
     }
+    if (result.phase === 'needs_mfa') {
+      navigate('/admin/mfa', { replace: true });
+      return;
+    }
     navigate(defaultHomeForRole(result.profile.role), { replace: true });
   };
 
@@ -48,14 +56,7 @@ export function AdminLoginPage() {
         onSubmit={onSubmit}
         className="w-full max-w-[400px] rounded-2xl border border-black/[0.04] bg-white p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
       >
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent font-display text-lg font-extrabold text-ink">
-            P
-          </span>
-          <span className="font-display text-lg font-extrabold tracking-tight text-ink">
-            Peraspera
-          </span>
-        </div>
+        <AdminBrandMark to="/admin/login" size="lg" />
 
         <h1 className="mt-7 font-display text-[1.65rem] font-bold tracking-tight text-ink">
           Admin sign in
@@ -123,12 +124,10 @@ export function AdminLoginPage() {
         <p className="mt-4 text-center text-xs text-[#8a8a8a]">Authorized administrators only.</p>
       </form>
 
-      <p className="mt-8 flex items-center gap-2 text-xs text-[#b0b0b0]">
-        <span className="flex h-5 w-5 items-center justify-center rounded bg-accent/30 font-display text-[10px] font-bold text-ink">
-          P
-        </span>
-        © {new Date().getFullYear()} Peraspera
-      </p>
+      <div className="mt-8 flex flex-col items-center gap-2 text-xs text-[#b0b0b0]">
+        <AdminBrandMark to={null} size="md" />
+        <span>© {new Date().getFullYear()}</span>
+      </div>
     </div>
   );
 }

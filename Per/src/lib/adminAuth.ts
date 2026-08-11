@@ -41,9 +41,10 @@ export async function signInAdmin(
   return { error: null, profile };
 }
 
-export async function signOutAdmin(): Promise<void> {
+export async function signOutAdmin(opts?: { scope?: 'local' | 'global' }): Promise<void> {
   if (!supabase) return;
-  await supabase.auth.signOut();
+  // Default local: MFA deny on web must not revoke the phone app session.
+  await supabase.auth.signOut({ scope: opts?.scope ?? 'local' });
 }
 
 export async function requestAdminPasswordReset(

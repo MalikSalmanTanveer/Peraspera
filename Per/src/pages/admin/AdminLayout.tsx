@@ -12,6 +12,7 @@ import {
   PenLine,
   Users,
 } from 'lucide-react';
+import { AdminBrandMark } from '../../components/admin/AdminBrandMark';
 import { LiveBadge } from '../../components/admin/LiveBadge';
 import { subscribeCareerApplicationSignals } from '../../lib/careerRealtime';
 import {
@@ -151,13 +152,8 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-[#f5f5f5]">
       <aside className="flex w-full flex-col border-b border-[#e8e8e8] bg-white md:w-[220px] md:shrink-0 md:border-b-0 md:border-r">
-        <div className="flex items-center gap-2.5 px-5 py-5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent font-display text-sm font-extrabold text-ink">
-            P
-          </span>
-          <span className="font-display text-[15px] font-extrabold tracking-tight text-ink">
-            Peraspera
-          </span>
+        <div className="px-4 py-5 md:px-5">
+          <AdminBrandMark to="/admin" size="md" />
         </div>
 
         <nav className="flex gap-1 overflow-x-auto px-3 pb-3 md:flex-1 md:flex-col md:gap-1 md:overflow-visible md:px-3">

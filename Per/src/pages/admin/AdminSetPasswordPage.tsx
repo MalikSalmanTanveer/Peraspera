@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AdminBrandMark } from '../../components/admin/AdminBrandMark';
 import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { fetchOwnAdminProfile, updateAdminPassword } from '../../lib/adminAuth';
 import { defaultHomeForRole } from '../../lib/adminRoles';
@@ -110,7 +111,8 @@ export function AdminSetPasswordPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f5f5] px-4 py-12">
         <div className="w-full max-w-[400px] rounded-2xl border border-black/[0.04] bg-white p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
-          <h1 className="font-display text-[1.65rem] font-bold tracking-tight text-ink">
+          <AdminBrandMark to="/admin/login" size="lg" />
+          <h1 className="mt-7 font-display text-[1.65rem] font-bold tracking-tight text-ink">
             Link expired or invalid
           </h1>
           <p className="mt-3 text-sm text-muted-alt">
@@ -139,14 +141,7 @@ export function AdminSetPasswordPage() {
         onSubmit={onSubmit}
         className="w-full max-w-[400px] rounded-2xl border border-black/[0.04] bg-white p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
       >
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent font-display text-lg font-extrabold text-ink">
-            P
-          </span>
-          <span className="font-display text-lg font-extrabold tracking-tight text-ink">
-            Peraspera
-          </span>
-        </div>
+        <AdminBrandMark to="/admin/login" size="lg" />
 
         <h1 className="mt-7 font-display text-[1.65rem] font-bold tracking-tight text-ink">
           {isReset ? 'Reset your password' : 'Set your password'}

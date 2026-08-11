@@ -22,9 +22,10 @@ import { AdminUsersPage } from './AdminUsersPage';
 import { AdminInviteUserPage } from './AdminInviteUserPage';
 import { AdminBlogListPage } from './AdminBlogListPage';
 import { AdminBlogEditorPage } from './AdminBlogEditorPage';
+import { AdminMfaWaitPage } from './AdminMfaWaitPage';
 
 function RequireAdmin({ children }: { children: ReactNode }) {
-  const { loading, isAuthenticated } = useAdminAuth();
+  const { loading, isAuthenticated, phase } = useAdminAuth();
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5] text-sm text-muted-alt">
@@ -32,7 +33,25 @@ function RequireAdmin({ children }: { children: ReactNode }) {
       </div>
     );
   }
+  if (phase === 'needs_mfa') {
+    return <Navigate to="/admin/mfa" replace />;
+  }
   if (!isAuthenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
+  return children;
+}
+
+function RequirePasswordSession({ children }: { children: ReactNode }) {
+  const { loading, hasPasswordSession } = useAdminAuth();
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5] text-sm text-muted-alt">
+        Loading…
+      </div>
+    );
+  }
+  if (!hasPasswordSession) {
     return <Navigate to="/admin/login" replace />;
   }
   return children;
@@ -118,6 +137,14 @@ function AdminRoutes() {
       <Route path="set-password" element={<AdminSetPasswordPage />} />
       <Route path="reset-password" element={<AdminSetPasswordPage />} />
       <Route
+        path="mfa"
+        element={
+          <RequirePasswordSession>
+            <AdminMfaWaitPage />
+          </RequirePasswordSession>
+        }
+      />
+      <Route
         path="*"
         element={
           <RequireAdmin>
@@ -127,7 +154,6 @@ function AdminRoutes() {
                 <Route path="hiring/*" element={<HiringRoutes />} />
                 <Route path="blog/*" element={<BlogRoutes />} />
                 <Route path="users/*" element={<UsersRoutes />} />
-                {/* Legacy redirects */}
                 <Route path="overview" element={<Navigate to="/admin/hiring/overview" replace />} />
                 <Route
                   path="applications"

@@ -8,6 +8,13 @@ import {
   normalizeFormSchema,
   validateFormSchema,
 } from '../_shared/formSchema.ts';
+import { sessionKeyFromAccessToken } from '../_shared/adminMfa.ts';
+import {
+  MFA_ACTIONS,
+  MFA_PRE_VERIFY_ACTIONS,
+  handleMfaAction,
+  isMfaSessionVerified,
+} from './mfaActions.ts';
 
 const corsHeaders: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',
@@ -69,7 +76,10 @@ type Action =
   | 'publishBlogPost'
   | 'unpublishBlogPost'
   | 'deleteBlogPost'
-  | 'uploadBlogImage';
+  | 'uploadBlogImage'
+  | 'mfaStatus'
+  | 'mfaSendEmailCode'
+  | 'mfaVerifyEmailCode';
 
 const USER_ACTIONS = new Set<Action>([
   'listUsers',
@@ -124,41 +134,94 @@ type AdminRole = 'super_admin' | 'hiring_manager' | 'blog_author' | 'sales_leads
 type AdminActor = {
   userId: string;
   role: AdminRole;
+  authKind: 'jwt' | 'legacy';
+  sessionKey: string;
+  email: string | null;
+  accessToken: string;
 };
 
 type AdminAuthResult =
   | { ok: true; actor: AdminActor }
   | { ok: false; response: Response };
 
+async function sha256Hex(value: string): Promise<string> {
+  const data = new TextEncoder().encode(value);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+/**
+ * Auth for admin-api:
+ * 1) Supabase Auth JWT + admin_profiles (new platform)
+ * 2) Legacy admin-login session token in admin_sessions (live site)
+ */
 async function requireAdmin(req: Request, supabase: SupabaseClient): Promise<AdminAuthResult> {
   const auth = req.headers.get('Authorization') ?? '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
-  if (!token) return { ok: false, response: json({ error: 'Unauthorized' }, 401) };
+  if (!token) {
+    return { ok: false, response: json({ error: 'Not authenticated' }, 401) };
+  }
 
+  // New platform: Supabase access token
   const { data: userData, error: userError } = await supabase.auth.getUser(token);
-  if (userError || !userData.user) {
-    return { ok: false, response: json({ error: 'Unauthorized' }, 401) };
-  }
+  if (!userError && userData.user) {
+    const { data: profile, error: profileError } = await supabase
+      .from('admin_profiles')
+      .select('id, role, is_active')
+      .eq('id', userData.user.id)
+      .maybeSingle();
 
-  const { data: profile, error: profileError } = await supabase
-    .from('admin_profiles')
-    .select('id, role, is_active')
-    .eq('id', userData.user.id)
-    .maybeSingle();
+    if (profileError || !profile) {
+      return { ok: false, response: json({ error: 'Not authenticated' }, 401) };
+    }
+    if (!profile.is_active) {
+      return {
+        ok: false,
+        response: json({ error: 'This account is disabled. Contact a Super Admin.' }, 403),
+      };
+    }
 
-  if (profileError || !profile) {
-    return { ok: false, response: json({ error: 'Unauthorized' }, 401) };
-  }
-  if (!profile.is_active) {
+    const sessionKey = await sessionKeyFromAccessToken(token);
     return {
-      ok: false,
-      response: json({ error: 'This account is disabled. Contact a Super Admin.' }, 403),
+      ok: true,
+      actor: {
+        userId: profile.id as string,
+        role: profile.role as AdminRole,
+        authKind: 'jwt',
+        sessionKey,
+        email: userData.user.email ?? null,
+        accessToken: token,
+      },
     };
   }
 
+  // Live site: opaque token from admin-login → admin_sessions
+  const tokenHash = await sha256Hex(token);
+  const nowIso = new Date().toISOString();
+  const { data: session, error: sessionError } = await supabase
+    .from('admin_sessions')
+    .select('id')
+    .eq('token_hash', tokenHash)
+    .gt('expires_at', nowIso)
+    .maybeSingle();
+
+  if (sessionError || !session) {
+    return { ok: false, response: json({ error: 'Not authenticated' }, 401) };
+  }
+
+  // Shared env admin has full hiring access (matches pre-platform live behavior).
   return {
     ok: true,
-    actor: { userId: profile.id as string, role: profile.role as AdminRole },
+    actor: {
+      userId: 'legacy-shared-admin',
+      role: 'super_admin',
+      authKind: 'legacy',
+      sessionKey: tokenHash,
+      email: null,
+      accessToken: token,
+    },
   };
 }
 
@@ -253,6 +316,52 @@ Deno.serve(async (req) => {
   const action = body.action;
   const payload = body.payload ?? {};
   const includeDeleted = Boolean(payload.include_deleted);
+
+  // MFA actions (JWT platform only)
+  if (MFA_ACTIONS.has(action)) {
+    if (authResult.actor.authKind !== 'jwt') {
+      return json({ error: 'MFA is only available for platform admin accounts' }, 400);
+    }
+    try {
+      const mfaVerified = await isMfaSessionVerified(
+        supabase,
+        authResult.actor.userId,
+        authResult.actor.sessionKey,
+      );
+      if (!MFA_PRE_VERIFY_ACTIONS.has(action) && !mfaVerified) {
+        return json({ error: 'MFA required' }, 403);
+      }
+      return await handleMfaAction({
+        action,
+        payload,
+        supabase,
+        actor: {
+          userId: authResult.actor.userId,
+          role: authResult.actor.role,
+        },
+        sessionKey: authResult.actor.sessionKey,
+        userEmail: authResult.actor.email,
+        json,
+        sendResendEmail,
+        mfaVerified,
+      });
+    } catch (error) {
+      console.error('admin-api MFA error', action, error);
+      return json({ error: error instanceof Error ? error.message : 'Server error' }, 500);
+    }
+  }
+
+  // JWT platform: require MFA verification for all data actions
+  if (authResult.actor.authKind === 'jwt') {
+    const mfaVerified = await isMfaSessionVerified(
+      supabase,
+      authResult.actor.userId,
+      authResult.actor.sessionKey,
+    );
+    if (!mfaVerified) {
+      return json({ error: 'MFA required' }, 403);
+    }
+  }
 
   if (USER_ACTIONS.has(action)) {
     const denied = requireSuperAdmin(authResult.actor);

@@ -94,6 +94,9 @@ export type AdminAction =
   | 'unpublishBlogPost'
   | 'deleteBlogPost'
   | 'uploadBlogImage'
+  | 'mfaStatus'
+  | 'mfaSendEmailCode'
+  | 'mfaVerifyEmailCode'
   /** @deprecated Use getCulture / updateCulture */
   | 'getPageContent'
   | 'upsertPageContent'
@@ -477,4 +480,25 @@ export async function uploadAdminBlogImage(file: File, kind: 'cover' | 'inline')
     contentType: file.type || 'image/jpeg',
     dataBase64,
   });
+}
+
+export type MfaStatus = {
+  mfa_verified: boolean;
+  needs_enroll: boolean;
+  can_use_email: boolean;
+  inbox_hint?: string;
+};
+
+export async function fetchMfaStatus() {
+  return adminApi<MfaStatus>('mfaStatus');
+}
+
+export async function sendMfaEmailCode() {
+  return adminApi<{ ok: boolean; expires_in_seconds: number; sent_to?: string }>(
+    'mfaSendEmailCode',
+  );
+}
+
+export async function verifyMfaEmailCode(code: string) {
+  return adminApi<{ mfa_verified: boolean }>('mfaVerifyEmailCode', { code });
 }
