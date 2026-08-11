@@ -8,6 +8,13 @@ import {
   normalizeFormSchema,
   validateFormSchema,
 } from '../_shared/formSchema.ts';
+import { sessionKeyFromAccessToken } from '../_shared/adminMfa.ts';
+import {
+  MFA_ACTIONS,
+  MFA_PRE_VERIFY_ACTIONS,
+  handleMfaAction,
+  isMfaSessionVerified,
+} from './mfaActions.ts';
 
 const corsHeaders: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',
@@ -69,7 +76,10 @@ type Action =
   | 'publishBlogPost'
   | 'unpublishBlogPost'
   | 'deleteBlogPost'
-  | 'uploadBlogImage';
+  | 'uploadBlogImage'
+  | 'mfaStatus'
+  | 'mfaSendEmailCode'
+  | 'mfaVerifyEmailCode';
 
 const USER_ACTIONS = new Set<Action>([
   'listUsers',
@@ -124,6 +134,10 @@ type AdminRole = 'super_admin' | 'hiring_manager' | 'blog_author' | 'sales_leads
 type AdminActor = {
   userId: string;
   role: AdminRole;
+  authKind: 'jwt' | 'legacy';
+  sessionKey: string;
+  email: string | null;
+  accessToken: string;
 };
 
 type AdminAuthResult =
@@ -169,9 +183,17 @@ async function requireAdmin(req: Request, supabase: SupabaseClient): Promise<Adm
       };
     }
 
+    const sessionKey = await sessionKeyFromAccessToken(token);
     return {
       ok: true,
-      actor: { userId: profile.id as string, role: profile.role as AdminRole },
+      actor: {
+        userId: profile.id as string,
+        role: profile.role as AdminRole,
+        authKind: 'jwt',
+        sessionKey,
+        email: userData.user.email ?? null,
+        accessToken: token,
+      },
     };
   }
 
@@ -192,7 +214,14 @@ async function requireAdmin(req: Request, supabase: SupabaseClient): Promise<Adm
   // Shared env admin has full hiring access (matches pre-platform live behavior).
   return {
     ok: true,
-    actor: { userId: 'legacy-shared-admin', role: 'super_admin' },
+    actor: {
+      userId: 'legacy-shared-admin',
+      role: 'super_admin',
+      authKind: 'legacy',
+      sessionKey: tokenHash,
+      email: null,
+      accessToken: token,
+    },
   };
 }
 
@@ -287,6 +316,52 @@ Deno.serve(async (req) => {
   const action = body.action;
   const payload = body.payload ?? {};
   const includeDeleted = Boolean(payload.include_deleted);
+
+  // MFA actions (JWT platform only)
+  if (MFA_ACTIONS.has(action)) {
+    if (authResult.actor.authKind !== 'jwt') {
+      return json({ error: 'MFA is only available for platform admin accounts' }, 400);
+    }
+    try {
+      const mfaVerified = await isMfaSessionVerified(
+        supabase,
+        authResult.actor.userId,
+        authResult.actor.sessionKey,
+      );
+      if (!MFA_PRE_VERIFY_ACTIONS.has(action) && !mfaVerified) {
+        return json({ error: 'MFA required' }, 403);
+      }
+      return await handleMfaAction({
+        action,
+        payload,
+        supabase,
+        actor: {
+          userId: authResult.actor.userId,
+          role: authResult.actor.role,
+        },
+        sessionKey: authResult.actor.sessionKey,
+        userEmail: authResult.actor.email,
+        json,
+        sendResendEmail,
+        mfaVerified,
+      });
+    } catch (error) {
+      console.error('admin-api MFA error', action, error);
+      return json({ error: error instanceof Error ? error.message : 'Server error' }, 500);
+    }
+  }
+
+  // JWT platform: require MFA verification for all data actions
+  if (authResult.actor.authKind === 'jwt') {
+    const mfaVerified = await isMfaSessionVerified(
+      supabase,
+      authResult.actor.userId,
+      authResult.actor.sessionKey,
+    );
+    if (!mfaVerified) {
+      return json({ error: 'MFA required' }, 403);
+    }
+  }
 
   if (USER_ACTIONS.has(action)) {
     const denied = requireSuperAdmin(authResult.actor);
