@@ -10,6 +10,7 @@ import {
   LogOut,
   Mail,
   PenLine,
+  Send,
   Users,
 } from 'lucide-react';
 import { AdminBrandMark } from '../../components/admin/AdminBrandMark';
@@ -18,6 +19,7 @@ import { subscribeCareerApplicationSignals } from '../../lib/careerRealtime';
 import {
   ADMIN_ROLE_LABELS,
   canAccessBlog,
+  canAccessBulkMail,
   canAccessHiring,
   canAccessUsers,
   type AdminRole,
@@ -40,11 +42,18 @@ type NavGroup = {
 function groupsForRole(role: AdminRole): NavGroup[] {
   const groups: NavGroup[] = [];
 
+  const platformItems: NavItem[] = [];
   if (canAccessUsers(role)) {
+    platformItems.push({ to: '/admin/users', label: 'Users', Icon: Users });
+  }
+  if (canAccessBulkMail(role)) {
+    platformItems.push({ to: '/admin/bulk-mail', label: 'Bulk Mail', Icon: Send });
+  }
+  if (platformItems.length > 0) {
     groups.push({
       id: 'platform',
       label: 'Platform',
-      items: [{ to: '/admin/users', label: 'Users', Icon: Users }],
+      items: platformItems,
     });
   }
 

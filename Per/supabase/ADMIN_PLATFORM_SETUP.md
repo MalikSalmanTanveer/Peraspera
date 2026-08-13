@@ -99,3 +99,35 @@ Enable Auth templates:
 
 - Invite user  
 - Reset password  
+
+## 5. Bulk mail
+
+Apply migration `supabase/migrations/20260813120000_bulk_mail.sql` (included in `supabase db push`).
+
+Set Edge secret `BULK_MAIL_FROM_ADDRESSES` to a JSON array of `{ "email", "label" }` objects. The admin UI reads this via `listBulkMailFromOptions`; if unset, `admin-api` falls back to the defaults below.
+
+```bash
+npx supabase secrets set BULK_MAIL_FROM_ADDRESSES='[{"email":"contact@peraspera.solutions","label":"Contact"},{"email":"hr@peraspera.solutions","label":"HR"},{"email":"careers@peraspera.solutions","label":"Careers"}]' --project-ref YOUR_REF
+```
+
+Each address must be allowed by your verified Resend domain (`peraspera.solutions`). In the [Resend dashboard](https://resend.com/domains), confirm the domain is verified and that `contact@`, `hr@`, and `careers@` are permitted senders before production use.
+
+### Stop bulk mail landing in spam (required)
+
+Code alone cannot fix spam. Complete **all** DNS records Resend shows for `peraspera.solutions`:
+
+1. Open [Resend → Domains](https://resend.com/domains) → `peraspera.solutions`
+2. Add/verify **SPF**, **DKIM**, and (recommended) **DMARC** exactly as Resend lists them
+3. Wait until the domain status is **Verified** (green)
+4. Set production `FROM_EMAIL` to a domain address, **not** `onboarding@resend.dev`:
+
+```bash
+npx supabase secrets set FROM_EMAIL='Peraspera <contact@peraspera.solutions>' --project-ref YOUR_REF
+```
+
+5. Redeploy `admin-api` after secrets change
+6. In Gmail, open a received mail → mark **Not spam** / drag into **Primary** once to train the inbox
+
+Bulk sends use a plain transactional layout (no newsletter card, no `List-Unsubscribe` header) so Gmail is less likely to route them to **Promotions**. Classification is still Gmail’s call; domain reputation and content matter more than any single header.
+
+Then redeploy `admin-api` and the frontend.

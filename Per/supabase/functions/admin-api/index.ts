@@ -16,6 +16,8 @@ import {
   isMfaSessionVerified,
 } from './mfaActions.ts';
 
+declare const EdgeRuntime: { waitUntil: (promise: Promise<unknown>) => void } | undefined;
+
 const corsHeaders: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -24,6 +26,10 @@ const corsHeaders: Record<string, string> = {
 
 const RESUME_BUCKET = 'career-resumes';
 const BLOG_MEDIA_BUCKET = 'blog-media';
+const BULK_MAIL_ATTACHMENTS_BUCKET = 'bulk-mail-attachments';
+const BULK_MAIL_BATCH_SIZE = 25;
+const BULK_MAIL_MAX_RECIPIENTS = 500;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const BLOG_IMAGE_MAX_BYTES = 5 * 1024 * 1024;
 const BLOG_IMAGE_MIME = new Set([
   'image/jpeg',
@@ -64,6 +70,12 @@ type Action =
   | 'deleteApplication'
   | 'signedResumeUrl'
   | 'sendMail'
+  | 'listBulkMailFromOptions'
+  | 'createBulkMailJob'
+  | 'startBulkMailJob'
+  | 'listBulkMailJobs'
+  | 'getBulkMailJob'
+  | 'processBulkMailJob'
   | 'listApplicationEmails'
   | 'listUsers'
   | 'inviteUser'
@@ -97,6 +109,15 @@ const BLOG_ACTIONS = new Set<Action>([
   'unpublishBlogPost',
   'deleteBlogPost',
   'uploadBlogImage',
+]);
+
+const BULK_MAIL_ACTIONS = new Set<Action>([
+  'listBulkMailFromOptions',
+  'createBulkMailJob',
+  'startBulkMailJob',
+  'listBulkMailJobs',
+  'getBulkMailJob',
+  'processBulkMailJob',
 ]);
 
 interface RequestBody {
@@ -251,14 +272,169 @@ function slugifyBlog(input: string): string {
     .slice(0, 80);
 }
 
+function parseFromEmailEnv(raw: string | undefined): { email: string; label: string } | null {
+  if (!raw?.trim()) return null;
+  const angled = raw.match(/^\s*(.*?)\s*<([^>]+)>\s*$/);
+  if (angled) {
+    const email = angled[2].toLowerCase().trim();
+    const label = angled[1].trim() || email;
+    if (!EMAIL_RE.test(email)) return null;
+    return { email, label };
+  }
+  const email = raw.toLowerCase().trim();
+  if (!EMAIL_RE.test(email)) return null;
+  return { email, label: 'Default (FROM_EMAIL)' };
+}
+
+function getBulkMailFromOptions(): { email: string; label: string }[] {
+  const defaults = [
+    { email: 'contact@peraspera.solutions', label: 'Contact' },
+    { email: 'hr@peraspera.solutions', label: 'HR' },
+    { email: 'careers@peraspera.solutions', label: 'Careers' },
+  ];
+
+  let options = defaults;
+  const raw = Deno.env.get('BULK_MAIL_FROM_ADDRESSES');
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        const configured = parsed
+          .map((item) => {
+            const value = item && typeof item === 'object'
+              ? item as Record<string, unknown>
+              : {};
+            const email = String(value.email ?? '').toLowerCase().trim();
+            return {
+              email,
+              label: String(value.label ?? email).trim(),
+            };
+          })
+          .filter((option) => EMAIL_RE.test(option.email));
+        if (configured.length > 0) options = configured;
+      }
+    } catch {
+      // Fall back to defaults below.
+    }
+  }
+
+  const fromEnv = parseFromEmailEnv(Deno.env.get('FROM_EMAIL'));
+  if (fromEnv && !options.some((option) => option.email === fromEnv.email)) {
+    options = [
+      { email: fromEnv.email, label: `${fromEnv.label} (verified sender)` },
+      ...options,
+    ];
+  }
+
+  return options;
+}
+
+function formatBulkMailFrom(email: string): string {
+  const option = getBulkMailFromOptions().find((item) => item.email === email.toLowerCase().trim());
+  const label = option?.label?.replace(/\s*\(verified sender\)\s*$/i, '').trim() || 'Peraspera';
+  return `${label} <${email.toLowerCase().trim()}>`;
+}
+
+function isAllowedBulkMailFrom(email: string): boolean {
+  const normalized = email.toLowerCase().trim();
+  return getBulkMailFromOptions().some((option) => option.email === normalized);
+}
+
+function safeBulkMailFilename(filename: string): string {
+  const withoutControlCharacters = Array.from(filename)
+    .filter((character) => {
+      const code = character.charCodeAt(0);
+      return code >= 32 && code !== 127;
+    })
+    .join('');
+  return withoutControlCharacters
+    .replace(/[\\/]+/g, '-')
+    .trim()
+    .slice(0, 120) || 'attachment';
+}
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const chunkSize = 0x8000;
+  for (let offset = 0; offset < bytes.length; offset += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(offset, offset + chunkSize));
+  }
+  return btoa(binary);
+}
+
+function keepAlive(promise: Promise<unknown>): void {
+  try {
+    if (typeof EdgeRuntime !== 'undefined' && EdgeRuntime?.waitUntil) {
+      EdgeRuntime.waitUntil(promise);
+      return;
+    }
+  } catch {
+    // Fall back when the runtime API is unavailable.
+  }
+  void promise;
+}
+
+function invokeBulkMailProcessor(params: {
+  supabaseUrl: string;
+  serviceKey: string;
+  accessToken: string;
+  jobId: string;
+}): void {
+  keepAlive(
+    fetch(`${params.supabaseUrl}/functions/v1/admin-api`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${params.accessToken}`,
+        apikey: params.serviceKey,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: 'processBulkMailJob',
+        payload: { job_id: params.jobId },
+      }),
+    }).catch((error) => {
+      console.error('Failed to invoke bulk mail processor', params.jobId, error);
+    }),
+  );
+}
+
+function htmlToPlainText(html: string): string {
+  return html
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/p>/gi, '\n\n')
+    .replace(/<\/div>/gi, '\n')
+    .replace(/<\/li>/gi, '\n')
+    .replace(/<li[^>]*>/gi, '• ')
+    .replace(/<a[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi, '$2 ($1)')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+/** Pass through compose HTML like career sendMail — no campaign wrapper/footer. */
+function wrapBulkMailHtml(bodyHtml: string, _fromEmail: string): string {
+  return bodyHtml;
+}
+
 async function sendResendEmail(params: {
   to: string[];
   subject: string;
   html: string;
+  text?: string;
   replyTo?: string;
+  from?: string;
+  headers?: Record<string, string>;
+  attachments?: { filename: string; content: string }[];
+  idempotencyKey?: string;
 }): Promise<{ ok: boolean; error?: string; id?: string }> {
   const apiKey = Deno.env.get('RESEND_API_KEY');
-  const from = Deno.env.get('FROM_EMAIL');
+  const from = params.from ?? Deno.env.get('FROM_EMAIL');
   if (!apiKey || !from) {
     return { ok: false, error: 'Email service not configured' };
   }
@@ -268,6 +444,7 @@ async function sendResendEmail(params: {
     headers: {
       Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
+      ...(params.idempotencyKey ? { 'Idempotency-Key': params.idempotencyKey } : {}),
     },
     body: JSON.stringify({
       from,
@@ -275,6 +452,9 @@ async function sendResendEmail(params: {
       reply_to: params.replyTo,
       subject: params.subject,
       html: params.html,
+      ...(params.text ? { text: params.text } : {}),
+      ...(params.headers ? { headers: params.headers } : {}),
+      ...(params.attachments ? { attachments: params.attachments } : {}),
     }),
   });
 
@@ -363,7 +543,7 @@ Deno.serve(async (req) => {
     }
   }
 
-  if (USER_ACTIONS.has(action)) {
+  if (USER_ACTIONS.has(action) || BULK_MAIL_ACTIONS.has(action)) {
     const denied = requireSuperAdmin(authResult.actor);
     if (denied) return denied;
   } else if (BLOG_ACTIONS.has(action)) {
@@ -804,6 +984,415 @@ Deno.serve(async (req) => {
         return json({ data: { email: logged, resend_id: mail.id } });
       }
 
+      case 'listBulkMailFromOptions': {
+        return json({ data: getBulkMailFromOptions() });
+      }
+
+      case 'createBulkMailJob': {
+        const fromEmail = String(payload.from_email ?? '').toLowerCase().trim();
+        const subject = String(payload.subject ?? '').trim();
+        const bodyHtml = String(payload.body ?? '');
+        if (!isAllowedBulkMailFrom(fromEmail)) {
+          return json({ error: 'From address is not allowed' }, 400);
+        }
+        if (!subject || !bodyHtml.trim()) {
+          return json({ error: 'from_email, subject, and body are required' }, 400);
+        }
+        if (!Array.isArray(payload.recipients)) {
+          return json({ error: 'recipients must be an array' }, 400);
+        }
+
+        const recipients = Array.from(
+          new Set(
+            payload.recipients
+              .map((recipient) => String(recipient).toLowerCase().trim())
+              .filter((recipient) => EMAIL_RE.test(recipient)),
+          ),
+        );
+        if (recipients.length === 0) {
+          return json({ error: 'At least one valid recipient is required' }, 400);
+        }
+        if (recipients.length > BULK_MAIL_MAX_RECIPIENTS) {
+          return json(
+            { error: `A maximum of ${BULK_MAIL_MAX_RECIPIENTS} recipients is allowed` },
+            400,
+          );
+        }
+
+        const hasAttachment = payload.has_attachment === true;
+        const attachmentName = hasAttachment
+          ? safeBulkMailFilename(String(payload.attachment_name ?? 'attachment'))
+          : null;
+
+        // Stable UUID reserved for jobs created through the legacy shared-admin session.
+        const createdBy = authResult.actor.userId === 'legacy-shared-admin'
+          ? '00000000-0000-4000-8000-0000000000b1'
+          : authResult.actor.userId;
+        const { data: job, error: jobError } = await supabase
+          .from('bulk_mail_jobs')
+          .insert({
+            created_by: createdBy,
+            from_email: fromEmail,
+            subject,
+            body: bodyHtml,
+            status: 'draft',
+            total_count: recipients.length,
+          })
+          .select()
+          .single();
+        if (jobError) throw jobError;
+
+        const { error: recipientsError } = await supabase
+          .from('bulk_mail_recipients')
+          .insert(
+            recipients.map((email) => ({
+              job_id: job.id,
+              email,
+              status: 'pending',
+            })),
+          );
+        if (recipientsError) {
+          await supabase.from('bulk_mail_jobs').delete().eq('id', job.id);
+          throw recipientsError;
+        }
+
+        if (!hasAttachment) return json({ data: { job } });
+
+        const path = `${job.id}/${attachmentName}`;
+        const { data: upload, error: uploadError } = await supabase.storage
+          .from(BULK_MAIL_ATTACHMENTS_BUCKET)
+          .createSignedUploadUrl(path, { upsert: true });
+        if (uploadError) {
+          await supabase.from('bulk_mail_jobs').delete().eq('id', job.id);
+          throw uploadError;
+        }
+
+        return json({
+          data: {
+            job,
+            upload: {
+              path,
+              token: upload.token,
+              signedUrl: upload.signedUrl,
+            },
+          },
+        });
+      }
+
+      case 'startBulkMailJob': {
+        const jobId = String(payload.job_id ?? '');
+        if (!jobId) return json({ error: 'job_id is required' }, 400);
+
+        const { data: existing, error: loadError } = await supabase
+          .from('bulk_mail_jobs')
+          .select('*')
+          .eq('id', jobId)
+          .maybeSingle();
+        if (loadError) throw loadError;
+        if (!existing) return json({ error: 'Bulk mail job not found' }, 404);
+        if (existing.status !== 'draft' && existing.status !== 'queued') {
+          return json({ error: 'Only draft or queued jobs can be started' }, 409);
+        }
+
+        const attachmentPath = payload.attachment_path
+          ? String(payload.attachment_path)
+          : null;
+        const attachmentName = payload.attachment_name
+          ? safeBulkMailFilename(String(payload.attachment_name))
+          : null;
+        const attachmentContentType = payload.attachment_content_type
+          ? String(payload.attachment_content_type).trim()
+          : null;
+        if (attachmentPath || attachmentName || attachmentContentType) {
+          if (!attachmentPath || !attachmentName || !attachmentContentType) {
+            return json(
+              {
+                error:
+                  'attachment_path, attachment_name, and attachment_content_type are all required',
+              },
+              400,
+            );
+          }
+          const attachmentStorageName = attachmentPath.slice(jobId.length + 1);
+          if (
+            !attachmentPath.startsWith(`${jobId}/`) ||
+            !attachmentStorageName ||
+            attachmentStorageName.includes('/') ||
+            attachmentStorageName.includes('\\')
+          ) {
+            return json({ error: 'Invalid attachment path' }, 400);
+          }
+          const { data: attachment, error: attachmentError } = await supabase.storage
+            .from(BULK_MAIL_ATTACHMENTS_BUCKET)
+            .download(attachmentPath);
+          if (attachmentError || !attachment) {
+            return json({ error: 'Attachment upload was not found' }, 400);
+          }
+        }
+
+        const now = new Date().toISOString();
+        const { data: job, error } = await supabase
+          .from('bulk_mail_jobs')
+          .update({
+            status: 'queued',
+            started_at: existing.started_at ?? now,
+            attachment_path: attachmentPath ?? existing.attachment_path,
+            attachment_name: attachmentName ?? existing.attachment_name,
+            attachment_content_type:
+              attachmentContentType ?? existing.attachment_content_type,
+          })
+          .eq('id', jobId)
+          .select()
+          .single();
+        if (error) throw error;
+
+        invokeBulkMailProcessor({
+          supabaseUrl,
+          serviceKey,
+          accessToken: authResult.actor.accessToken,
+          jobId,
+        });
+        return json({ data: { job } });
+      }
+
+      case 'listBulkMailJobs': {
+        const { data, error } = await supabase
+          .from('bulk_mail_jobs')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(50);
+        if (error) throw error;
+        return json({ data: data ?? [] });
+      }
+
+      case 'getBulkMailJob': {
+        const jobId = String(payload.job_id ?? '');
+        if (!jobId) return json({ error: 'job_id is required' }, 400);
+
+        const { data: job, error: jobError } = await supabase
+          .from('bulk_mail_jobs')
+          .select('*')
+          .eq('id', jobId)
+          .maybeSingle();
+        if (jobError) throw jobError;
+        if (!job) return json({ error: 'Bulk mail job not found' }, 404);
+
+        let recipientsQuery = supabase
+          .from('bulk_mail_recipients')
+          .select('*')
+          .eq('job_id', jobId)
+          .order('email', { ascending: true });
+        if (payload.include_all !== true) {
+          recipientsQuery = recipientsQuery.eq('status', 'failed');
+        }
+        const { data: recipients, error: recipientsError } = await recipientsQuery;
+        if (recipientsError) throw recipientsError;
+        return json({ data: { job, recipients: recipients ?? [] } });
+      }
+
+      case 'processBulkMailJob': {
+        const jobId = String(payload.job_id ?? '');
+        if (!jobId) return json({ error: 'job_id is required' }, 400);
+
+        const { data: existing, error: loadError } = await supabase
+          .from('bulk_mail_jobs')
+          .select('*')
+          .eq('id', jobId)
+          .maybeSingle();
+        if (loadError) throw loadError;
+        if (!existing) return json({ error: 'Bulk mail job not found' }, 404);
+        if (['completed', 'failed', 'cancelled'].includes(existing.status)) {
+          return json({ data: { job: existing } });
+        }
+        if (existing.status === 'processing') {
+          return json({ data: { job: existing } });
+        }
+        if (existing.status !== 'queued') {
+          return json({ error: 'Bulk mail job is not queued' }, 409);
+        }
+
+        const { data: claimed, error: claimError } = await supabase
+          .from('bulk_mail_jobs')
+          .update({ status: 'processing' })
+          .eq('id', jobId)
+          .eq('status', 'queued')
+          .select()
+          .maybeSingle();
+        if (claimError) throw claimError;
+        if (!claimed) {
+          return json({ data: { job: existing } });
+        }
+
+        // Repair counters if a prior tick updated a recipient but failed before
+        // persisting that recipient's counter increment.
+        const [sentCountResult, failedCountResult] = await Promise.all([
+          supabase
+            .from('bulk_mail_recipients')
+            .select('id', { count: 'exact', head: true })
+            .eq('job_id', jobId)
+            .eq('status', 'sent'),
+          supabase
+            .from('bulk_mail_recipients')
+            .select('id', { count: 'exact', head: true })
+            .eq('job_id', jobId)
+            .eq('status', 'failed'),
+        ]);
+        if (sentCountResult.error) throw sentCountResult.error;
+        if (failedCountResult.error) throw failedCountResult.error;
+        const { error: reconcileError } = await supabase
+          .from('bulk_mail_jobs')
+          .update({
+            sent_count: sentCountResult.count ?? 0,
+            failed_count: failedCountResult.count ?? 0,
+          })
+          .eq('id', jobId)
+          .eq('status', 'processing');
+        if (reconcileError) throw reconcileError;
+
+        let attachments: { filename: string; content: string }[] | undefined;
+        if (claimed.attachment_path) {
+          const { data: file, error: fileError } = await supabase.storage
+            .from(BULK_MAIL_ATTACHMENTS_BUCKET)
+            .download(claimed.attachment_path);
+          if (fileError || !file) {
+            const message = fileError?.message ?? 'Attachment could not be downloaded';
+            const { data: failedJob } = await supabase
+              .from('bulk_mail_jobs')
+              .update({
+                status: 'failed',
+                error_summary: message,
+                completed_at: new Date().toISOString(),
+              })
+              .eq('id', jobId)
+              .select()
+              .single();
+            return json({ error: message, data: { job: failedJob } }, 500);
+          }
+          attachments = [{
+            filename: claimed.attachment_name ?? 'attachment',
+            content: arrayBufferToBase64(await file.arrayBuffer()),
+          }];
+        }
+
+        const { data: pending, error: pendingError } = await supabase
+          .from('bulk_mail_recipients')
+          .select('id, email')
+          .eq('job_id', jobId)
+          .eq('status', 'pending')
+          .order('id', { ascending: true })
+          .limit(BULK_MAIL_BATCH_SIZE);
+        if (pendingError) throw pendingError;
+
+        for (const recipient of pending ?? []) {
+          let mail: { ok: boolean; error?: string; id?: string };
+          try {
+            const fromFormatted = formatBulkMailFrom(claimed.from_email);
+            const replyTo = Deno.env.get('NOTIFY_EMAIL') ?? claimed.from_email;
+            const wrappedHtml = wrapBulkMailHtml(claimed.body, claimed.from_email);
+            const plainText = htmlToPlainText(claimed.body);
+            mail = await sendResendEmail({
+              from: fromFormatted,
+              to: [recipient.email],
+              subject: claimed.subject,
+              html: wrappedHtml,
+              text: plainText,
+              replyTo,
+              attachments,
+              idempotencyKey: `bulk-mail-${recipient.id}`,
+            });
+          } catch (error) {
+            mail = {
+              ok: false,
+              error: error instanceof Error ? error.message : 'Email request failed',
+            };
+          }
+
+          const recipientUpdate = mail.ok
+            ? {
+              status: 'sent',
+              resend_id: mail.id ?? null,
+              error: null,
+              sent_at: new Date().toISOString(),
+            }
+            : {
+              status: 'failed',
+              error: (mail.error ?? 'Failed to send email').slice(0, 2000),
+              sent_at: null,
+            };
+          let recipientUpdateError: unknown = null;
+          const recipientUpdateAttempts = mail.ok ? 3 : 1;
+          for (let attempt = 0; attempt < recipientUpdateAttempts; attempt += 1) {
+            const { data: updatedRecipient, error: updateError } = await supabase
+              .from('bulk_mail_recipients')
+              .update(recipientUpdate)
+              .eq('id', recipient.id)
+              .eq('status', 'pending')
+              .select('id')
+              .maybeSingle();
+            recipientUpdateError = updateError ??
+              (updatedRecipient ? null : new Error('Recipient was not updated'));
+            if (!recipientUpdateError) break;
+          }
+          if (recipientUpdateError) throw recipientUpdateError;
+
+          const counterColumn = mail.ok ? 'sent_count' : 'failed_count';
+          let counterUpdateError: unknown = null;
+          for (let attempt = 0; attempt < 3; attempt += 1) {
+            const { data: counts, error: countsError } = await supabase
+              .from('bulk_mail_jobs')
+              .select('sent_count, failed_count')
+              .eq('id', jobId)
+              .eq('status', 'processing')
+              .maybeSingle();
+            if (countsError || !counts) {
+              counterUpdateError = countsError ?? new Error('Bulk mail job is not processing');
+              continue;
+            }
+            const { data: updatedJob, error: updateCounterError } = await supabase
+              .from('bulk_mail_jobs')
+              .update({ [counterColumn]: Number(counts[counterColumn] ?? 0) + 1 })
+              .eq('id', jobId)
+              .eq('status', 'processing')
+              .select('id')
+              .maybeSingle();
+            counterUpdateError = updateCounterError ??
+              (updatedJob ? null : new Error('Bulk mail counter was not updated'));
+            if (!counterUpdateError) break;
+          }
+          if (counterUpdateError) throw counterUpdateError;
+        }
+
+        const { count: pendingCount, error: countError } = await supabase
+          .from('bulk_mail_recipients')
+          .select('id', { count: 'exact', head: true })
+          .eq('job_id', jobId)
+          .eq('status', 'pending');
+        if (countError) throw countError;
+
+        const hasPending = (pendingCount ?? 0) > 0;
+        const { data: job, error: finishError } = await supabase
+          .from('bulk_mail_jobs')
+          .update({
+            status: hasPending ? 'queued' : 'completed',
+            completed_at: hasPending ? null : new Date().toISOString(),
+          })
+          .eq('id', jobId)
+          .select()
+          .single();
+        if (finishError) throw finishError;
+
+        if (hasPending) {
+          // An optional cron can call processBulkMailJob for stalled queued jobs.
+          invokeBulkMailProcessor({
+            supabaseUrl,
+            serviceKey,
+            accessToken: authResult.actor.accessToken,
+            jobId,
+          });
+        }
+        return json({ data: { job, processed: (pending ?? []).length } });
+      }
+
       case 'listUsers': {
         const { data: profiles, error } = await supabase
           .from('admin_profiles')
@@ -1210,6 +1799,13 @@ Deno.serve(async (req) => {
     }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Request failed';
+    if (action === 'processBulkMailJob' && payload.job_id) {
+      await supabase
+        .from('bulk_mail_jobs')
+        .update({ status: 'queued', error_summary: message.slice(0, 2000) })
+        .eq('id', String(payload.job_id))
+        .eq('status', 'processing');
+    }
     return json({ error: message }, 500);
   }
 });

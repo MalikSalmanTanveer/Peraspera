@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   canAccessBlog,
+  canAccessBulkMail,
   canAccessHiring,
   canAccessUsers,
   defaultHomeForRole,
@@ -23,6 +24,8 @@ import { AdminInviteUserPage } from './AdminInviteUserPage';
 import { AdminBlogListPage } from './AdminBlogListPage';
 import { AdminBlogEditorPage } from './AdminBlogEditorPage';
 import { AdminMfaWaitPage } from './AdminMfaWaitPage';
+import { AdminBulkMailPage } from './AdminBulkMailPage';
+import { AdminBulkMailJobPage } from './AdminBulkMailJobPage';
 
 function RequireAdmin({ children }: { children: ReactNode }) {
   const { loading, isAuthenticated, phase } = useAdminAuth();
@@ -81,6 +84,14 @@ function RequireBlog({ children }: { children: ReactNode }) {
   return children;
 }
 
+function RequireBulkMail({ children }: { children: ReactNode }) {
+  const { profile } = useAdminAuth();
+  if (!profile || !canAccessBulkMail(profile.role)) {
+    return <AdminPermissionDeniedPage />;
+  }
+  return children;
+}
+
 function AdminIndexRedirect() {
   const { profile } = useAdminAuth();
   if (!profile) return <Navigate to="/admin/login" replace />;
@@ -129,6 +140,18 @@ function UsersRoutes() {
   );
 }
 
+function BulkMailRoutes() {
+  return (
+    <RequireBulkMail>
+      <Routes>
+        <Route index element={<AdminBulkMailPage />} />
+        <Route path=":jobId" element={<AdminBulkMailJobPage />} />
+        <Route path="*" element={<Navigate to="/admin/bulk-mail" replace />} />
+      </Routes>
+    </RequireBulkMail>
+  );
+}
+
 function AdminRoutes() {
   return (
     <Routes>
@@ -154,6 +177,7 @@ function AdminRoutes() {
                 <Route path="hiring/*" element={<HiringRoutes />} />
                 <Route path="blog/*" element={<BlogRoutes />} />
                 <Route path="users/*" element={<UsersRoutes />} />
+                <Route path="bulk-mail/*" element={<BulkMailRoutes />} />
                 <Route path="overview" element={<Navigate to="/admin/hiring/overview" replace />} />
                 <Route
                   path="applications"

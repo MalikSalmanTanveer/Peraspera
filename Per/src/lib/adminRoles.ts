@@ -36,6 +36,10 @@ export function canAccessSales(role: AdminRole): boolean {
   return role === 'super_admin' || role === 'sales_leads';
 }
 
+export function canAccessBulkMail(role: AdminRole): boolean {
+  return role === 'super_admin';
+}
+
 export function defaultHomeForRole(role: AdminRole): string {
   switch (role) {
     case 'blog_author':

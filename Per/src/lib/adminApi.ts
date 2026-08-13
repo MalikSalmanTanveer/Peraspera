@@ -97,6 +97,11 @@ export type AdminAction =
   | 'mfaStatus'
   | 'mfaSendEmailCode'
   | 'mfaVerifyEmailCode'
+  | 'listBulkMailFromOptions'
+  | 'createBulkMailJob'
+  | 'startBulkMailJob'
+  | 'listBulkMailJobs'
+  | 'getBulkMailJob'
   /** @deprecated Use getCulture / updateCulture */
   | 'getPageContent'
   | 'upsertPageContent'
@@ -501,4 +506,69 @@ export async function sendMfaEmailCode() {
 
 export async function verifyMfaEmailCode(code: string) {
   return adminApi<{ mfa_verified: boolean }>('mfaVerifyEmailCode', { code });
+}
+
+export type BulkMailFromOption = { email: string; label: string };
+
+export type BulkMailJob = {
+  id: string;
+  from_email: string;
+  subject: string;
+  body: string;
+  attachment_name: string | null;
+  status: 'draft' | 'queued' | 'processing' | 'completed' | 'failed' | 'cancelled';
+  total_count: number;
+  sent_count: number;
+  failed_count: number;
+  error_summary: string | null;
+  created_at: string;
+  started_at: string | null;
+  completed_at: string | null;
+};
+
+export type BulkMailRecipient = {
+  id: string;
+  email: string;
+  status: 'pending' | 'sent' | 'failed' | 'skipped';
+  error: string | null;
+  sent_at: string | null;
+};
+
+export async function listBulkMailFromOptions() {
+  return adminApi<BulkMailFromOption[]>('listBulkMailFromOptions', {});
+}
+
+export async function createBulkMailJob(input: {
+  from_email: string;
+  subject: string;
+  body: string;
+  recipients: string[];
+  has_attachment?: boolean;
+  attachment_name?: string;
+  attachment_content_type?: string;
+}) {
+  return adminApi<{
+    job: BulkMailJob;
+    upload?: { path: string; signedUrl: string; token?: string };
+  }>('createBulkMailJob', input);
+}
+
+export async function startBulkMailJob(input: {
+  job_id: string;
+  attachment_path?: string;
+  attachment_name?: string;
+  attachment_content_type?: string;
+}) {
+  return adminApi<{ job: BulkMailJob }>('startBulkMailJob', input);
+}
+
+export async function listBulkMailJobs() {
+  return adminApi<BulkMailJob[]>('listBulkMailJobs', {});
+}
+
+export async function getBulkMailJob(job_id: string, include_all = false) {
+  return adminApi<{ job: BulkMailJob; recipients: BulkMailRecipient[] }>(
+    'getBulkMailJob',
+    { job_id, include_all },
+  );
 }
