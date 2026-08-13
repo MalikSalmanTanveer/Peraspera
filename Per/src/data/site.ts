@@ -49,6 +49,7 @@ export const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/services', showChevron: true },
   { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Careers', href: '/careers' },
   { label: 'Blogs', href: '/blog' },
   { label: 'About', href: '/about' },
   { label: 'Labs', href: '/labs', isLabs: true },
